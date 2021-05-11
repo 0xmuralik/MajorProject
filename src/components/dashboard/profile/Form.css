@@ -1,0 +1,42 @@
+.wrapper {
+    margin: 0 auto;
+  }
+  .wrapper--w360 {
+    max-width: 360px;
+  }
+  .wrapper--w720 {
+    max-width: 800px;
+  }
+  .wrapper--w480 {
+    max-width: 480px;
+  }
+  .label {
+    font-size: 16px;
+    color: #555;
+    text-transform: capitalize;
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+ 
+  .input--style-4 {
+    line-height: 35px;
+    background: #e9e7e7;
+    -webkit-box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+    -moz-box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+    box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    padding: 0 10px;
+    font-size: 15px;
+    color: #666;
+    -webkit-transition: all 0.4s ease;
+    -o-transition: all 0.4s ease;
+    -moz-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+  }
+  .card-padding{
+    padding: 57px 65px;
+    padding-bottom: 65px;
+  }
