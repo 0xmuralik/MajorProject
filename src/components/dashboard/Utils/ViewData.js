@@ -45,40 +45,56 @@ export const ref_paper_links = ["xyz", "abc", "lmn"]
 export const code_link = ["code.link"]
 export const discussion_form = [
 {
-    "name": "priyal",
-    "id": "12345",
-    "time": "5 min ago",
-    "comment": "such a great research",
-    "subcomment": [
+    name: "priyal",
+    id: "12345",
+    user_id:12,
+    time: "5 min ago",
+    comment: "such a great research",
+    upvotes:0,
+    downvotes:2,
+    subcomment: [
         {
-            "name": "anna",
-            "id": "145",
-            "time": "10 min ago",
-            "comment": "nice code",
-            "subcomment": [
+            name: "anna",
+            id: "15",
+            time: "10 min ago",
+            user_id:12,
+            comment: "nice codeeee",
+            upvotes:0,
+            downvotes:0,
+            subcomment: [
                 {
-                    "name": "anna",
-                    "id": "145",
-                    "time": "10 min ago",
-                    "comment": "nice code"
+                    name: "anna",
+                    id: "145",
+                    time: "10 min ago",
+                    user_id:12,
+                    comment: "nice code",
+                    upvotes:5,
+                    downvotes:0,
+                    subcomment:[]
                 }
             ]
         },
         {
-            "name": "thala",
-            "id": "1445",
-            "time": "11 min ago",
-            "comment": "brilliant",
-            "subcomment": []
+            name: "thala",
+            id: "1445",
+            time: "11 min ago",
+            comment: "brilliant",
+            user_id:12,
+            upvotes:5,
+            downvotes:2,
+            subcomment: []
         }
     ]
 }
 ,
 {
-    "name": "priyal",
-    "id": "12345",
-    "time": "6 min ago",
-    "comment": "pretty good nice work",
-    "subcomment": []
+    name: "priyal",
+    id: "123456",
+    time: "6 min ago",
+    user_id:12,
+    upvotes:5,
+    downvotes:2,
+    comment: "pretty good nice work",
+    subcomment: []
 }
 ]

@@ -9,13 +9,14 @@ import * as FaIcons from 'react-icons/fa';
 import * as ViewData from '../Utils/ViewData';
 import Carousel from 'react-bootstrap/Carousel'
 import Accordion from 'react-bootstrap/Accordion'
+import DiscussionForum from './DiscussionForum'
 
 const View = () => {
 
     return (
         <div style={{ position: 'relative', top: '100px' }}>
-            <Card style={{ width: '60rem' }}>
-                <Card.Header style={{background:'#aeb9f7'}}>
+            <Card border="primary" style={{ width: '60rem' }}>
+                <Card.Header style={{ background: '#aeb9f7' }}>
                     <Container>
                         <Row>
                             <Col md={9}><h2>{ViewData.title}</h2></Col>
@@ -31,7 +32,7 @@ const View = () => {
                         </Row>
                     </Container>
                 </Card.Header>
-                <Card.Body style={{background:'#d8dbf0'}}>
+                <Card.Body style={{ background: '#d8dbf0' }}>
                     <Card.Text>
                         <h5>
                             {ViewData.author_details.map((field) => (
@@ -48,7 +49,7 @@ const View = () => {
                         </h5>
                     </Card.Text>
                 </Card.Body>
-                <Card.Body style={{background:'#d8dbf0'}}>
+                <Card.Body style={{ background: '#d8dbf0' }}>
                     <Carousel>
                         <Carousel.Item height>
                             <img height={300} width={100}
@@ -74,43 +75,46 @@ const View = () => {
                         </Carousel.Item>
                     </Carousel>
                 </Card.Body>
-                <Card.Body style={{background:'#d8dbf0'}}>
+                <Card.Body style={{ background: '#d8dbf0' }}>
                     <Card.Title>Brief Description</Card.Title>
                     <Card.Text>{ViewData.desc}</Card.Text>
                 </Card.Body>
-                <Card.Body style={{background:'#d8dbf0'}}>
+                <Card.Body style={{ background: '#d8dbf0' }}>
                     <Card.Title>Work done till date</Card.Title>
                     <Card.Text>{ViewData.work_till_date}</Card.Text>
                 </Card.Body>
-                <Card.Body style={{background:'#d8dbf0'}}>
+                <Card.Body style={{ background: '#d8dbf0' }}>
                     <Card.Title>Future Works</Card.Title>
                     <Card.Text>{ViewData.future_works}</Card.Text>
                 </Card.Body>
                 <Accordion >
-                    <Card style={{background:'#d8dbf0'}}>
+                    <Card style={{ background: '#d8dbf0' }}>
                         <Accordion.Toggle as={Card.Header} eventKey="0">
                             Refernce Paper Links
                         </Accordion.Toggle>
                         {ViewData.ref_paper_links.map((field) => (
                             <Accordion.Collapse eventKey="0">
-                                <Card.Body style={{background:'#d8dbf0'}}><Card.Link href={field}>{field}</Card.Link></Card.Body>
+                                <Card.Body style={{ background: '#d8dbf0' }}><Card.Link href={field}>{field}</Card.Link></Card.Body>
                             </Accordion.Collapse>
                         ))}
                     </Card>
-                    <Card style={{background:'#d8dbf0'}}>
+                    <Card style={{ background: '#d8dbf0' }}>
                         <Accordion.Toggle as={Card.Header} eventKey="1">
                             Code Link
                         </Accordion.Toggle>
                         {ViewData.code_link.map((field) => (
                             <Accordion.Collapse eventKey="1">
-                                <Card.Body style={{background:'#d8dbf0'}}><Card.Link href={field}>{field}</Card.Link></Card.Body>
+                                <Card.Body style={{ background: '#d8dbf0' }}><Card.Link href={field}>{field}</Card.Link></Card.Body>
                             </Accordion.Collapse>
                         ))}
                     </Card>
                 </Accordion>
-                <Card.Body style={{background:'#d8dbf0'}}>
+                <Card.Body style={{ background: '#d8dbf0' }}>
                     <Card.Title>Discussion Form</Card.Title>
-                    <Card.Text>comments</Card.Text>
+                    {   ViewData.discussion_form.length == 0 ?
+                        <p>No comments</p> :
+                        <DiscussionForum discussion_form={ViewData.discussion_form} />
+                    }
                 </Card.Body>
             </Card>
         </div>
