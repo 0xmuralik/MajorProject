@@ -11,6 +11,8 @@ import Row from 'react-bootstrap/Row';
 import {BrowserRouter as Router,Link,Switch,Route } from 'react-router-dom';
 import Upload from './Upload/Upload';
 import Notification from './notifications/Notification';
+import Communities from './communities/Communities';
+import Settings from './settings/Settings';
 function Main() {
     return (
         <Router>
@@ -40,7 +42,12 @@ function Main() {
                                 <Route path='/upload'>
                                     <Upload />
                                 </Route>
-                             
+                                <Route path='/communities'>
+                                    <Communities />
+                                </Route>
+                                <Route path='/settings'>
+                                    <Settings />
+                                </Route>
                             </Switch>
                         </Col>
                     </Row>
