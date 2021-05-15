@@ -1,4 +1,4 @@
-import  FolderMessage from "../models/folderMessages";
+import  FolderMessage from "../models/folderMessages.js";
 
 export const getFolders= async (req,res)=>{
     try {
