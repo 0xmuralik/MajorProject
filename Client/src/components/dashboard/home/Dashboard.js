@@ -19,14 +19,30 @@ export class Dashboard extends Component {
     render() {
         console.log(this.props)
         return (
+
             <>
-                <div class="sticky-top" style={{ top: '60px' }}>
-                    <FilterNavBar />
-                </div>
-                <div style={{ position: 'relative', top: '90px' }}>
-                    < ProcessResearchCards />
-                </div>
-            </>
+            <Header />
+            <div>
+                <Container fluid>
+                    <Row>
+                        <Col sm={2}>
+                            <div style={{ top: '600px' }}>
+                                <SidePannel />
+                            </div>
+
+                        </Col>
+                        <Col sm={10}>
+                        <div class="sticky-top" style={{ top: '60px' }}>
+                            <FilterNavBar />
+                        </div>
+                        <div style={{ position: 'relative', top: '90px' }}>
+                            < ProcessResearchCards />
+                        </div>
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
+        </>
         )
     }
 }
