@@ -4,10 +4,12 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 
 import postRoutes from './routes/posts.js'
+import folderRoutes from './routes/folders.js'
 
 const app = express();
 
 app.use('/posts',postRoutes)
+app.use('/folders',folderRoutes)
 
 
 app.use(bodyParser.json({limit:'30mb', extended:true}));

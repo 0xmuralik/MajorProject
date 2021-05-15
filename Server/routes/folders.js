@@ -1,6 +1,6 @@
 import express from 'express';
 
-import {getPosts,createPost, getFolders, createFolder} from '../controllers/folders.js'
+import { getFolders, createFolder} from '../controllers/folders.js'
 
 const router = express.Router();
 
