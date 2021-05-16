@@ -1,12 +1,12 @@
-import express from 'express';
+import express from "express";
 
-import { getFolders, createFolder} from '../controllers/folders.js'
+import { getFolders, createFolder } from "../controllers/folders.js";
 
 const router = express.Router();
 
 // http://localhost:5000/folders
 
-router.get('/',getFolders);
-router.post('/',createFolder);
+router.get("/", getFolders);
+router.post("/", createFolder);
 
 export default router;
