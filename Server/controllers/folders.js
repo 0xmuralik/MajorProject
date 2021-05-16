@@ -22,7 +22,15 @@ export const createFolder=async (req,res)=>{
 }
 
 export const updateFolder = async (req,res)=>{
+    const{id:_id} =req.params;
+    const folder = req.body;
+
+    if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No folder with that id');
+
     
+    const updateFolder = await FolderMessage.findByIdAndUpdate(_id,{...folder,_id},{new:true});
+
+    res.json(updateFolder);
 }
 
 export const deleteFolder = async (req,res)=>{
