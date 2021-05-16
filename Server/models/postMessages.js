@@ -12,17 +12,17 @@ const postSchema = mongoose.Schema({
     status: String, //status of the research (comlpeted/InProgress)
     collaborators:[mongoose.Schema.Types.ObjectId], //list of collaborators (user _ids) 
     homeDirectory:mongoose.Schema.Types.ObjectId, //id of home directory - create a folder with name as title and pass the objectID 
-    likeCount:{ //number of likes
+    likes:{ //array of userIds who liked
         type: [String],
         default: []
     },
-    viewCount:{ //number of views
-        type: Number,
-        default: 0
+    views:{ //array of userIds who viewed
+        type: [String],
+        default: []
     },
-    saveCount:{ //number of saves
-        type: Number,
-        default: 0
+    saves:{ //arrays of userIds who saved
+        type: [String],
+        default: []
     },
     createdOn: { //date and time of project created
         type: Date,
