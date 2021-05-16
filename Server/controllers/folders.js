@@ -35,7 +35,7 @@ export const updateFolder = async (req,res)=>{
 export const deleteFolder = async (req,res)=>{
     const{id:_id} =req.params;
 
-    if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No post with that id');
+    if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No folder with that id');
 
     await FolderMessage.findByIdAndRemove(_id);
 
@@ -43,5 +43,12 @@ export const deleteFolder = async (req,res)=>{
 }
 
 export const addItem = async (req,res)=>{
-    
+    const{id:_id} =req.params;
+
+    if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No folder with that id');
+
+    const folder = await FolderMessage.findById(_id);
+    const updatedFolder = await FolderMessage.findByIdAndUpdate(_id,{itemCount: folder.itemCount+1},{new:true});
+
+    res.json(updatedFolder);
 }
