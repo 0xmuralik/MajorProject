@@ -32,7 +32,7 @@ class LoginForm extends Component {
     submitHandler = (e) => {
         e.preventDefault();
 
-        window.location('/dashboard')
+        window.location='/dashboard'
     }
 
 
