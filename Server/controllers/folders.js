@@ -27,14 +27,19 @@ export const updateFolder = async (req,res)=>{
 
     if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No folder with that id');
 
-    
     const updateFolder = await FolderMessage.findByIdAndUpdate(_id,{...folder,_id},{new:true});
 
     res.json(updateFolder);
 }
 
 export const deleteFolder = async (req,res)=>{
-    
+    const{id:_id} =req.params;
+
+    if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No post with that id');
+
+    await FolderMessage.findByIdAndRemove(_id);
+
+    res.json({message: 'Folder deleted successfully'});
 }
 
 export const addItem = async (req,res)=>{
