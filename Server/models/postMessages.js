@@ -13,8 +13,8 @@ const postSchema = mongoose.Schema({
     collaborators:[mongoose.Schema.Types.ObjectId], //list of collaborators (user _ids) 
     homeDirectory:mongoose.Schema.Types.ObjectId, //id of home directory - create a folder with name as title and pass the objectID 
     likeCount:{ //number of likes
-        type: Number,
-        default: 0
+        type: [String],
+        default: []
     },
     viewCount:{ //number of views
         type: Number,
