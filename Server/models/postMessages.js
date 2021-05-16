@@ -24,10 +24,6 @@ const postSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
-    fileCount:{ //number of files(not folders) in research
-        type: Number,
-        default: 0
-    },
     createdOn: { //date and time of project created
         type: Date,
         default: new Date()
