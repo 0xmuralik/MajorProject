@@ -5,6 +5,7 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { LoginDetails } from '../../dashboard/Utils/LoginDetails';
+import axios from 'axios';
 //import Dashboard from './Dashboard';
 import {
     BrowserRouter as Router,
@@ -28,8 +29,10 @@ class LoginForm extends Component {
         console.log(`${event.target.value}`)
         this.setState({ password: event.target.value })
     }
-    submitHandler = () => {
-        this.props.parentcallback(this.state)
+    submitHandler = (e) => {
+        e.preventDefault();
+
+        window.location='/dashboard'
     }
 
 

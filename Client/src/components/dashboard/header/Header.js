@@ -20,6 +20,9 @@ export class Header extends Component {
   handleNotification=()=>{
     this.setState({openNotification:!this.state.openNotification});
   }
+  handleLogout=()=>{
+    window.location='/'
+  }
     render() {
         return (
              <div class="fixed-top">
@@ -39,7 +42,7 @@ export class Header extends Component {
                           </NavDropdown.Item>
                       </NavDropdown>
                       </Link>
-                      <Nav.Link><Link to='/'>Log Out</Link></Nav.Link>
+                      <Nav.Link><Link onClick={this.handleLogout}>Log Out</Link></Nav.Link>
                   </Nav>
                 </Navbar.Collapse>
                 </Container>
