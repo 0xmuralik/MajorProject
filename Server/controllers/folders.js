@@ -33,7 +33,7 @@ export const updateFolder = async (req,res)=>{
 }
 
 export const deleteFolder = async (req,res)=>{
-    const{id:_id} =req.params;
+    const{_id} =req.params;
 
     if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No folder with that id');
 
@@ -43,7 +43,7 @@ export const deleteFolder = async (req,res)=>{
 }
 
 export const addItem = async (req,res)=>{
-    const{id:_id} =req.params;
+    const{_id} =req.params;
 
     if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No folder with that id');
 
