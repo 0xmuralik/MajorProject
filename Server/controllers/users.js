@@ -8,7 +8,7 @@ export const signin = async (req,res) =>{
 
     try {
         let existingUser;
-        if(emailOrUsername.indexOf("@")>1){
+        if(emailOrUsername.indexOf("@")>-1){
             existingUser = await Users.findOne({email:emailOrUsername});
         }
         else{
