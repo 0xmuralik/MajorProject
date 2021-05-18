@@ -49,3 +49,15 @@ export const signup = async (req,res) =>{
         
     }
 }
+
+export const updateUser = async (req,res)=>{
+    const {id:_id} =req.params;
+    const user = req.body;
+
+    if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No post with that id');
+
+    
+    const updateUser = await PostMessage.findByIdAndUpdate(_id,{...user,_id},{new:true});
+
+    res.json(updateUser);
+}
