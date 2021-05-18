@@ -24,8 +24,14 @@ class SearchBar extends Component {
     this.cancel = "";
     this.dropDownOptions = options;
   }
-  fetchSearchResults = () => {
-    const searchUrl = `http://localhost:5000/posts`;
+  fetchSearchResults = (
+    Domains,
+    ResearchTypes,
+    StatusSelected,
+    Authors,
+    query
+  ) => {
+    const searchUrl = `http://localhost:5000/posts/${query}/${Domains}/${ResearchTypes}/${StatusSelected}/${Authors}`;
     if (this.cancel) {
       this.cancel.cancel();
     }
@@ -54,7 +60,7 @@ class SearchBar extends Component {
   handleOnInputChange = (event) => {
     const query = event.target.value;
     this.setState({ query: query, loading: true, message: "" }, () => {
-      this.fetchSearchResults(query);
+      this.fetchSearchResults(["B", "A"], ["A"], "Pemd", "Authors", query);
     });
   };
 
