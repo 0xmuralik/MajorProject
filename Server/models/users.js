@@ -20,7 +20,11 @@ const userSchema = mongoose.Schema({
     domains: [mongoose.Schema.Types.ObjectId],
     contact: String,
     description: String,
-    displayPicture: String
+    displayPicture: String,
+    likedPosts: [mongoose.Schema.Types.ObjectId],
+    savedPosts: [mongoose.Schema.Types.ObjectId],
+    viewedPosts: [mongoose.Schema.Types.ObjectId]
 })
 
-export default mongoose.model("Users",userSchema);
+const Users = mongoose.model("Users",userSchema);
+export default Users;
