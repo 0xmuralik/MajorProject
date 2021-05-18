@@ -12,6 +12,8 @@ import Accordion from 'react-bootstrap/Accordion'
 import DiscussionForum from './DiscussionForum'
 import Header from '../header/Header';
 import SidePannel from '../sidepannel/SidePannel';
+import CodeFolders from './CodeFolders';
+import {codeFolderStructure} from '../Utils/CodeFolders';
 
 const View = () => {
 
@@ -102,28 +104,7 @@ const View = () => {
                                     <Card.Title>Future Works</Card.Title>
                                     <Card.Text>{ViewData.future_works}</Card.Text>
                                 </Card.Body>
-                                <Accordion >
-                                    <Card style={{ background: '#d8dbf0' }}>
-                                        <Accordion.Toggle as={Card.Header} eventKey="0">
-                                            Refernce Paper Links
-                                        </Accordion.Toggle>
-                                        {ViewData.ref_paper_links.map((field) => (
-                                            <Accordion.Collapse eventKey="0">
-                                                <Card.Body style={{ background: '#d8dbf0' }}><Card.Link href={field}>{field}</Card.Link></Card.Body>
-                                            </Accordion.Collapse>
-                                        ))}
-                                    </Card>
-                                    <Card style={{ background: '#d8dbf0' }}>
-                                        <Accordion.Toggle as={Card.Header} eventKey="1">
-                                            Code Link
-                                        </Accordion.Toggle>
-                                        {ViewData.code_link.map((field) => (
-                                            <Accordion.Collapse eventKey="1">
-                                                <Card.Body style={{ background: '#d8dbf0' }}><Card.Link href={field}>{field}</Card.Link></Card.Body>
-                                            </Accordion.Collapse>
-                                        ))}
-                                    </Card>
-                                </Accordion>
+                                <CodeFolders folderStructure={codeFolderStructure}/>
                                 <Card.Body style={{ background: '#d8dbf0' }}>
                                     <Card.Title>Discussion Form</Card.Title>
                                     {   ViewData.discussion_form.length == 0 ?
