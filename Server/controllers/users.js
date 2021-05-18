@@ -7,8 +7,13 @@ export const signin = async (req,res) =>{
     const {emailOrUsername, password} =req.body;
 
     try {
-        //usernam or email
-        const existingUser = await Users.findOne({email});
+        let existingUser;
+        if(emailOrUsername.indexOf("@")>1){
+            existingUser = await Users.findOne({email:emailOrUsername});
+        }
+        else{
+            existingUser = await Users.findOne({username:emailOrUsername});
+        }
         if(!existingUser) return res.status(404).json({message: "User doesn't exist."});
 
 
