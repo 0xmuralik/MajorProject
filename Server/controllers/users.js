@@ -4,16 +4,18 @@ import jwt from 'jsonwebtoken';
 import Users from '../models/users.js'
 
 export const signin = async (req,res) =>{
-    const {email , password} =req.body;
+    const {emailOrUsername, password} =req.body;
 
     try {
+        //usernam or email
         const existingUser = await Users.findOne({email});
         if(!existingUser) return res.status(404).json({message: "User doesn't exist."});
+
 
         const isPasswordCorrect = await bcrypt.compare(password,existingUser.password);
         if(!isPasswordCorrect) return res.status(400).json({message: "Incorrect Password."});
 
-        const token = jwt.sign({email:existingUser.email, id:existingUser._id,username:existingUser.username},'test',{expiresIn:'1h'});
+        const token = jwt.sign({email:existingUser.email, _id:existingUser._id,username:existingUser.username},'test',{expiresIn:'1h'});
 
         res.status(200).json({result:existingUser,token});
     } catch (error) {
@@ -22,7 +24,7 @@ export const signin = async (req,res) =>{
 }
 
 export const signup = async (req,res) =>{
-    const {email ,username, password, confirmPassword, firstName, lastName} =req.body;
+    const {email ,username, password, name} =req.body;
 
     try {
         const existingUser = await Users.findOne({email});
@@ -31,13 +33,11 @@ export const signup = async (req,res) =>{
         const uname = await Users.findOne({username});
         if(uname) return res.status(400).json({message:"Username is already taken."});
        
-        if(password!==confirmPassword) return res.status(400).json({message: "Passwords don't match."});
-
         const hashedPassword = await bcrypt.hash(password,12);
 
         const result = await Users.create({email,username,password:hashedPassword,name:`${firstName} ${lastName}`});
 
-        const token = jwt.sign({email:result.email, id:result._id,username:result.username},'test',{expiresIn:'1h'});
+        const token = jwt.sign({email:result.email, _id:result._id,username:result.username},'test',{expiresIn:'1h'});
         
         res.status(200).json({result,token});
     } catch (error) {

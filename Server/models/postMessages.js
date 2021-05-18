@@ -3,15 +3,19 @@ import mongoose from 'mongoose';
 const postSchema = mongoose.Schema({
     title: String, //title of project
     creator: mongoose.Schema.Types.ObjectId, //id of uploading account 
-    authors: [mongoose.Schema.Types.ObjectId], //authors of the research 
+    author: mongoose.Schema.Types.ObjectId, //authors of the research 
     organization: String, //organization of the authors
-    Region: String, //Region of the organization
-    Description: String, //Description of the project
-    Domain : String, //Domain of the research
+    region: String, //Region of the organization
+    description: String, //Description of the project
+    image:[String], //base64 encoding of images in research home
+    future: String, //Future of the project
+    workDone: String, //Description of the project
+    description: String, //Description of the project
+    domain : {type:String, require:true}, //Domain of the research
     tags: [String], //Keywords or tags (use in search)
-    status: String, //status of the research (comlpeted/InProgress)
-    collaborators:[mongoose.Schema.Types.ObjectId], //list of collaborators (user _ids) 
-    homeDirectory:mongoose.Schema.Types.ObjectId, //id of home directory - create a folder with name as title and pass the objectID 
+    status:{type:String, require:true}, //status of the research (comlpeted/InProgress)
+    coAuthors:[mongoose.Schema.Types.ObjectId], //list of collaborators (user _ids) 
+    homeDirectory:mongoose.Schema.Types.ObjectId, //id of home directory - create a folder with name as title and pass the objectID = > {name:title} 
     likes:{ //array of userIds who liked
         type: [String],
         default: []

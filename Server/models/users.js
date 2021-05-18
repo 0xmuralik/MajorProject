@@ -16,8 +16,7 @@ const userSchema = mongoose.Schema({
     username: {
         type:String,
         required:true
-    },
-    id:String
+    }
 })
 
 export default mongoose.model("Users",userSchema);
