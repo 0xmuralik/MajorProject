@@ -11,11 +11,11 @@ const postSchema = mongoose.Schema({
     future: String, //Future of the project
     workDone: String, //Description of the project
     description: String, //Description of the project
-    domain : {type:String, require:true}, //Domain of the research
+    domain : {type:mongoose.Schema.Types.ObjectId, require:true}, //Domain of the research
     tags: [String], //Keywords or tags (use in search)
     status:{type:String, require:true}, //status of the research (comlpeted/InProgress)
     coAuthors:[mongoose.Schema.Types.ObjectId], //list of collaborators (user _ids) 
-    homeDirectory:mongoose.Schema.Types.ObjectId, //id of home directory - create a folder with name as title and pass the objectID = > {name:title} 
+    homeDirectory:{type:mongoose.Schema.Types.ObjectId, require:true}, //id of home directory - create a folder with name as title and pass the objectID = > {name:title} 
     likes:{ //array of userIds who liked
         type: [String],
         default: []

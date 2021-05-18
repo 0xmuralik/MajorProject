@@ -1,4 +1,5 @@
 import PostMessage from '../models/postMessages.js'
+import  FolderMessage from "../models/folderMessages.js";
 
 export const getPosts= async (req,res)=>{
     try {
@@ -11,8 +12,8 @@ export const getPosts= async (req,res)=>{
 
 export const createPost=async (req,res)=>{
     const post = req.body;
-
-    const newPost = new PostMessage({...post, creator: req.userId, createdAt: new Date().toISOString()});
+    const folder = new FolderMessage({name:post.title});
+    const newPost = new PostMessage({...post, homeDirectory:folder._id, creator: req.userId, createdAt: new Date().toISOString()});
     try {
         await newPost.save()
         res.status(201).json(newPost)

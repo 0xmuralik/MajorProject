@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const folderSchema = mongoose.Schema({
-    name:String, //folder name
+    name:{type:String, require:true}, //folder name
     description:String, //folder description 
     parentId:mongoose.Schema.Types.ObjectId,
     subfolders:[mongoose.Schema.Types.ObjectId], // _ids of sub folders

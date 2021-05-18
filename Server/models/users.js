@@ -16,7 +16,11 @@ const userSchema = mongoose.Schema({
     username: {
         type:String,
         required:true
-    }
+    },
+    domains: [mongoose.Schema.Types.ObjectId],
+    contact: String,
+    description: String,
+    displayPicture: String
 })
 
 export default mongoose.model("Users",userSchema);
