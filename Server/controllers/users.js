@@ -51,13 +51,23 @@ export const signup = async (req,res) =>{
 }
 
 export const updateUser = async (req,res)=>{
-    const {id:_id} =req.params;
+    const {_id} =req.params;
     const user = req.body;
 
-    if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No post with that id');
+    if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No user with that id');
 
     
-    const updateUser = await PostMessage.findByIdAndUpdate(_id,{...user,_id},{new:true});
+    const updateUser = await Users.findByIdAndUpdate(_id,{...user,_id},{new:true});
 
     res.json(updateUser);
+}
+
+export const deleteUser= async (req,res)=>{
+    const {_id} =req.params;
+
+    if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No user with that id');
+
+    await Users.findByIdAndRemove(_id);
+
+    res.json({message: 'User deleted successfully'});
 }
