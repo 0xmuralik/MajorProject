@@ -11,6 +11,16 @@ export const getPosts= async (req,res)=>{
     }
 }
 
+export const getPostById =async (req,res) => {
+    const {_id} = req.params;
+    
+    if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No post with that id');
+
+    const post = await PostMessage.findById(_id);
+
+    res.json(post);
+}
+
 export const createPost=async (req,res)=>{
     const post = req.body;
     const folder = new FolderMessage({name:post.title});
@@ -24,7 +34,7 @@ export const createPost=async (req,res)=>{
 }
 
 export const updatePost= async (req,res)=>{
-    const {id:_id} =req.params;
+    const {_id} =req.params;
     const post = req.body;
 
     if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No post with that id');

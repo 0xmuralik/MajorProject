@@ -50,6 +50,25 @@ export const signup = async (req,res) =>{
     }
 }
 
+export const getUsers= async (req,res)=>{
+    try {
+        const users = await Users.find();
+        res.status(200).json(users)
+    } catch (error) {
+        res.status(404).json({message:error.message});
+    }
+}
+
+export const getUserById =async (req,res) => {
+    const {_id} = req.params;
+    
+    if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No user with that id');
+
+    const user = await Users.findById(_id);
+
+    res.json(user);
+}
+
 export const updateUser = async (req,res)=>{
     const {_id} =req.params;
     const user = req.body;
@@ -71,3 +90,5 @@ export const deleteUser= async (req,res)=>{
 
     res.json({message: 'User deleted successfully'});
 }
+
+//getPostCreatedByUser

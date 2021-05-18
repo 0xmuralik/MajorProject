@@ -9,6 +9,16 @@ export const getDomains= async (req,res)=>{
     }
 }
 
+export const getDomainById =async (req,res) => {
+    const {_id} = req.params;
+    
+    if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No domain with that id');
+
+    const domain = await Domains.findById(_id);
+
+    res.json(domain);
+}
+
 export const createDomain=async (req,res)=>{
     const domain = req.body;
     const newDomain = new Domains({...domain});
