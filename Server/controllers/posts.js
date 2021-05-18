@@ -1,124 +1,156 @@
-import PostMessage from '../models/postMessages.js'
-import  FolderMessage from "../models/folderMessages.js";
-import Users from '../models/users.js'
+import PostMessage from "../models/postMessages.js";
+import FolderMessage from "../models/folderMessages.js";
+import Users from "../models/users.js";
+import { Model } from "mongoose";
 
-export const getPosts= async (req,res)=>{
-    try {
-        const postMessages = await PostMessage.find();
-        res.status(200).json(postMessages)
-    } catch (error) {
-        res.status(404).json({message:error.message});
-    }
-}
+export const getPosts = async (req, res) => {
+  try {
+    const postMessages = await PostMessage.find();
+    res.status(200).json(postMessages);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
 
-export const createPost=async (req,res)=>{
-    const post = req.body;
-    const folder = new FolderMessage({name:post.title});
-    const newPost = new PostMessage({...post, homeDirectory:folder._id, creator: req.userId, createdAt: new Date().toISOString()});
-    try {
-        await newPost.save()
-        res.status(201).json(newPost)
-    } catch (error) {
-        res.status(409).json({message:error.message});
-    }
-}
+export const createPost = async (req, res) => {
+  const post = req.body;
+  const folder = new FolderMessage({ name: post.title });
+  const newPost = new PostMessage({
+    ...post,
+    homeDirectory: folder._id,
+    creator: req.userId,
+    createdAt: new Date().toISOString(),
+  });
+  try {
+    await newPost.save();
+    res.status(201).json(newPost);
+  } catch (error) {
+    res.status(409).json({ message: error.message });
+  }
+};
 
-export const updatePost= async (req,res)=>{
-    const {id:_id} =req.params;
-    const post = req.body;
+export const updatePost = async (req, res) => {
+  const { id: _id } = req.params;
+  const post = req.body;
 
-    if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No post with that id');
+  if (!mongoose.Types.ObjectId.isValid(_id))
+    return res.status(404).send("No post with that id");
 
-    
-    const updatePost = await PostMessage.findByIdAndUpdate(_id,{...post,_id},{new:true});
+  const updatePost = await PostMessage.findByIdAndUpdate(
+    _id,
+    { ...post, _id },
+    { new: true }
+  );
 
-    res.json(updatePost);
-}
+  res.json(updatePost);
+};
 
-export const deletePost= async (req,res)=>{
-    const {id:_id} =req.params;
+export const deletePost = async (req, res) => {
+  const { id: _id } = req.params;
 
-    if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No post with that id');
+  if (!mongoose.Types.ObjectId.isValid(_id))
+    return res.status(404).send("No post with that id");
 
-    await PostMessage.findByIdAndRemove(_id);
+  await PostMessage.findByIdAndRemove(_id);
 
-    res.json({message: 'Post deleted successfully'});
-}
+  res.json({ message: "Post deleted successfully" });
+};
 
-export const likePost= async (req,res)=>{
-    const {postId:_id} =req.params;
+export const likePost = async (req, res) => {
+  const { postId: _id } = req.params;
 
-    if(!req.userId) return res.json({message:'Unauthenticated'});
+  if (!req.userId) return res.json({ message: "Unauthenticated" });
 
-    if(!mongoose.Types.ObjectId.isValid(postId)) return res.status(404).send('No post with that id');
+  if (!mongoose.Types.ObjectId.isValid(postId))
+    return res.status(404).send("No post with that id");
 
-    const post = await PostMessage.findById(postId);
-    
-    const user = await Users.findById(req.userId);
+  const post = await PostMessage.findById(postId);
 
-    const index = post.likes.findIndex((id)=>id===String(req.userId));
+  const user = await Users.findById(req.userId);
 
-    if(index===-1){
-        post.likes.push(req.userId);
-        user.likedPosts.push(postId);
-    }else{
-        post.likes=post.likes.filter((id)=>id!==String(req.userId));
-        user.likedPosts= user.likedPosts.filter((id)=>id!==String(postId));
-    }
+  const index = post.likes.findIndex((id) => id === String(req.userId));
 
-    const updatedPost = await PostMessage.findByIdAndUpdate(postId,post,{new:true});
-    const updatedUser = await Users.findByIdAndUpdate(req.userId,user,{new:true});
+  if (index === -1) {
+    post.likes.push(req.userId);
+    user.likedPosts.push(postId);
+  } else {
+    post.likes = post.likes.filter((id) => id !== String(req.userId));
+    user.likedPosts = user.likedPosts.filter((id) => id !== String(postId));
+  }
 
-    res.json(updatedPost,updatedUser);
-}
+  const updatedPost = await PostMessage.findByIdAndUpdate(postId, post, {
+    new: true,
+  });
+  const updatedUser = await Users.findByIdAndUpdate(req.userId, user, {
+    new: true,
+  });
 
-export const savePost= async (req,res)=>{
-    const {postId:_id} =req.params;
+  res.json(updatedPost, updatedUser);
+};
 
-    if(!req.userId) return res.json({message:'Unauthenticated'});
+export const savePost = async (req, res) => {
+  const { postId: _id } = req.params;
 
-    if(!mongoose.Types.ObjectId.isValid(postId)) return res.status(404).send('No post with that id');
+  if (!req.userId) return res.json({ message: "Unauthenticated" });
 
-    const post = await PostMessage.findById(postId);
+  if (!mongoose.Types.ObjectId.isValid(postId))
+    return res.status(404).send("No post with that id");
 
-    const user = await Users.findById(req.userId);
-    
-    const index = post.saves.findIndex((id)=>id===String(res.userId));
-    
-    if(index===-1){
-        post.saves.push(req.userId);
-        user.savedPosts.push(postId);
-    }else{
-        post.saves=post.saves.filter((id)=>id!==String(req.userId));
-        user.savedPosts= user.savedPosts.filter((id)=>id!==String(postId));
-    }
-    
-    const updatedPost = await PostMessage.findByIdAndUpdate(postId,post,{new:true});
-    const updatedUser = await Users.findByIdAndUpdate(req.userId,user,{new:true});
+  const post = await PostMessage.findById(postId);
 
-    res.json(updatedPost,updatedUser);
-}
+  const user = await Users.findById(req.userId);
 
-export const viewPost= async (req,res)=>{
-    const {postId:_id} =req.params;
+  const index = post.saves.findIndex((id) => id === String(res.userId));
 
-    if(!req.userId) return res.json({message:'Unauthenticated'});
+  if (index === -1) {
+    post.saves.push(req.userId);
+    user.savedPosts.push(postId);
+  } else {
+    post.saves = post.saves.filter((id) => id !== String(req.userId));
+    user.savedPosts = user.savedPosts.filter((id) => id !== String(postId));
+  }
 
-    if(!mongoose.Types.ObjectId.isValid(postId)) return res.status(404).send('No post with that id');
+  const updatedPost = await PostMessage.findByIdAndUpdate(postId, post, {
+    new: true,
+  });
+  const updatedUser = await Users.findByIdAndUpdate(req.userId, user, {
+    new: true,
+  });
 
-    const post = await PostMessage.findById(postId);
+  res.json(updatedPost, updatedUser);
+};
 
-    const user = await Users.findById(req.userId);
-    
-    const index = post.views.findIndex((id)=>id===String(res.userId));
-    
-    if(index===-1){
-        post.views.push(req.userId);
-        user.savedPosts.push(postId);
-    }
-    
-    const updatedUser = await Users.findByIdAndUpdate(req.userId,user,{new:true});
-    const updatedPost = await PostMessage.findByIdAndUpdate(postId,post,{new:true});
+export const viewPost = async (req, res) => {
+  const { postId: _id } = req.params;
 
-    res.json(updatedPost,updatedUser);
-}
+  if (!req.userId) return res.json({ message: "Unauthenticated" });
+
+  if (!mongoose.Types.ObjectId.isValid(postId))
+    return res.status(404).send("No post with that id");
+
+  const post = await PostMessage.findById(postId);
+
+  const user = await Users.findById(req.userId);
+
+  const index = post.views.findIndex((id) => id === String(res.userId));
+
+  if (index === -1) {
+    post.views.push(req.userId);
+    user.savedPosts.push(postId);
+  }
+
+  const updatedUser = await Users.findByIdAndUpdate(req.userId, user, {
+    new: true,
+  });
+  const updatedPost = await PostMessage.findByIdAndUpdate(postId, post, {
+    new: true,
+  });
+
+  res.json(updatedPost, updatedUser);
+};
+
+export const SearchFun = async (req, res) => {
+  console.log(req.params);
+  const searchparams = await Model.find();
+  res.send(searchparams);
+};
