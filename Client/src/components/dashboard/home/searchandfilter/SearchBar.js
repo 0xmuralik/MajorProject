@@ -60,7 +60,13 @@ class SearchBar extends Component {
   handleOnInputChange = (event) => {
     const query = event.target.value;
     this.setState({ query: query, loading: true, message: "" }, () => {
-      this.fetchSearchResults(["B", "A"], ["A"], "Pemd", "Authors", query);
+      this.fetchSearchResults(
+        ["Blockchain"],
+        ["KMIT"],
+        "Completed",
+        "Authors",
+        query
+      );
     });
   };
 
