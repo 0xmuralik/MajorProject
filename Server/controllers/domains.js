@@ -1,4 +1,5 @@
 import Domains from '../models/domains.js'
+import mongoose from 'mongoose';
 
 export const getDomains= async (req,res)=>{
     try {

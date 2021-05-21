@@ -1,6 +1,7 @@
 import PostMessage from "../models/postMessages.js";
 import FolderMessage from "../models/folderMessages.js";
 import Users from "../models/users.js";
+import mongoose from 'mongoose';
 
 export const getPosts = async (req, res) => {
   try {

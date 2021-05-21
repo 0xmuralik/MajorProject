@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 import Users from '../models/users.js'
+import mongoose from 'mongoose';
 
 export const signin = async (req,res) =>{
     const {emailOrUsername, password} =req.body;
