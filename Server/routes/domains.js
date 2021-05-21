@@ -10,8 +10,8 @@ const router = express.Router();
 
 router.get('/',getDomains);
 router.get('/:id',getDomainById)
-router.post('/',auth,createDomain);
-router.patch('/:id/susbscribe',auth,subscribe);
-router.delete('/:id',auth,deleteDomain);
+router.post('/',createDomain);
+router.patch('/:id/susbscribe',subscribe);
+router.delete('/:id',deleteDomain);
 
 export default router;

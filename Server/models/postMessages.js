@@ -6,11 +6,11 @@ const postSchema = mongoose.Schema({
     author: mongoose.Schema.Types.ObjectId, //authors of the research 
     organization: String, //organization of the authors
     region: String, //Region of the organization
-    description: String, //Description of the project
+    //description: String, //Description of the project
     image:[String], //base64 encoding of images in research home
     future: String, //Future of the project
     workDone: String, //Description of the project
-    description: String, //Description of the project
+    Description: String, //Description of the project
     domain : {type:mongoose.Schema.Types.ObjectId, require:true}, //Domain of the research
     tags: [String], //Keywords or tags (use in search)
     status:{type:String, require:true}, //status of the research (comlpeted/InProgress)

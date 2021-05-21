@@ -10,9 +10,9 @@ const router = express.Router();
 
 router.get('/',getFolders);
 router.get('/:id',getFolderById);
-router.post('/',auth,createFolder);
-router.patch('/:id',auth,updateFolder);
-router.delete('/:id',auth,deleteFolder);
-router.patch('/:id/addItem',auth,addItem);
+router.post('/',createFolder);
+router.patch('/:id',updateFolder);
+router.delete('/:id',deleteFolder);
+router.patch('/:id/addItem',addItem);
 
 export default router;

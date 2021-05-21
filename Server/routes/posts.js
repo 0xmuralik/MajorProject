@@ -20,11 +20,11 @@ const router = express.Router();
 
 router.get("/", getPosts);
 router.get("/:id", getPostById);
-router.post("/", auth, createPost);
-router.patch("/:id", auth, updatePost);
-router.delete("/:id", auth, deletePost);
-router.patch("/:id/likePost", auth, likePost);
-router.patch("/:id/savePost", auth, savePost);
-router.patch("/:id/viewPost", auth, viewPost);
+router.post("/", createPost);
+router.patch("/:id", updatePost);
+router.delete("/:id", deletePost);
+router.patch("/:id/likePost", likePost);
+router.patch("/:id/savePost", savePost);
+router.patch("/:id/viewPost", viewPost);
 router.get("/:q/:d/:r/:s/:a", SearchFun);
 export default router;
