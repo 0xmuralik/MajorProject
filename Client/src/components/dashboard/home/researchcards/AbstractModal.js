@@ -28,7 +28,7 @@ export class AbstractModal extends Component {
           <Modal.Header closeButton>
             <Modal.Title>{this.props.title}</Modal.Title>
           </Modal.Header>
-          <Modal.Body>{this.props.Description}</Modal.Body>
+          <Modal.Body>{this.props.abstract}</Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={this.closeAbstractModal}>
               Close

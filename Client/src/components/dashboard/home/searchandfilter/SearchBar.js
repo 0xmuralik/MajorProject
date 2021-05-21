@@ -41,6 +41,13 @@ class SearchBar extends Component {
 
     this.cancel = "";
   }
+  componentDidMount(){
+    axios.get('http://localhost:5000/posts')
+    .then(response=>{
+      this.setState({results:response.data})
+    })
+  }
+
   fetchSearchResults = (
     Domains,
     ResearchTypes,
@@ -48,7 +55,7 @@ class SearchBar extends Component {
     Authors,
     query
   ) => {
-    const searchUrl = `http://localhost:5000/posts/${query}/${Domains}/${ResearchTypes}/${StatusSelected}/${Authors}`;
+    const searchUrl = query=='' ? `http://localhost:5000/posts`:`http://localhost:5000/posts/${query}/${Domains}/${ResearchTypes}/${StatusSelected}/${Authors}`;
     if (this.cancel) {
       this.cancel.cancel();
     }
@@ -114,7 +121,7 @@ class SearchBar extends Component {
     const { results } = this.state;
     if (Object.keys(results).length && results.length) {
       return (
-        <div className="results-cont">
+        <div >
           {results.map((result) => {
             return (
               <a>
