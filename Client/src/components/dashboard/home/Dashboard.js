@@ -29,7 +29,7 @@ export class Dashboard extends Component {
                   <SidePannel />
                 </div>
               </Col>
-              <Col sm={10}>
+              <Col sm={5}>
                 <div class="sticky-top" style={{ top: "60px" }}></div>
                 <div style={{ position: "relative", top: "90px" }}>
                   <SearchBar />

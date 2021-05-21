@@ -7,22 +7,36 @@ import react, { Component } from "react";
 import "./SearchBar.css";
 import UseFiltersToggle from "./UseFiltersToggle";
 import axios from "axios";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
+import ReactMultiSelectCheckboxes from "react-multiselect-checkboxes";
 import FilterDropDowns from "./FilterDropDowns";
 import { options } from "../../Utils/DropDownOprions";
+import { Children } from "react";
 
 class SearchBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
       query: "",
+      DomainsToSend: [],
       results: {},
       loading: false,
       message: "",
+      DomainOptions: [
+        { label: "Blockchain", value: 1 },
+        { label: "AI/ML", value: 2 },
+        { label: "AUgmented Reality", value: 2 },
+      ],
+      OrgainzationOptions: [
+        { label: "Lab", value: 1 },
+        { label: "Private", value: 2 },
+      ],
+      StatusOptions: [
+        { label: "Pending", value: 1 },
+        { label: "Completed", value: 2 },
+      ],
     };
+
     this.cancel = "";
-    this.dropDownOptions = options;
   }
   fetchSearchResults = (
     Domains,
@@ -69,6 +83,10 @@ class SearchBar extends Component {
       );
     });
   };
+  SendDomains = (event) => {
+    console.log("This is the real life");
+    console.log(event.target.value);
+  };
 
   renderSearchResults = () => {
     const { results } = this.state;
@@ -91,52 +109,44 @@ class SearchBar extends Component {
 
   render() {
     const { query } = this.state;
-    this.filterDropDownsComponent = this.dropDownOptions.map((result) => (
-      <FilterDropDowns details={result} />
-    ));
+    //   this.filterDropDownsComponent = this.dropDownOptions.map((result) => (
+    //     <FilterDropDowns details={result} />
+    //));
 
     return (
-      //             <div class="input-group">
-      //   <div class="form-outline">
-      //     <input id="search-focus" type="search" id="form1" class="form-control" />
-      //     <label class="form-label" for="form1">Search</label>
-      //   </div>
-      //   <button type="button" class="btn btn-primary">
-      //     <i class="fas fa-search"></i>
-      //   </button>
-      // </div>
-
       <div class="col-sm-12">
         <div class="row input-group">
           <div class="col-sm-3">
-            <form onSubmit={this.submitHandler}>
-              <input
-                type="search"
-                name="query"
-                value={query}
-                placeholder="Search"
-                class="form-control search-style"
-                id="form1"
-                onChange={this.handleOnInputChange}
-              />
-            </form>
+            <input
+              type="search"
+              name="query"
+              value={query}
+              placeholder="Search"
+              class="form-control search-style"
+              id="form1"
+              onChange={this.handleOnInputChange}
+            />
           </div>
-          <div class="col-sm-9">
-            <div>
-              <Navbar style={{ background: "white" }} expand="lg">
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Container>
-                  <div class="row">
-                    <Navbar.Collapse id="basic-navbar-nav">
-                      <UseFiltersToggle />
-                      <Nav className="mr-auto">
-                        {this.filterDropDownsComponent}
-                      </Nav>
-                    </Navbar.Collapse>
-                  </div>
-                </Container>
-              </Navbar>
-            </div>
+          <div class="col-sm-3">
+            <ReactMultiSelectCheckboxes
+              placeholderButtonLabel="Domain"
+              onPress={() => {
+                this.SendDomains();
+              }}
+              options={this.state.DomainOptions}
+            />
+          </div>
+          <div class="col-sm-3">
+            <ReactMultiSelectCheckboxes
+              placeholderButtonLabel="Organization"
+              options={this.state.OrgainzationOptions}
+            />
+          </div>
+          <div class="col-sm-3">
+            <ReactMultiSelectCheckboxes
+              placeholderButtonLabel="Status"
+              options={this.state.StatusOptions}
+            />
           </div>
         </div>
         {this.renderSearchResults()}
