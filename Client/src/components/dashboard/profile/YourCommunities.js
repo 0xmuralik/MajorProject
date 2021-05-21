@@ -9,7 +9,7 @@ import rImg from "../Utils/Images/logo.jpeg";
 function YourCommunities() {
     return (
         <div  class='pad'>
-            <h3>Communties</h3>
+            <h3>Manage notifications</h3>
             <div class=''>
                 
             <Carousel>

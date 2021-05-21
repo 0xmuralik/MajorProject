@@ -7,6 +7,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Header from '../header/Header';
 import SidePannel from '../sidepannel/SidePannel';
+import YourCommunities from '../profile/YourCommunities'
 
 function Communities() {
     return (
@@ -23,6 +24,11 @@ function Communities() {
 
                         </Col>
                         <Col sm={10}>
+                        <Row>
+                                        <Col sm={4}>
+                                        <YourCommunities/>
+                                        </Col>
+                                    </Row>
                         <div style={{ position: 'relative', top: '100px' }}>
                             <div style={{ padding: '50px 0px 50px 0px' }}>
                                 <h3>Your Communities</h3>

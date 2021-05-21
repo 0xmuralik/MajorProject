@@ -74,11 +74,6 @@ const UserProfile = () => {
 
                                 <Container >
                                     <Row>
-                                        <Col sm={4}>
-                                        <YourCommunities/>
-                                        </Col>
-                                    </Row>
-                                    <Row>
                                         <Col sm={10}>
                                         <UserActivity/>
                                         </Col>
