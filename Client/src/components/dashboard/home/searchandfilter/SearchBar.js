@@ -3,7 +3,7 @@ import Container from "react-bootstrap/Container";
 import ListGroup from "react-bootstrap/ListGroup";
 import ResearchCard from "../researchcards/ResearchCard";
 import Col from "react-bootstrap/Col";
-import react, { Component } from "react";
+import React, { Component } from "react";
 import "./SearchBar.css";
 import UseFiltersToggle from "./UseFiltersToggle";
 import axios from "axios";
@@ -17,6 +17,9 @@ class SearchBar extends Component {
     super(props);
     this.state = {
       query: "",
+      DomainFilterValues: "",
+      OrgainzationFilterValues: "",
+      StatusFilterValues: "",
       DomainsToSend: [],
       results: {},
       loading: false,
@@ -24,7 +27,7 @@ class SearchBar extends Component {
       DomainOptions: [
         { label: "Blockchain", value: 1 },
         { label: "AI/ML", value: 2 },
-        { label: "AUgmented Reality", value: 2 },
+        { label: "AUgmented Reality", value: 3 },
       ],
       OrgainzationOptions: [
         { label: "Lab", value: 1 },
@@ -73,19 +76,38 @@ class SearchBar extends Component {
 
   handleOnInputChange = (event) => {
     const query = event.target.value;
+    console.log(this.state.DomainFilterValues);
     this.setState({ query: query, loading: true, message: "" }, () => {
       this.fetchSearchResults(
-        ["Blockchain"],
-        ["KMIT"],
-        "Completed",
+        this.state.DomainFilterValues,
+        this.state.OrgainzationFilterValues,
+        this.state.StatusFilterValues,
         "Authors",
         query
       );
     });
   };
-  SendDomains = (event) => {
-    console.log("This is the real life");
-    console.log(event.target.value);
+
+  DomainFilter = (event) => {
+    const arr = [];
+    event.map((ival, idx) => {
+      arr.push(ival.label);
+    });
+    this.state.DomainFilterValues = arr;
+  };
+  OrgainzationFilter = (event) => {
+    const arr = [];
+    event.map((ival, idx) => {
+      arr.push(ival.label);
+    });
+    this.state.OrgainzationFilterValues = arr;
+  };
+  StatusFilter = (event) => {
+    const arr = [];
+    event.map((ival, idx) => {
+      arr.push(ival.label);
+    });
+    this.state.StatusFilterValues = arr;
   };
 
   renderSearchResults = () => {
@@ -109,6 +131,7 @@ class SearchBar extends Component {
 
   render() {
     const { query } = this.state;
+    const { myval } = this.state;
     //   this.filterDropDownsComponent = this.dropDownOptions.map((result) => (
     //     <FilterDropDowns details={result} />
     //));
@@ -130,21 +153,21 @@ class SearchBar extends Component {
           <div class="col-sm-3">
             <ReactMultiSelectCheckboxes
               placeholderButtonLabel="Domain"
-              onPress={() => {
-                this.SendDomains();
-              }}
+              onChange={this.DomainFilter}
               options={this.state.DomainOptions}
             />
           </div>
           <div class="col-sm-3">
             <ReactMultiSelectCheckboxes
               placeholderButtonLabel="Organization"
+              onChange={this.OrgainzationFilter}
               options={this.state.OrgainzationOptions}
             />
           </div>
           <div class="col-sm-3">
             <ReactMultiSelectCheckboxes
               placeholderButtonLabel="Status"
+              onChange={this.StatusFilter}
               options={this.state.StatusOptions}
             />
           </div>

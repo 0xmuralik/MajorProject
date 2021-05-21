@@ -169,6 +169,7 @@ export const SearchFun = async (req, res) => {
 
   const searchparams = await PostMessage.find({
     title: { $regex: "^" + query },
+    status: { $regex: "^" + StatusSelected },
   });
   console.log(searchparams);
   res.status(200).json(searchparams);
