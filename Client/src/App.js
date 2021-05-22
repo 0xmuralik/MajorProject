@@ -20,7 +20,7 @@ function App() {
         <Route path='/profile'>
           <UserProfile />
         </Route>
-        <Route path='/view'>
+        <Route path='/view/:post_id'>
           <View />
         </Route>
         <Route path='/upload'>

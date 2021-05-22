@@ -34,6 +34,7 @@ export class ResearchCard extends Component {
     this.setState({ isSaved: !this.state.isSaved });
   };
   render() {
+    console.log('cardsss', this.props)
     return (
       <>
         <div style={{ padding: "50px" }} class="wrapper wrapper--w640">
@@ -55,7 +56,7 @@ export class ResearchCard extends Component {
                     </Row>
                   </Col>
                   <Col md={1}>
-                    <Link to="/view">
+                    <Link to={"/view/"+this.props.details._id}>
                       <IoIcons.IoEyeSharp size={40} />
                     </Link>
                   </Col>
