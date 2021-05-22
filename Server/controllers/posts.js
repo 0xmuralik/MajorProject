@@ -13,7 +13,7 @@ export const getPosts = async (req, res) => {
 };
 
 export const getPostById = async (req, res) => {
-  const { _id } = req.params;
+  const  _id  = req.params.id;
 
   if (!mongoose.Types.ObjectId.isValid(_id))
     return res.status(404).send("No post with that id");
@@ -41,7 +41,7 @@ export const createPost = async (req, res) => {
 };
 
 export const updatePost = async (req, res) => {
-  const { _id } = req.params;
+  const _id = req.params.id;
   const post = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(_id))
