@@ -33,7 +33,7 @@ class Upload extends Component{
     }
     submitHandler=(e)=>{
         e.preventDefault();
-        console.log(this.state);
+        console.log(this.state,'stateeeeee');
         const request = {
             "title":this.state.title,
             "organization":this.state.organization,
@@ -41,6 +41,8 @@ class Upload extends Component{
             "Domain":this.state.domain,
             "tags":this.state.tags,
             "status":this.state.status,
+            "workDone":this.state.workDone,
+            "future":this.state.future
         }
         console.log(request);
         axios.post('http://localhost:5000/posts/', request)
@@ -79,6 +81,12 @@ class Upload extends Component{
     }
     descriptionHandler=(e)=>{
         this.setState({Description:e.target.value});
+    }
+    workdoneHandler=(e)=>{
+        this.setState({workDone:e.target.value});
+    }
+    futureworkHandler=(e)=>{
+        this.setState({future:e.target.value});
     }
     
     render(){
@@ -170,11 +178,11 @@ class Upload extends Component{
                                         </Form.Group>
                                         <Form.Group as={Row}>
                                             <Form.Label column sm={2}>Work Done</Form.Label>
-                                            <Col sm={10}><Form.Control as="textarea" rows={3} /></Col>
+                                            <Col sm={10}><Form.Control onChange={this.workdoneHandler} as="textarea" rows={3} /></Col>
                                         </Form.Group>
                                         <Form.Group as={Row}>
                                             <Form.Label column sm={2}>Future Work</Form.Label>
-                                            <Col sm={10}><Form.Control as="textarea" rows={3} /></Col>
+                                            <Col sm={10}><Form.Control onChange={this.futureworkHandler} as="textarea" rows={3} /></Col>
                                         </Form.Group>
                                         <Button variant="primary" type="submit">
                                             Submit

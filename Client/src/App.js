@@ -20,6 +20,7 @@ function App() {
         <Route path='/profile'>
           <UserProfile />
         </Route>
+        {/* <Route path='/view/:post_id' component={View}> */}
         <Route path='/view/:post_id'>
           <View />
         </Route>

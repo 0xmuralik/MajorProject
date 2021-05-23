@@ -19,7 +19,7 @@ export const getPostById = async (req, res) => {
     return res.status(404).send("No post with that id");
 
   const post = await PostMessage.findById(_id);
-
+  // console.log(post)
   res.json(post);
 };
 

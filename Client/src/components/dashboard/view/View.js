@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React, useState, useEffect } from 'react'
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup'
 import ListGroupItem from 'react-bootstrap/ListGroupItem'
@@ -16,23 +16,37 @@ import CodeFolders from './CodeFolders';
 import { codeFolderStructure } from '../Utils/CodeFolders';
 import axios from 'axios'
 import { useParams } from 'react-router';
-
-
+import { Component } from 'react';
 
 const View = () => {
-    // var results;
-    // const getPostData = async (post_id) => {
+
+    let { post_id } = useParams();
+    const [postData, setpostData] = useState(
+        {
+            title: '',
+            creator: '',
+            author: '',
+            organization: '',
+            region: '',
+            likes: [1, 1000],
+            views: [10, 0, 0],
+            image: [],
+            future: '',
+            workDone: '',
+            Description: '',
+            domain: '',
+            tags: [],
+            status: '',
+            coAuthors: []
+        })
+    useEffect(async () => {
+        await axios.get('http://localhost:5000/posts/' + post_id, {})
+            .then(response => {
+                setpostData(response.data)
+                console.log(postData, '-----------')
+            })
         
-    //     await axios.get('http://localhost:5000/posts/' + post_id, {})
-    //         .then(response => {
-    //             results= response.data
-    //             console.log(results,'--------')
-    //         })
-    // }
-    // let { post_id } = useParams();
-    // getPostData(post_id)
-    // const [postData, setpostData] = useState(results)
-    // console.log(postData,'=====')
+    }, []);
 
     return (
         <>
@@ -52,15 +66,21 @@ const View = () => {
                                     <Card.Header style={{ background: '#aeb9f7' }}>
                                         <Container>
                                             <Row>
-                                                <Col md={9}><h2>{postData.title}</h2></Col>
+                                                <Col md={9}>
+                                                    <h2>{postData.title}</h2>
+                                                    <span>{postData.organization}</span>
+                                                    <span>Created on {postData.createdOn}</span>
+                                                </Col>
                                                 <Col md={3}>
-                                                    <h5><FaIcons.FaRegDotCircle color={ViewData.research_status.color} /> {ViewData.research_status.status}</h5>
+                                                    <h5><FaIcons.FaRegDotCircle color={postData.status == 'Pending' ? 'red' : 'green'} /> {postData.status}</h5>
+
                                                 </Col>
                                             </Row>
 
                                             <Row>
-                                                <Col><Card.Link href="#">{ViewData.likes} Likes</Card.Link></Col>
-                                                <Col><Card.Link href="#">{ViewData.views} Views</Card.Link></Col>
+                                                {console.log(postData, '===================')}
+                                                <Col><Card.Link href="#">{postData.likes.length} Likes</Card.Link></Col>
+                                                <Col><Card.Link href="#">{postData.views.length} Views</Card.Link></Col>
                                                 <Col><Card.Link href="#">Share</Card.Link></Col>
                                             </Row>
                                         </Container>
@@ -68,17 +88,18 @@ const View = () => {
                                     <Card.Body style={{ background: '#d8dbf0' }}>
                                         <Card.Text>
                                             <h5>
-                                                {ViewData.author_details.map((field) => (
-                                                    `${field.name} (${field.email}), `
+                                                {postData.coAuthors && postData.coAuthors.map((field) => (
+                                                    `${field.coAuthors}`
+                                                    // `${field.name} (${field.email}), `
                                                 ))}
                                                 <br />
-                                                <b>Domain: </b>
-                                                {ViewData.domain.map((field) => (
+                                                <b>Domain: {postData.domain}</b>
+                                                {/* {postData.domain.map((field) => (
                                                     `${field}, `
-                                                ))}
+                                                ))} */}
                                                 <br />
                                                 <b>Region: </b>
-                                                {ViewData.region}
+                                                {postData.region}
                                             </h5>
                                         </Card.Text>
                                     </Card.Body>
@@ -110,15 +131,15 @@ const View = () => {
                                     </Card.Body>
                                     <Card.Body style={{ background: '#d8dbf0' }}>
                                         <Card.Title>Brief Description</Card.Title>
-                                        <Card.Text>{ViewData.desc}</Card.Text>
+                                        <Card.Text>{postData.Description}</Card.Text>
                                     </Card.Body>
                                     <Card.Body style={{ background: '#d8dbf0' }}>
                                         <Card.Title>Work done till date</Card.Title>
-                                        <Card.Text>{ViewData.work_till_date}</Card.Text>
+                                        <Card.Text>{postData.workDone}</Card.Text>
                                     </Card.Body>
                                     <Card.Body style={{ background: '#d8dbf0' }}>
                                         <Card.Title>Future Works</Card.Title>
-                                        <Card.Text>{ViewData.future_works}</Card.Text>
+                                        <Card.Text>{postData.future}</Card.Text>
                                     </Card.Body>
                                     <CodeFolders folderStructure={codeFolderStructure} />
                                     <Card.Body style={{ background: '#d8dbf0' }}>
@@ -135,8 +156,8 @@ const View = () => {
                 </Container>
             </div>
         </>
-
     )
 }
+
 
 export default View
