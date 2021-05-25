@@ -22,7 +22,6 @@ export const signin = async (req,res) =>{
         if(!isPasswordCorrect) return res.status(400).json({message: "Incorrect Password."});
 
         const token = jwt.sign({email:existingUser.email, _id:existingUser._id,username:existingUser.username},'test',{expiresIn:'1h'});
-
         res.status(200).json({result:existingUser,token});
     } catch (error) {
         res.status(500).json({ message:error});
@@ -33,17 +32,19 @@ export const signup = async (req,res) =>{
     const user =req.body;
 
     try {
-        const existingUser = await Users.findOne(user.email);
+        const existingUser =await Users.findOne({email: user.email}).exec();
         if(existingUser) return res.status(400).json({message: "User already exist."});
 
-        const uname = await Users.findOne(user.username);
+        const uname = await Users.findOne({username:user.username}).exec();
         if(uname) return res.status(400).json({message:"Username is already taken."});
-       
-        const hashedPassword = await bcrypt.hash(password,12);
+        const hashedPassword = await bcrypt.hash(user.password,12);
+        console.log("1");
 
         const result = await Users.create({...user,password:hashedPassword});
+        console.log("2");
 
         const token = jwt.sign({email:result.email, _id:result._id,username:result.username},'test',{expiresIn:'1h'});
+        console.log("3");
         
         res.status(200).json({result,token});
     } catch (error) {
