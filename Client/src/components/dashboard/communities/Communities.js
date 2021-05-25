@@ -1,4 +1,4 @@
-import React from 'react'
+import React ,{useEffect}from 'react'
 import Container from 'react-bootstrap/Container';
 import { yourCommunities } from "../Utils/YourCommunities"
 import { suggestedCommunities } from "../Utils/SuggestedCommunities"
@@ -10,6 +10,10 @@ import SidePannel from '../sidepannel/SidePannel';
 import YourCommunities from '../profile/YourCommunities'
 
 function Communities() {
+
+    useEffect(async () => {
+        window.scrollTo(0, 0)
+    });
     return (
 
         <>

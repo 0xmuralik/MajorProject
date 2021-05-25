@@ -39,7 +39,7 @@ export const signup = async (req,res) =>{
         const uname = await Users.findOne(user.username);
         if(uname) return res.status(400).json({message:"Username is already taken."});
        
-        const hashedPassword = await bcrypt.hash(password,12);
+        const hashedPassword = await bcrypt.hash(user.password,12);
 
         const result = await Users.create({...user,password:hashedPassword});
 

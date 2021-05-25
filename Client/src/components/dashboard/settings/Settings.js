@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
 import './settings.css';
 import Button from 'react-bootstrap/Button'
 import EditPasswordForm from './EditPasswordForm';
@@ -24,6 +24,9 @@ function Settings() {
         setDarkMode(!isDarkModeOn);
         document.body.style.backgroundColor = isDarkModeOn?'white':'black';
     }
+    useEffect(async () => {
+        window.scrollTo(0, 0)
+    });
     return (
         <>
         <Header />

@@ -21,6 +21,7 @@ export class Header extends Component {
     this.setState({openNotification:!this.state.openNotification});
   }
   handleLogout=()=>{
+    localStorage.clear();
     window.location='/'
   }
     render() {
