@@ -16,6 +16,11 @@ export class Dashboard extends Component {
   constructor(props) {
     super(props);
   }
+  componentDidMount(){
+    if(!localStorage.getItem('profile')){
+      window.location='/';
+    }
+  }
   render() {
     console.log(this.props);
     return (

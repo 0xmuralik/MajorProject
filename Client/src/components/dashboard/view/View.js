@@ -40,6 +40,9 @@ const View = () => {
             coAuthors: []
         })
     useEffect(async () => {
+        if(!localStorage.getItem('profile')){
+            window.location='/';
+          }
         window.scrollTo(0, 0);
         await axios.get('http://localhost:5000/posts/' + post_id, {})
             .then(response => {

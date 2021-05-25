@@ -68,8 +68,8 @@ export const deletePost = async (req, res) => {
 };
 
 export const likePost = async (req, res) => {
-  const { postId: _id } = req.params;
-
+  const postId = req.params.id;
+  
   if (!req.userId) return res.json({ message: "Unauthenticated" });
 
   if (!mongoose.Types.ObjectId.isValid(postId))
@@ -96,11 +96,11 @@ export const likePost = async (req, res) => {
     new: true,
   });
 
-  res.json(updatedPost, updatedUser);
+  res.status(200).json({updatedPost, updatedUser});
 };
 
 export const savePost = async (req, res) => {
-  const { postId: _id } = req.params;
+  const postId = req.params.id;
 
   if (!req.userId) return res.json({ message: "Unauthenticated" });
 
@@ -128,11 +128,11 @@ export const savePost = async (req, res) => {
     new: true,
   });
 
-  res.json(updatedPost, updatedUser);
+  res.status(200).json({updatedPost, updatedUser});
 };
 
 export const viewPost = async (req, res) => {
-  const { postId: _id } = req.params;
+  const postId = req.params.id;
 
   if (!req.userId) return res.json({ message: "Unauthenticated" });
 
@@ -157,7 +157,7 @@ export const viewPost = async (req, res) => {
     new: true,
   });
 
-  res.json(updatedPost, updatedUser);
+  res.status(200).json({updatedPost, updatedUser});
 };
 
 export const SearchFun = async (req, res) => {

@@ -12,6 +12,9 @@ import YourCommunities from '../profile/YourCommunities'
 function Communities() {
 
     useEffect(async () => {
+        if(!localStorage.getItem('profile')){
+            window.location='/';
+          }
         window.scrollTo(0, 0)
     });
     return (

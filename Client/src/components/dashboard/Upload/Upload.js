@@ -89,6 +89,9 @@ class Upload extends Component{
         this.setState({future:e.target.value});
     }
     componentDidMount(){
+        if(!localStorage.getItem('profile')){
+            window.location='/';
+          }
         window.scrollTo(0, 0);
     }
     

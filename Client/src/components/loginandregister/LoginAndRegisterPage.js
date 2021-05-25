@@ -22,6 +22,11 @@ export class LoginAndRegisterPage extends Component{
     //this.props.history.push('/dashboard');
   }
 
+  componentDidMount(){
+    if(localStorage.getItem('profile')){
+      window.location='/dashboard';
+    }
+  }
   render(){
 
     return (

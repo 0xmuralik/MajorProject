@@ -30,7 +30,10 @@ const UserProfile = () => {
     const desc=details.filter(field=>field.name=='Description')[0].value
 
     useEffect(async () => {
-        window.scrollTo(0, 0)
+        if(!localStorage.getItem('profile')){
+            window.location='/';
+          }
+        window.scrollTo(0, 0);
     }, []);
 
 

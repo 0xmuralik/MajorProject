@@ -25,6 +25,9 @@ function Settings() {
         document.body.style.backgroundColor = isDarkModeOn?'white':'black';
     }
     useEffect(async () => {
+        if(!localStorage.getItem('profile')){
+            window.location='/';
+          }
         window.scrollTo(0, 0)
     });
     return (
