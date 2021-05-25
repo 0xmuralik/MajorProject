@@ -88,6 +88,9 @@ class Upload extends Component{
     futureworkHandler=(e)=>{
         this.setState({future:e.target.value});
     }
+    componentDidMount(){
+        window.scrollTo(0, 0);
+    }
     
     render(){
         return(

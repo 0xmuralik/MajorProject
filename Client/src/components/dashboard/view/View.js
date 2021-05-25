@@ -40,6 +40,7 @@ const View = () => {
             coAuthors: []
         })
     useEffect(async () => {
+        window.scrollTo(0, 0);
         await axios.get('http://localhost:5000/posts/' + post_id, {})
             .then(response => {
                 setpostData(response.data)

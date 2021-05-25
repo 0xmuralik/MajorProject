@@ -42,6 +42,7 @@ class SearchBar extends Component {
     this.cancel = "";
   }
   componentDidMount(){
+    window.scrollTo(0, 0)
     axios.get('http://localhost:5000/posts')
     .then(response=>{
       this.setState({results:response.data})

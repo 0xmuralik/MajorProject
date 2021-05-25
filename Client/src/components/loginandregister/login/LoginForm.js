@@ -18,21 +18,33 @@ class LoginForm extends Component {
 
     constructor(props) {
         super(props)
-        this.state = { email: '',password:'' }
+        this.state = { formDetails:{
+            name:'',
+            emailOrUsername:'',
+            password:'',
+            username:'',
+            domains:[],
+            contact:'',
+            description:'',
+            displayPicture:'',
+            likedPosts:[],
+            savedPosts:[],
+            viewedPosts:[]
+        } }
     }
 
-    emailHandler = (event) => {
-        console.log(`${event.target.value}`)
-        this.setState({ email: event.target.value })
-    }
-    passwordHandler = (event) => {
-        console.log(`${event.target.value}`)
-        this.setState({ password: event.target.value })
+    changeHandler = (event) => {
+        const details= this.state.formDetails;
+        details[event.target.name] = event.target.value;
+        this.setState({formDetails: details});
+        console.log(this.state.formDetails)
     }
     submitHandler = (e) => {
         e.preventDefault();
-
-        window.location='/dashboard'
+        axios.post('http://localhost:5000/users/signin',this.state.formDetails)
+        .then(response=>{console.log(response);
+            localStorage.setItem('profile',JSON.stringify(response));
+            window.location='/dashboard'});
     }
 
 
@@ -47,11 +59,11 @@ class LoginForm extends Component {
                         <Form onSubmit={this.submitHandler}>
                             <Form.Group>
                                 <Form.Label>Email</Form.Label>
-                                <Form.Control onChange={this.emailHandler} type='email' value={this.state.email}></Form.Control>
+                                <Form.Control name='emailOrUsername' onChange={this.changeHandler} type='email' value={this.state.formDetails.email}></Form.Control>
                             </Form.Group>
                             <Form.Group>
                                 <Form.Label>Password</Form.Label>
-                                <Form.Control onChange={this.passwordHandler} type='password' value={this.state.password}></Form.Control>
+                                <Form.Control name='password' onChange={this.changeHandler} type='password' value={this.state.formDetails.password}></Form.Control>
                             </Form.Group>
                             <Button variant='primary' type="submit">Login</Button>
                         </Form>

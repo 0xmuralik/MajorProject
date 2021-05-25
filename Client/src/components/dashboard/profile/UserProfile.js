@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import './Form.css'
 import Card from 'react-bootstrap/Card';
@@ -28,6 +28,12 @@ const UserProfile = () => {
     //setDetails(UserDetails)
     const uname=details.filter(field=>field.name=='Username')[0].value
     const desc=details.filter(field=>field.name=='Description')[0].value
+
+    useEffect(async () => {
+        window.scrollTo(0, 0)
+    }, []);
+
+
     return (
 
         <>
