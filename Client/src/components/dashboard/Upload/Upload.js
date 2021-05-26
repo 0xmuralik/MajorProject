@@ -45,7 +45,8 @@ class Upload extends Component{
             "future":this.state.future
         }
         console.log(request);
-        axios.post('http://localhost:5000/posts/', request)
+        axios.post('http://localhost:5000/posts/', request,
+        {headers:{'Authorization':`Bearer ${JSON.parse(localStorage.getItem('profile')).data.token}`} })
         .then((response)=>{
             console.log(response);
 

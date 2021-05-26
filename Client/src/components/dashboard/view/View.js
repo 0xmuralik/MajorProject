@@ -17,6 +17,7 @@ import { codeFolderStructure } from '../Utils/CodeFolders';
 import axios from 'axios'
 import { useParams } from 'react-router';
 import { Component } from 'react';
+import {updateLocalStorage} from '../Utils/UpdateLocalStorage';
 
 const View = () => {
 
@@ -28,8 +29,8 @@ const View = () => {
             author: '',
             organization: '',
             region: '',
-            likes: [1, 1000],
-            views: [10, 0, 0],
+            likes: [],
+            views: [],
             image: [],
             future: '',
             workDone: '',
@@ -44,6 +45,12 @@ const View = () => {
             window.location='/';
           }
         window.scrollTo(0, 0);
+        await axios.patch('http://localhost:5000/posts/'+post_id+'/viewPost',{},
+        {headers:{'Authorization':`Bearer ${JSON.parse(localStorage.getItem('profile')).data.token}`} })
+        .then((response)=>{
+            console.log(response);
+            updateLocalStorage(response.data.updatedUser);
+        })
         await axios.get('http://localhost:5000/posts/' + post_id, {})
             .then(response => {
                 setpostData(response.data)

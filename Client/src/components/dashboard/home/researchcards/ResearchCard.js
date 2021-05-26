@@ -12,6 +12,8 @@ import AbstractModal from "./AbstractModal";
 import { Link } from "react-router-dom";
 import * as IoIcons from "react-icons/io5";
 import * as AiIcons from "react-icons/ai";
+import axios from 'axios';
+import {updateLocalStorage} from "../../Utils/UpdateLocalStorage";
 
 //import './LoginForm.css'
 export class ResearchCard extends Component {
@@ -19,8 +21,9 @@ export class ResearchCard extends Component {
     super(props);
     this.modalRef = React.createRef();
     this.state = {
-      isLiked: false,
-      isSaved: false,
+      isLiked: this.props.details.likes.includes(JSON.parse(localStorage.getItem('profile')).data.result._id)?true:false,
+      isSaved: this.props.details.saves.includes(JSON.parse(localStorage.getItem('profile')).data.result._id)?true:false,
+      details: this.props.details
     };
   }
 
@@ -29,12 +32,26 @@ export class ResearchCard extends Component {
   };
   handleLike = () => {
     this.setState({ isLiked: !this.state.isLiked });
+    axios.patch('http://localhost:5000/posts/'+this.props.details._id+'/likePost',{},
+        {headers:{'Authorization':`Bearer ${JSON.parse(localStorage.getItem('profile')).data.token}`} })
+        .then((response)=>{
+            console.log((response).data.updatedPost,"aaa");
+            this.setState({details:response.data.updatedPost});
+            updateLocalStorage(response.data.updatedUser);
+        })
   };
   handleSave = () => {
     this.setState({ isSaved: !this.state.isSaved });
+    axios.patch('http://localhost:5000/posts/'+this.props.details._id+'/savePost',{},
+        {headers:{'Authorization':`Bearer ${JSON.parse(localStorage.getItem('profile')).data.token}`} })
+        .then((response)=>{
+            console.log((response).data.updatedPost,"aaa");
+            this.setState({details:response.data.updatedPost});
+            updateLocalStorage(response.data.updatedUser);
+        })
   };
   render() {
-    console.log('cardsss', this.props)
+    console.log('cardsss', this.state.details)
     return (
       <>
         <div style={{ padding: "50px" }} class="wrapper wrapper--w640">
@@ -48,15 +65,15 @@ export class ResearchCard extends Component {
                   <Col md={9}>
                     <Row>
                       <Link to="/profile">
-                        <h5>{this.props.details.author}</h5>
+                        <h5>{this.state.details.creator}</h5>
                       </Link>
                     </Row>
                     <Row>
-                      <h7>{this.props.details.createdOn}</h7>
+                      <h7>{this.state.details.createdOn}</h7>
                     </Row>
                   </Col>
                   <Col md={1}>
-                    <Link to={"/view/"+this.props.details._id}>
+                    <Link to={"/view/"+this.state.details._id}>
                       <IoIcons.IoEyeSharp size={40} />
                     </Link>
                   </Col>
@@ -64,17 +81,18 @@ export class ResearchCard extends Component {
               </Container>
             </Card.Header>
             <Card.Body style={{ background: "#d8dbf0" }}>
-              <Card.Title>{this.props.details.title}</Card.Title>
-              <Card.Subtitle>{this.props.details.status}</Card.Subtitle>
+              <Card.Title>{this.state.details.title}</Card.Title>
+              <Card.Subtitle>{this.state.details.status}</Card.Subtitle>
               <hr />
               <Card.Text>
-                {this.props.details.Description}
+                {this.state.details.Description}
                 <Card.Link onClick={this.openAbstractModal}>
                   Read More
                 </Card.Link>
               </Card.Text>
 
               <div>
+                <span>{this.state.details.likes.length} likes</span>
                 <ButtonToolbar className="justify-content-between">
                   <ButtonGroup className="mr-2">
                     <Button
@@ -102,8 +120,8 @@ export class ResearchCard extends Component {
           </Card>
         </div>
         <AbstractModal
-          title={this.props.details.title}
-          abstract={this.props.details.Description}
+          title={this.state.details.title}
+          abstract={this.state.details.Description}
           ref={this.modalRef}
         />
       </>

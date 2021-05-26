@@ -63,7 +63,7 @@ class SearchBar extends Component {
     this.cancel = axios.CancelToken.source();
 
     axios
-      .get(searchUrl, { cancelToken: this.cancel.token })
+      .get(searchUrl, {headers:{'Authorization':`Bearer ${JSON.parse(localStorage.getItem('profile')).data.token}`} })
       .then((res) => {
         const resultNotFoundMsg = !res.data ? "no More" : "";
         this.setState({
