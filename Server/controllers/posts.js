@@ -111,7 +111,7 @@ export const savePost = async (req, res) => {
 
   const user = await Users.findById(req.userId);
 
-  const index = post.saves.findIndex((id) => id === String(res.userId));
+  const index = post.saves.findIndex((id) => id === String(req.userId));
 
   if (index === -1) {
     post.saves.push(req.userId);
@@ -143,7 +143,7 @@ export const viewPost = async (req, res) => {
 
   const user = await Users.findById(req.userId);
 
-  const index = post.views.findIndex((id) => id === String(res.userId));
+  const index = post.views.findIndex((id) => id === String(req.userId));
 
   if (index === -1) {
     post.views.push(req.userId);
