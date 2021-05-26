@@ -124,9 +124,7 @@ export const savePost = async (req, res) => {
   const updatedPost = await PostMessage.findByIdAndUpdate(postId, post, {
     new: true,
   });
-  const updatedUser = await Users.findByIdAndUpdate(req.userId, user, {
-    new: true,
-  });
+  const updatedUser = await Users.findByIdAndUpdate(req.userId, user);
 
   res.status(200).json({updatedPost, updatedUser});
 };
@@ -150,9 +148,7 @@ export const viewPost = async (req, res) => {
     user.savedPosts.push(postId);
   }
 
-  const updatedUser = await Users.findByIdAndUpdate(req.userId, user, {
-    new: true,
-  });
+  const updatedUser = await Users.findByIdAndUpdate(req.userId, user);
   const updatedPost = await PostMessage.findByIdAndUpdate(postId, post, {
     new: true,
   });

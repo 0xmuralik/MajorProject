@@ -21,9 +21,9 @@ const userSchema = mongoose.Schema({
     contact: String,
     description: String,
     displayPicture: String,
-    likedPosts: [mongoose.Schema.Types.ObjectId],
-    savedPosts: [mongoose.Schema.Types.ObjectId],
-    viewedPosts: [mongoose.Schema.Types.ObjectId]
+    likedPosts: [String],
+    savedPosts: [String],
+    viewedPosts: [String]
 })
 
 const Users = mongoose.model("Users",userSchema);
