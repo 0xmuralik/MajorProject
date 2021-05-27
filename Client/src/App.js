@@ -8,6 +8,8 @@ import Upload from './components/dashboard/Upload/Upload';
 import Communities from './components/dashboard/communities/Communities';
 import Settings from './components/dashboard/settings/Settings';
 import LoginAndRegisterPage from './components/loginandregister/LoginAndRegisterPage'
+import SavedPosts from './components/dashboard/sidepannel/SavedPosts';
+import YourPosts from './components/dashboard/sidepannel/YourPosts';
 
 function App() {
   console.log("com");
@@ -26,6 +28,12 @@ function App() {
         </Route>
         <Route path='/upload'>
           <Upload />
+        </Route>
+        <Route path='/self/:status'>
+          <YourPosts />
+        </Route>
+        <Route path='/saved/:status'>
+          <SavedPosts />
         </Route>
         <Route path='/communities'>
           <Communities />

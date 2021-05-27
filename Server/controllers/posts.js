@@ -34,7 +34,13 @@ export const createPost = async (req, res) => {
   });
   try {
     await newPost.save();
-    res.status(201).json(newPost);
+    const user = await Users.findById(req.userId);
+    user.createdPosts.push(newPost._id);
+    const updatedUser = await Users.findByIdAndUpdate(req.userId, user, {
+      new: true,
+    });
+
+    res.status(201).json({newPost,updatedUser});
   } catch (error) {
     res.status(409).json({ message: error.message });
   }
@@ -124,7 +130,7 @@ export const savePost = async (req, res) => {
   const updatedPost = await PostMessage.findByIdAndUpdate(postId, post, {
     new: true,
   });
-  const updatedUser = await Users.findByIdAndUpdate(req.userId, user);
+  const updatedUser = await Users.findByIdAndUpdate(req.userId, user,{new:true});
 
   res.status(200).json({updatedPost, updatedUser});
 };

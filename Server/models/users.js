@@ -23,7 +23,8 @@ const userSchema = mongoose.Schema({
     displayPicture: String,
     likedPosts: [String],
     savedPosts: [String],
-    viewedPosts: [String]
+    viewedPosts: [String],
+    createdPosts:[String]
 })
 
 const Users = mongoose.model("Users",userSchema);

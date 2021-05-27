@@ -9,6 +9,7 @@ import * as ViewData from '../Utils/ViewData'
 import Button from 'react-bootstrap/Button'
 import { Multiselect } from 'multiselect-react-dropdown';
 import axios from 'axios';
+import {updateLocalStorage} from "../Utils/UpdateLocalStorage";
 
 
 class Upload extends Component{
@@ -49,7 +50,8 @@ class Upload extends Component{
         {headers:{'Authorization':`Bearer ${JSON.parse(localStorage.getItem('profile')).data.token}`} })
         .then((response)=>{
             console.log(response);
-
+            updateLocalStorage(response.data.updatedUser);
+            window.location= '/dashboard';
         })
 
     }

@@ -16,18 +16,18 @@ export const SidebarData = [
   {
     id:'yourresearches',
     title: 'Your Researches',
-    path: '/dashboard',
+    path: '/self',
     children:[
       {
         title:'Completed',
-        path:'/dashboard',
+        path:'/self/completed',
         children:[],
         icon:<IoIcons.IoIosDoneAll/>,
         cName: 'nav-text'
       },
       {
         title:'Pending',
-        path:'/dashboard',
+        path:'/self/pending',
         children:[],
         icon:<AiIcons.AiOutlineQuestion/>,
         cName: 'nav-text'
@@ -39,18 +39,18 @@ export const SidebarData = [
   {
     id:'saved',
     title: 'Saved',
-    path: '/dashboard',
+    path: '/saved',
     children:[
       {
         title:'Completed',
-        path:'/dashboard',
+        path:'/saved/completed',
         children:[],
         icon:<IoIcons.IoIosDoneAll/>,
         cName: 'nav-text'
       },
       {
         title:'Pending',
-        path:'/dashboard',
+        path:'/saved/pending',
         children:[],
         icon:<AiIcons.AiOutlineQuestion/>,
         cName: 'nav-text'
