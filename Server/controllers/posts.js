@@ -1,7 +1,7 @@
 import PostMessage from "../models/postMessages.js";
 import FolderMessage from "../models/folderMessages.js";
 import Users from "../models/users.js";
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 export const getPosts = async (req, res) => {
   try {
@@ -13,7 +13,7 @@ export const getPosts = async (req, res) => {
 };
 
 export const getPostById = async (req, res) => {
-  const  _id  = req.params.id;
+  const _id = req.params.id;
 
   if (!mongoose.Types.ObjectId.isValid(_id))
     return res.status(404).send("No post with that id");
@@ -40,7 +40,7 @@ export const createPost = async (req, res) => {
       new: true,
     });
 
-    res.status(201).json({newPost,updatedUser});
+    res.status(201).json({ newPost, updatedUser });
   } catch (error) {
     res.status(409).json({ message: error.message });
   }
@@ -68,14 +68,14 @@ export const deletePost = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(_id))
     return res.status(404).send("No post with that id");
 
-  const deletePost= await PostMessage.findByIdAndRemove(_id);
+  const deletePost = await PostMessage.findByIdAndRemove(_id);
 
   res.json({ message: "Post deleted successfully" });
 };
 
 export const likePost = async (req, res) => {
   const postId = req.params.id;
-  
+
   if (!req.userId) return res.json({ message: "Unauthenticated" });
 
   if (!mongoose.Types.ObjectId.isValid(postId))
@@ -102,7 +102,7 @@ export const likePost = async (req, res) => {
     new: true,
   });
 
-  res.status(200).json({updatedPost, updatedUser});
+  res.status(200).json({ updatedPost, updatedUser });
 };
 
 export const savePost = async (req, res) => {
@@ -130,9 +130,11 @@ export const savePost = async (req, res) => {
   const updatedPost = await PostMessage.findByIdAndUpdate(postId, post, {
     new: true,
   });
-  const updatedUser = await Users.findByIdAndUpdate(req.userId, user,{new:true});
+  const updatedUser = await Users.findByIdAndUpdate(req.userId, user, {
+    new: true,
+  });
 
-  res.status(200).json({updatedPost, updatedUser});
+  res.status(200).json({ updatedPost, updatedUser });
 };
 
 export const viewPost = async (req, res) => {
@@ -159,20 +161,14 @@ export const viewPost = async (req, res) => {
     new: true,
   });
 
-  res.status(200).json({updatedPost, updatedUser});
+  res.status(200).json({ updatedPost, updatedUser });
 };
 
 export const SearchFun = async (req, res) => {
   console.log(req.params);
   var query = req.params.q;
-  const domain = req.params.d;
-  const researchType = req.params.r;
-  const StatusSelected = req.params.s;
-  const authors = req.params.a;
-
   const searchparams = await PostMessage.find({
     title: { $regex: "^" + query },
-    status: { $regex: "^" + StatusSelected },
   });
   console.log(searchparams);
   res.status(200).json(searchparams);

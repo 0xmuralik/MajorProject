@@ -17,17 +17,22 @@ class SearchBar extends Component {
     super(props);
     this.state = {
       query: "",
-      DomainFilterValues: "",
-      OrgainzationFilterValues: "",
-      StatusFilterValues: "",
-      DomainsToSend: [],
+      DomainFilterValues: [],
+      OrgainzationFilterValues: [],
+      StatusFilterValues: [],
+      DomainsInDB: new Map(),
       results: {},
       loading: false,
       message: "",
       DomainOptions: [
         { label: "Blockchain", value: 1 },
-        { label: "AI/ML", value: 2 },
-        { label: "AUgmented Reality", value: 3 },
+        { label: "Artificial intelligence", value: 2 },
+        { label: "Augmented Reality", value: 3 },
+        { label: "Internet Of Things", value: 4 },
+        { label: "Cyber Security", value: 5 },
+        { label: "Quantum Computing", value: 6 },
+        { label: "Robotics", value: 7 },
+        { label: "Virtual Reality", value: 8 },
       ],
       OrgainzationOptions: [
         { label: "Lab", value: 1 },
@@ -41,12 +46,11 @@ class SearchBar extends Component {
 
     this.cancel = "";
   }
-  componentDidMount(){
-    window.scrollTo(0, 0)
-    axios.get('http://localhost:5000/posts')
-    .then(response=>{
-      this.setState({results:response.data})
-    })
+  componentDidMount() {
+    window.scrollTo(0, 0);
+    axios.get("http://localhost:5000/posts").then((response) => {
+      this.setState({ results: response.data });
+    });
   }
 
   fetchSearchResults = (
@@ -56,14 +60,23 @@ class SearchBar extends Component {
     Authors,
     query
   ) => {
-    const searchUrl = query=='' ? `http://localhost:5000/posts`:`http://localhost:5000/posts/${query}/${Domains}/${ResearchTypes}/${StatusSelected}/${Authors}`;
+    const searchUrl =
+      query == ""
+        ? `http://localhost:5000/posts`
+        : `http://localhost:5000/posts/${query}/Domains/ResearchTypes/StatusSelected/Authors`;
     if (this.cancel) {
       this.cancel.cancel();
     }
     this.cancel = axios.CancelToken.source();
 
     axios
-      .get(searchUrl, {headers:{'Authorization':`Bearer ${JSON.parse(localStorage.getItem('profile')).data.token}`} })
+      .get(searchUrl, {
+        headers: {
+          Authorization: `Bearer ${
+            JSON.parse(localStorage.getItem("profile")).data.token
+          }`,
+        },
+      })
       .then((res) => {
         const resultNotFoundMsg = !res.data ? "no More" : "";
         this.setState({
@@ -118,12 +131,58 @@ class SearchBar extends Component {
     this.state.StatusFilterValues = arr;
   };
 
+  find_in_object(my_object, my_criteria) {
+    return my_object.filter(function (obj) {
+      return Object.keys(my_criteria).every(function (c) {
+        return obj[c] == my_criteria[c];
+      });
+    });
+  }
+
   renderSearchResults = () => {
+    axios.get("http://localhost:5000/domains").then((res) => {
+      res.data.map((ival) => {
+        this.state.DomainsInDB.set(ival.name, ival._id);
+      });
+    });
+
     const { results } = this.state;
-    if (Object.keys(results).length && results.length) {
+    console.log(results);
+
+    var resultss = [];
+
+    this.state.DomainFilterValues.map((ival) => {
+      console.log(ival);
+      var temp_results = [];
+      temp_results = this.find_in_object(results, {
+        domain: this.state.DomainsInDB.get(ival),
+      });
+      console.log(temp_results);
+      resultss = resultss.concat(temp_results);
+    });
+    console.log(resultss);
+    this.state.OrgainzationFilterValues.map((ival) => {
+      console.log(ival);
+      var temp_results = [];
+      temp_results = this.find_in_object(resultss, { organization: ival });
+      console.log(temp_results);
+      resultss = resultss.concat(temp_results);
+    });
+    console.log(resultss);
+    this.state.StatusFilterValues.map((ival) => {
+      //console.log(ival);
+      var temp_results = [];
+      temp_results = this.find_in_object(resultss, { status: ival });
+      resultss = resultss.concat(temp_results);
+    });
+
+    console.log("this is ");
+    console.log(resultss);
+
+    if (Object.keys(resultss).length && results.length) {
       return (
-        <div >
-          {results.map((result) => {
+        <div>
+          {resultss.map((result) => {
             return (
               <a>
                 <ListGroup horizontal={true} className="my-2" key={result._id}>
@@ -134,6 +193,8 @@ class SearchBar extends Component {
           })}
         </div>
       );
+    } else {
+      return <div>Not Found</div>;
     }
   };
 

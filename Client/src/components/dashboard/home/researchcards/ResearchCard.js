@@ -12,8 +12,8 @@ import AbstractModal from "./AbstractModal";
 import { Link } from "react-router-dom";
 import * as IoIcons from "react-icons/io5";
 import * as AiIcons from "react-icons/ai";
-import axios from 'axios';
-import {updateLocalStorage} from "../../Utils/UpdateLocalStorage";
+import axios from "axios";
+import { updateLocalStorage } from "../../Utils/UpdateLocalStorage";
 
 //import './LoginForm.css'
 export class ResearchCard extends Component {
@@ -21,9 +21,17 @@ export class ResearchCard extends Component {
     super(props);
     this.modalRef = React.createRef();
     this.state = {
-      isLiked: this.props.details.likes.includes(JSON.parse(localStorage.getItem('profile')).data.result._id)?true:false,
-      isSaved: this.props.details.saves.includes(JSON.parse(localStorage.getItem('profile')).data.result._id)?true:false,
-      details: this.props.details
+      isLiked: this.props.details.likes.includes(
+        JSON.parse(localStorage.getItem("profile")).data.result._id
+      )
+        ? true
+        : false,
+      isSaved: this.props.details.saves.includes(
+        JSON.parse(localStorage.getItem("profile")).data.result._id
+      )
+        ? true
+        : false,
+      details: this.props.details,
     };
   }
 
@@ -32,26 +40,46 @@ export class ResearchCard extends Component {
   };
   handleLike = () => {
     this.setState({ isLiked: !this.state.isLiked });
-    axios.patch('http://localhost:5000/posts/'+this.props.details._id+'/likePost',{},
-        {headers:{'Authorization':`Bearer ${JSON.parse(localStorage.getItem('profile')).data.token}`} })
-        .then((response)=>{
-            console.log((response).data.updatedPost,"aaa");
-            this.setState({details:response.data.updatedPost});
-            updateLocalStorage(response.data.updatedUser);
-        })
+    axios
+      .patch(
+        "http://localhost:5000/posts/" + this.props.details._id + "/likePost",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${
+              JSON.parse(localStorage.getItem("profile")).data.token
+            }`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data.updatedPost, "aaa");
+        this.setState({ details: response.data.updatedPost });
+        updateLocalStorage(response.data.updatedUser);
+      });
   };
   handleSave = () => {
     this.setState({ isSaved: !this.state.isSaved });
-    axios.patch('http://localhost:5000/posts/'+this.props.details._id+'/savePost',{},
-        {headers:{'Authorization':`Bearer ${JSON.parse(localStorage.getItem('profile')).data.token}`} })
-        .then((response)=>{
-            console.log((response).data.updatedPost,"aaa");
-            this.setState({details:response.data.updatedPost});
-            updateLocalStorage(response.data.updatedUser);
-        })
+    axios
+      .patch(
+        "http://localhost:5000/posts/" + this.props.details._id + "/savePost",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${
+              JSON.parse(localStorage.getItem("profile")).data.token
+            }`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data.updatedPost, "aaa");
+        this.setState({ details: response.data.updatedPost });
+        updateLocalStorage(response.data.updatedUser);
+      });
   };
   render() {
-    console.log('cardsss', this.state.details)
+    // console.log('cardsss', this.state.details)
     return (
       <>
         <div style={{ padding: "50px" }} class="wrapper wrapper--w640">
@@ -73,7 +101,7 @@ export class ResearchCard extends Component {
                     </Row>
                   </Col>
                   <Col md={1}>
-                    <Link to={"/view/"+this.state.details._id}>
+                    <Link to={"/view/" + this.state.details._id}>
                       <IoIcons.IoEyeSharp size={40} />
                     </Link>
                   </Col>
