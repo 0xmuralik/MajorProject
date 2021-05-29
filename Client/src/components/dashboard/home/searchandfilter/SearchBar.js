@@ -100,7 +100,7 @@ class SearchBar extends Component {
 
   handleOnInputChange = (event) => {
     const query = event.target.value;
-    console.log(this.state.DomainFilterValues);
+    console.log(event);
     this.setState({ query: query, loading: true, message: "" }, () => {
       this.fetchSearchResults(
         this.state.DomainFilterValues,
@@ -111,13 +111,30 @@ class SearchBar extends Component {
       );
     });
   };
-
+  DomainFilterBefore = (event) => {
+    this.DomainFilter(event);
+    const tin = document.querySelector("#form1");
+    console.log(tin.value);
+    var e = {
+      target: { value: tin.value },
+    };
+    this.handleOnInputChange(e);
+  };
   DomainFilter = (event) => {
     const arr = [];
     event.map((ival, idx) => {
       arr.push(ival.label);
     });
     this.state.DomainFilterValues = arr;
+  };
+  OrganizationFilterBefore = (event) => {
+    this.OrgainzationFilter(event);
+    const tin = document.querySelector("#form1");
+    console.log(tin.value);
+    var e = {
+      target: { value: tin.value },
+    };
+    this.handleOnInputChange(e);
   };
   OrgainzationFilter = (event) => {
     const arr = [];
@@ -126,16 +143,15 @@ class SearchBar extends Component {
     });
     this.state.OrgainzationFilterValues = arr;
   };
-  logevent = (e) => {
-    e.preventDefault(); // prevent default behaviour if needed
-    this.state.myevent.push(e);
-    console.log(e);
-  };
+
   StatusFilterBefore = (event) => {
     this.StatusFilter(event);
-    var target = document.getElementById("form1");
-    target.onchange = this.logevent;
-    console.log(this.state.myevent);
+    const tin = document.querySelector("#form1");
+    console.log(tin.value);
+    var e = {
+      target: { value: tin.value },
+    };
+    this.handleOnInputChange(e);
   };
   StatusFilter = (event) => {
     const arr = [];
@@ -250,21 +266,21 @@ class SearchBar extends Component {
           <div class="col-sm-3">
             <ReactMultiSelectCheckboxes
               placeholderButtonLabel="Domain"
-              onChange={this.DomainFilter}
+              onChange={this.DomainFilterBefore}
               options={this.state.DomainOptions}
             />
           </div>
           <div class="col-sm-3">
             <ReactMultiSelectCheckboxes
               placeholderButtonLabel="Organization"
-              onChange={this.OrgainzationFilter}
+              onChange={this.OrganizationFilterBefore}
               options={this.state.OrgainzationOptions}
             />
           </div>
           <div class="col-sm-3">
             <ReactMultiSelectCheckboxes
               placeholderButtonLabel="Status"
-              onChange={this.StatusFilter}
+              onChange={this.StatusFilterBefore}
               options={this.state.StatusOptions}
             />
           </div>
