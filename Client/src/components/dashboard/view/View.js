@@ -22,6 +22,7 @@ import {updateLocalStorage} from '../Utils/UpdateLocalStorage';
 const View = () => {
 
     let { post_id } = useParams();
+    const [doRender,setDoRender]=useState(false);
     const [postData, setpostData] = useState(
         {
             title: '',
@@ -38,28 +39,28 @@ const View = () => {
             domain: '',
             tags: [],
             status: '',
-            coAuthors: []
+            coAuthors: [],
+            homeDirectory:[]
         })
     useEffect(async () => {
         if(!localStorage.getItem('profile')){
             window.location='/';
           }
+        setDoRender(false);
         window.scrollTo(0, 0);
         await axios.patch('http://localhost:5000/posts/'+post_id+'/viewPost',{},
         {headers:{'Authorization':`Bearer ${JSON.parse(localStorage.getItem('profile')).data.token}`} })
         .then((response)=>{
             console.log(response);
+            setpostData(response.data.updatedPost);
             updateLocalStorage(response.data.updatedUser);
+            setDoRender(true);
         })
-        await axios.get('http://localhost:5000/posts/' + post_id, {})
-            .then(response => {
-                setpostData(response.data)
-                console.log(postData, '-----------')
-            })
         
     }, []);
 
     return (
+        doRender?
         <>
             <Header />
             <div>
@@ -151,7 +152,7 @@ const View = () => {
                                         <Card.Title>Future Works</Card.Title>
                                         <Card.Text>{postData.future}</Card.Text>
                                     </Card.Body>
-                                    <CodeFolders folderStructure={codeFolderStructure} />
+                                    <CodeFolders parentFolderID={postData.homeDirectory} />
                                     <Card.Body style={{ background: '#d8dbf0' }}>
                                         <Card.Title>Discussion Form</Card.Title>
                                         {ViewData.discussion_form.length == 0 ?
@@ -165,7 +166,7 @@ const View = () => {
                     </Row>
                 </Container>
             </div>
-        </>
+        </>:''
     )
 }
 
