@@ -17,11 +17,13 @@ class SearchBar extends Component {
     super(props);
     this.state = {
       myevent: [],
-
+      all_authors: [],
+      coAuthors: [],
       query: "",
       DomainFilterValues: [],
       OrgainzationFilterValues: [],
       StatusFilterValues: [],
+      AuthorsFilteredValues: [],
       DomainsInDB: new Map(),
       results: {},
       loading: false,
@@ -45,6 +47,7 @@ class SearchBar extends Component {
         { label: "Pending", value: 1 },
         { label: "Completed", value: 2 },
       ],
+      AuthorOptions: [],
     };
 
     this.cancel = "";
@@ -53,6 +56,17 @@ class SearchBar extends Component {
     window.scrollTo(0, 0);
     axios.get("http://localhost:5000/posts").then((response) => {
       this.setState({ results: response.data });
+    });
+    axios.get("http://localhost:5000/users/", {}).then((resp) => {
+      console.log(resp);
+      this.setState({ all_authors: resp.data });
+      console.log(this.state.all_authors);
+
+      this.state.all_authors.map((ival, idx) => {
+        var newObj = { label: ival.name, value: ival._id };
+        this.state.AuthorOptions.push(newObj);
+        console.log(this.state.AuthorOptions);
+      });
     });
   }
 
@@ -161,6 +175,23 @@ class SearchBar extends Component {
     this.state.StatusFilterValues = arr;
     console.log(this.state.StatusFilterValues);
   };
+  AuthorsFilterBefore = (event) => {
+    this.AuthorsFilter(event);
+    const tin = document.querySelector("#form1");
+    console.log(tin.value);
+    var e = {
+      target: { value: tin.value },
+    };
+    this.handleOnInputChange(e);
+  };
+  AuthorsFilter = (event) => {
+    const arr = [];
+    event.map((ival, idx) => {
+      console.log(ival);
+      arr.push(ival.value);
+    });
+    this.state.AuthorsFilteredValues = arr;
+  };
 
   find_in_object(my_object, my_criteria) {
     return my_object.filter(function (obj) {
@@ -179,9 +210,8 @@ class SearchBar extends Component {
 
     const { results } = this.state;
     console.log(results);
-
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
     var resultss = [];
-
     this.state.DomainFilterValues.map((ival) => {
       console.log(ival);
       var temp_results = [];
@@ -192,6 +222,7 @@ class SearchBar extends Component {
       resultss = resultss.concat(temp_results);
     });
     console.log(resultss);
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
     var temp_results = [];
     this.state.OrgainzationFilterValues.map((ival) => {
       console.log(ival);
@@ -203,12 +234,22 @@ class SearchBar extends Component {
     });
     resultss = temp_results;
     console.log(resultss);
-
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
     temp_results = [];
     this.state.StatusFilterValues.map((ival) => {
       console.log(ival);
       temp_results = temp_results.concat(
         this.find_in_object(resultss, { status: ival })
+      );
+      console.log(temp_results);
+    });
+    resultss = temp_results;
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    temp_results = [];
+    console.log(this.state.AuthorsFilteredValues);
+    this.state.AuthorsFilteredValues.map((ival) => {
+      temp_results = temp_results.concat(
+        this.find_in_object(resultss, { author: ival })
       );
       console.log(temp_results);
     });
@@ -252,7 +293,7 @@ class SearchBar extends Component {
     return (
       <div class="col-sm-12">
         <div class="row input-group">
-          <div class="col-sm-3">
+          <div class="col-sm-4">
             <input
               type="search"
               name="query"
@@ -263,25 +304,32 @@ class SearchBar extends Component {
               onChange={this.handleOnInputChange}
             />
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-2">
             <ReactMultiSelectCheckboxes
               placeholderButtonLabel="Domain"
               onChange={this.DomainFilterBefore}
               options={this.state.DomainOptions}
             />
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-2">
             <ReactMultiSelectCheckboxes
               placeholderButtonLabel="Organization"
               onChange={this.OrganizationFilterBefore}
               options={this.state.OrgainzationOptions}
             />
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-2">
             <ReactMultiSelectCheckboxes
               placeholderButtonLabel="Status"
               onChange={this.StatusFilterBefore}
               options={this.state.StatusOptions}
+            />
+          </div>
+          <div class="col-sm-2">
+            <ReactMultiSelectCheckboxes
+              placeholderButtonLabel="Authors"
+              onChange={this.AuthorsFilterBefore}
+              options={this.state.AuthorOptions}
             />
           </div>
         </div>
