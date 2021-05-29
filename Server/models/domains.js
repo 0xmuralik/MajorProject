@@ -5,6 +5,7 @@ const domainSchema = mongoose.Schema({
         type:String, 
         required: true
     },
+    image:[String], //base64 encodings of the 
     subscribers: [mongoose.Schema.Types.ObjectId]
 })
 

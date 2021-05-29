@@ -1,4 +1,5 @@
 import Domains from '../models/domains.js'
+import Users from '../models/users.js'
 import mongoose from 'mongoose';
 
 export const getDomains= async (req,res)=>{
@@ -32,8 +33,8 @@ export const createDomain=async (req,res)=>{
 }
 
 export const subscribe = async (req,res)=>{
-    const {domainId:_id} =req.params;
-
+    const domainId =req.params.id;
+    console.log('-----',domainId)
     if(!req.userId) return res.json({message:'Unauthenticated'});
 
     if(!mongoose.Types.ObjectId.isValid(domainId)) return res.status(404).send('No domain with that id');
@@ -42,22 +43,33 @@ export const subscribe = async (req,res)=>{
     
     const user = await Users.findById(req.userId);
 
-    const index = domain.subscribers.findIndex((id)=>id===String(req.userId));
-
+    const index = domain.subscribers.findIndex((id)=>String(id)===String(req.userId));
+    console.log(index,domainId)
     if(index===-1){
         domain.subscribers.push(req.userId);
-        user.domains.push(postId);
+        user.domains.push(domainId);
     }else{
-        domain.subscribers=domain.subscribers.filter((id)=>id!==String(req.userId));
-        user.domains= user.domains.filter((id)=>id!==String(domainId));
+        domain.subscribers=domain.subscribers.filter((id)=>String(id)!==String(req.userId));
+        user.domains= user.domains.filter((id)=>String(id)!==String(domainId));
     }
 
     const updatedDomain = await Domains.findByIdAndUpdate(domainId,domain,{new:true});
     const updatedUser = await Users.findByIdAndUpdate(req.userId,user,{new:true});
 
-    res.json(updatedDomain,updatedUser);
+    res.status(200).json({updatedDomain,updatedUser});
 }
 
+export const user_subscribed_and_unsubscribed = async(req,res)=>{
+    if(!req.userId) return res.json({message:'Unauthenticated'});
+    try{
+        const user = await Users.findById(req.userId);
+        const subscribed = await Domains.find({ '_id': { $in: user.domains } })
+        const unsubscribed = await Domains.find({ '_id': { $nin: user.domains } })
+        res.status(200).json({subscribed,unsubscribed})
+    }catch(error){
+        console.log(error)
+    }
+}
 
 export const deleteDomain = async (req,res)=>{
     const{_id} =req.params;

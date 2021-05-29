@@ -1,4 +1,4 @@
-import React ,{useEffect}from 'react'
+import React ,{useEffect, useState}from 'react'
 import Container from 'react-bootstrap/Container';
 import { yourCommunities } from "../Utils/YourCommunities"
 import { suggestedCommunities } from "../Utils/SuggestedCommunities"
@@ -8,15 +8,35 @@ import Col from 'react-bootstrap/Col';
 import Header from '../header/Header';
 import SidePannel from '../sidepannel/SidePannel';
 import YourCommunities from '../profile/YourCommunities'
+import axios from 'axios'
 
 function Communities() {
 
-    useEffect(async () => {
+    const [subscribed, setsubscribed] = useState([])
+    const [unsubscribed, setunsubscribed] = useState([])
+
+    useEffect( () => {
         if(!localStorage.getItem('profile')){
             window.location='/';
           }
         window.scrollTo(0, 0)
-    });
+        console.log(`Bearer ${JSON.parse(localStorage.getItem("profile")).data.token}`,'tokenn')
+        setCommunities()
+    },[]);
+
+    const setCommunities=()=>{
+        axios.get('http://localhost:5000/domains/subscribed_and_unsubscribed' ,{
+            headers: {
+              Authorization: `Bearer ${JSON.parse(localStorage.getItem("profile")).data.token}`,
+            },
+        })
+        .then(response => {
+            console.log(response, '-----------')
+            setsubscribed(response.data.subscribed)
+            setunsubscribed(response.data.unsubscribed)
+        })
+    }
+
     return (
 
         <>
@@ -41,8 +61,8 @@ function Communities() {
                                 <h3>Your Communities</h3>
                                 <Container fluid>
                                     <Row>
-                                        {yourCommunities.map((community) => (
-                                            <CommunityCard community={community}/>
+                                        {subscribed.map((community) => (
+                                            <CommunityCard community={community} setCommunities={setCommunities} isJoined={true}/>
                                         ))}
                                     </Row>
                                 </Container>
@@ -52,8 +72,8 @@ function Communities() {
                                 <h3>Suggestions</h3>
                                 <Container fluid>
                                     <Row>
-                                        {suggestedCommunities.map((community) => (
-                                            <CommunityCard community={community}/>
+                                        {unsubscribed.map((community) => (
+                                            <CommunityCard community={community} setCommunities={setCommunities} isJoined={false}/>
                                         ))}
                                     </Row>
                                 </Container>
