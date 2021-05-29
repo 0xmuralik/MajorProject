@@ -51,11 +51,11 @@ export const updateFolder = async (req,res)=>{
 }
 
 export const deleteFolder = async (req,res)=>{
-    const{_id} =req.params;
+    const{id} =req.params;
 
-    if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No folder with that id');
+    if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No folder with that id');
 
-    await FolderMessage.findByIdAndRemove(_id);
+    await FolderMessage.findByIdAndRemove(id);
 
     res.json({message: 'Folder deleted successfully'});
 }

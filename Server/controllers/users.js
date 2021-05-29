@@ -84,11 +84,12 @@ export const updateUser = async (req,res)=>{
 }
 
 export const deleteUser= async (req,res)=>{
-    const {_id} =req.params;
+    console.log(req.params)
+    const {id} =req.params;
 
-    if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No user with that id');
+    if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No user with that id');
 
-    await Users.findByIdAndRemove(_id);
+    await Users.findByIdAndRemove(id);
 
     res.json({message: 'User deleted successfully'});
 }
