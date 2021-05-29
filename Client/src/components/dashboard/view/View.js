@@ -79,7 +79,7 @@ const View = () => {
                                             <Row>
                                                 <Col md={9}>
                                                     <h2>{postData.title}</h2>
-                                                    <span>{postData.organization}</span>
+                                                    <span></span>
                                                     <span>Created on {postData.createdOn}</span>
                                                 </Col>
                                                 <Col md={3}>
@@ -99,18 +99,17 @@ const View = () => {
                                     <Card.Body style={{ background: '#d8dbf0' }}>
                                         <Card.Text>
                                             <h5>
+                                                <b>{postData.author}</b>
                                                 {postData.coAuthors && postData.coAuthors.map((field) => (
-                                                    `${field.coAuthors}`
+                                                    ` , ${field}`
                                                     // `${field.name} (${field.email}), `
                                                 ))}
                                                 <br />
-                                                <b>Domain: {postData.domain}</b>
-                                                {/* {postData.domain.map((field) => (
-                                                    `${field}, `
-                                                ))} */}
+                                                <b>Organization: </b>{postData.organization}
                                                 <br />
-                                                <b>Region: </b>
-                                                {postData.region}
+                                                <b>Domain: </b>{postData.domain}
+                                                <br />
+                                                <b>Region: </b>{postData.region}
                                             </h5>
                                         </Card.Text>
                                     </Card.Body>

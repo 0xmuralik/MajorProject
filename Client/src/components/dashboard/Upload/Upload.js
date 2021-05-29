@@ -28,24 +28,30 @@ class Upload extends Component {
       tags: [],
       status: "",
       coAuthors: [],
+      all_authors: [],
+      all_domains: [],
     };
   }
   submitHandler = (e) => {
     e.preventDefault();
     console.log(this.state, "stateeeeee");
     const request = {
-      title: this.state.title,
-      organization: this.state.organization,
-      Description: this.state.Description,
-      Domain: this.state.domain,
-      tags: this.state.tags,
-      status: this.state.status,
-      workDone: this.state.workDone,
-      future: this.state.future,
-    };
+      "title": this.state.title,
+      // "creator":JSON.parse(localStorage.getItem('profile')).data.result._id,
+      "author":this.state.author,
+      "organization": this.state.organization,
+      "region":this.state.region,
+      //"image":[],
+      "future": this.state.future,
+      "workDone": this.state.workDone,
+      "Description": this.state.Description,
+      "domain": this.state.domain,
+      "tags": this.state.tags,
+      "status": this.state.status,
+      "coAuthors":this.state.coAuthors,
+    }
     console.log(request);
-    axios
-      .post("http://localhost:5000/posts/", request, {
+    axios.post("http://localhost:5000/posts/", request, {
         headers: {
           Authorization: `Bearer ${
             JSON.parse(localStorage.getItem("profile")).data.token
@@ -67,7 +73,7 @@ class Upload extends Component {
     this.setState({ title: e.target.value });
   };
   coAuthorsHandler = (e) => {
-    const coAuthors = e.map((mem) => mem.name);
+    const coAuthors = e.map((mem) => mem._id);
     this.setState({ coAuthors: coAuthors });
   };
   orghandler = (e) => {
@@ -99,6 +105,16 @@ class Upload extends Component {
       window.location = "/";
     }
     window.scrollTo(0, 0);
+    axios.get("http://localhost:5000/domains/", {})
+      .then(resp => {
+        console.log(resp, 'domaiiiiiiiiin')
+        this.setState({ all_domains: resp.data })
+      })
+    axios.get("http://localhost:5000/users/", {})
+      .then(resp => {
+        console.log(resp)
+        this.setState({ all_authors: resp.data })
+      })
   }
 
   render() {
@@ -140,9 +156,8 @@ class Upload extends Component {
                             onChange={this.authorHandler}
                             as="select"
                           >
-                            {ViewData.author_details.map((field) => (
-                              <option>{field.name}</option>
-                            ))}
+                            <option>-Select-</option>
+                            {this.state.all_authors.map((field) => (<option value={field._id}>{field.name}</option>))}
                           </Form.Control>
                         </Col>
                       </Form.Group>
@@ -153,9 +168,9 @@ class Upload extends Component {
                         <Col sm={10}>
                           <Multiselect
                             onSelect={this.coAuthorsHandler}
-                            options={ViewData.author_details} // Options to display in the dropdown
+                            options={this.state.all_authors} // Options to display in the dropdown
                             selectedValues={
-                              ViewData.author_details.selectedValues
+                              this.state.all_authors.selectedValues
                             }
                             displayValue="name" // Property name to display in the dropdown options
                           />
@@ -167,6 +182,7 @@ class Upload extends Component {
                         </Form.Label>
                         <Col sm={10}>
                           <Form.Control onChange={this.orghandler} as="select">
+                            <option>-Select-</option>
                             <option>Lab</option>
                             <option>Private</option>
                           </Form.Control>
@@ -178,6 +194,7 @@ class Upload extends Component {
                         </Form.Label>
                         <Col sm={10}>
                           <Form.Control onChange={this.reghandler} as="select">
+                            <option>-Select-</option>
                             <option>region 1</option>
                             <option>region 2</option>
                             <option>region 3</option>
@@ -193,14 +210,8 @@ class Upload extends Component {
                             onChange={this.domainHandler}
                             as="select"
                           >
-                            <option>Artificial intelligence</option>
-                            <option>Augmented Reality</option>
-                            <option>Blockchain</option>
-                            <option>Virtual Reality</option>
-                            <option>Robotics</option>
-                            <option>Quantum Computing</option>
-                            <option>Cyber Security</option>
-                            <option>Internet Of Things</option>
+                            <option>-Select-</option>
+                            {this.state.all_domains.map((field) => (<option value={field._id}>{field.name}</option>))}
                           </Form.Control>
                         </Col>
                       </Form.Group>
