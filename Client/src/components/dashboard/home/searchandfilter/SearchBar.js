@@ -24,6 +24,7 @@ class SearchBar extends Component {
       results: {},
       loading: false,
       message: "",
+      printthis: "",
       DomainOptions: [
         { label: "Blockchain", value: 1 },
         { label: "Artificial intelligence", value: 2 },
@@ -166,14 +167,14 @@ class SearchBar extends Component {
       var temp_results = [];
       temp_results = this.find_in_object(resultss, { organization: ival });
       console.log(temp_results);
-      resultss = resultss.concat(temp_results);
+      resultss = temp_results.length ? temp_results : resultss;
     });
     console.log(resultss);
     this.state.StatusFilterValues.map((ival) => {
       //console.log(ival);
       var temp_results = [];
       temp_results = this.find_in_object(resultss, { status: ival });
-      resultss = resultss.concat(temp_results);
+      resultss = temp_results.length ? temp_results : resultss;
     });
 
     console.log("this is ");
