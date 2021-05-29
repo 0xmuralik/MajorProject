@@ -26,6 +26,8 @@ export const getPostById = async (req, res) => {
 export const createPost = async (req, res) => {
   const post = req.body;
   const folder = new FolderMessage({ name: post.title });
+  await folder.save();
+
   const newPost = new PostMessage({
     ...post,
     homeDirectory: folder._id,

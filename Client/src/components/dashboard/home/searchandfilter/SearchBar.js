@@ -22,6 +22,7 @@ class SearchBar extends Component {
       StatusFilterValues: [],
       DomainsInDB: new Map(),
       results: {},
+      filteredResults:[],
       loading: false,
       message: "",
       printthis: "",
@@ -51,6 +52,8 @@ class SearchBar extends Component {
     window.scrollTo(0, 0);
     axios.get("http://localhost:5000/posts").then((response) => {
       this.setState({ results: response.data });
+      this.setState({filteredResults:this.state.results});
+      console.log(response.data);
     });
   }
 
@@ -150,7 +153,6 @@ class SearchBar extends Component {
     const { results } = this.state;
     console.log(results);
 
-    var resultss = [];
 
     this.state.DomainFilterValues.map((ival) => {
       console.log(ival);
@@ -159,31 +161,31 @@ class SearchBar extends Component {
         domain: this.state.DomainsInDB.get(ival),
       });
       console.log(temp_results);
-      resultss = resultss.concat(temp_results);
+      this.setState({filteredResults: this.state.filteredResults.concat(temp_results)});
     });
-    console.log(resultss);
+    console.log(this.state.filteredResults);
     this.state.OrgainzationFilterValues.map((ival) => {
       console.log(ival);
       var temp_results = [];
-      temp_results = this.find_in_object(resultss, { organization: ival });
+      temp_results = this.find_in_object(this.state.filteredResults, { organization: ival });
       console.log(temp_results);
-      resultss = temp_results.length ? temp_results : resultss;
+      this.setState({filteredResults : temp_results.length ? temp_results : this.statefilteredResults});
     });
-    console.log(resultss);
+    console.log(this.state.filteredResults);
     this.state.StatusFilterValues.map((ival) => {
       //console.log(ival);
       var temp_results = [];
-      temp_results = this.find_in_object(resultss, { status: ival });
-      resultss = temp_results.length ? temp_results : resultss;
+      temp_results = this.find_in_object(this.state.filteredResults, { status: ival });
+      this.setState({filteredResults : temp_results.length ? temp_results : this.statefilteredResults});
     });
 
     console.log("this is ");
-    console.log(resultss);
+    console.log(this.state.filteredResults);
 
-    if (Object.keys(resultss).length && results.length) {
+    if (Object.keys(this.state.filteredResults).length && results.length) {
       return (
         <div>
-          {resultss.map((result) => {
+          {this.state.filteredResults.map((result) => {
             return (
               <a>
                 <ListGroup horizontal={true} className="my-2" key={result._id}>

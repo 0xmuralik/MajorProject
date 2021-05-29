@@ -11,12 +11,12 @@ export const getFolders= async (req,res)=>{
 }
 
 export const getFolderById =async (req,res) => {
-    const {_id} = req.params;
+    const _id = req.params.id;
+    console.log(_id,"AAA");
     
     if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No folder with that id');
 
     const folder = await FolderMessage.findById(_id);
-
     res.json(folder);
 }
 
@@ -25,8 +25,15 @@ export const createFolder=async (req,res)=>{
 
     const newFolder = new FolderMessage({...folder});
     try {
+        if(req.body.parentId){
+            const parentFolder =await FolderMessage.findById(req.body.parentId);
+            parentFolder.subfolders.push(newFolder._id);
+            const updatedParentFolder = await FolderMessage.findByIdAndUpdate(parentFolder._id, parentFolder, {
+                new: true,
+              });
+        }
         await newFolder.save()
-        res.status(201).json(newFolder)
+        res.status(201).json({newFolder, parentFolder});
     } catch (error) {
         res.status(409).json({message:error.message});
     }
