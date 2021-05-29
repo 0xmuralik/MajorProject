@@ -16,13 +16,14 @@ class SearchBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      myevent: [],
+
       query: "",
       DomainFilterValues: [],
       OrgainzationFilterValues: [],
       StatusFilterValues: [],
       DomainsInDB: new Map(),
       results: {},
-      filteredResults:[],
       loading: false,
       message: "",
       printthis: "",
@@ -52,8 +53,6 @@ class SearchBar extends Component {
     window.scrollTo(0, 0);
     axios.get("http://localhost:5000/posts").then((response) => {
       this.setState({ results: response.data });
-      this.setState({filteredResults:this.state.results});
-      console.log(response.data);
     });
   }
 
@@ -127,12 +126,24 @@ class SearchBar extends Component {
     });
     this.state.OrgainzationFilterValues = arr;
   };
+  logevent = (e) => {
+    e.preventDefault(); // prevent default behaviour if needed
+    this.state.myevent.push(e);
+    console.log(e);
+  };
+  StatusFilterBefore = (event) => {
+    this.StatusFilter(event);
+    var target = document.getElementById("form1");
+    target.onchange = this.logevent;
+    console.log(this.state.myevent);
+  };
   StatusFilter = (event) => {
     const arr = [];
     event.map((ival, idx) => {
       arr.push(ival.label);
     });
     this.state.StatusFilterValues = arr;
+    console.log(this.state.StatusFilterValues);
   };
 
   find_in_object(my_object, my_criteria) {
@@ -153,6 +164,7 @@ class SearchBar extends Component {
     const { results } = this.state;
     console.log(results);
 
+    var resultss = [];
 
     this.state.DomainFilterValues.map((ival) => {
       console.log(ival);
@@ -161,31 +173,44 @@ class SearchBar extends Component {
         domain: this.state.DomainsInDB.get(ival),
       });
       console.log(temp_results);
-      this.setState({filteredResults: this.state.filteredResults.concat(temp_results)});
+      resultss = resultss.concat(temp_results);
     });
-    console.log(this.state.filteredResults);
+    console.log(resultss);
+    var temp_results = [];
     this.state.OrgainzationFilterValues.map((ival) => {
       console.log(ival);
-      var temp_results = [];
-      temp_results = this.find_in_object(this.state.filteredResults, { organization: ival });
+
+      temp_results = temp_results.concat(
+        this.find_in_object(resultss, { organization: ival })
+      );
       console.log(temp_results);
-      this.setState({filteredResults : temp_results.length ? temp_results : this.statefilteredResults});
     });
-    console.log(this.state.filteredResults);
+    resultss = temp_results;
+    console.log(resultss);
+
+    temp_results = [];
     this.state.StatusFilterValues.map((ival) => {
-      //console.log(ival);
-      var temp_results = [];
-      temp_results = this.find_in_object(this.state.filteredResults, { status: ival });
-      this.setState({filteredResults : temp_results.length ? temp_results : this.statefilteredResults});
+      console.log(ival);
+      temp_results = temp_results.concat(
+        this.find_in_object(resultss, { status: ival })
+      );
+      console.log(temp_results);
     });
+    resultss = temp_results;
 
     console.log("this is ");
-    console.log(this.state.filteredResults);
+    console.log(resultss);
+    console.log(typeof this.state.query);
+    if (this.state.query == "") {
+      console.log("this is ");
+      console.log(resultss);
+      resultss = this.state.results;
+    }
 
-    if (Object.keys(this.state.filteredResults).length && results.length) {
+    if (Object.keys(resultss).length && resultss.length) {
       return (
         <div>
-          {this.state.filteredResults.map((result) => {
+          {resultss.map((result) => {
             return (
               <a>
                 <ListGroup horizontal={true} className="my-2" key={result._id}>
