@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import Breadcrumb from 'react-bootstrap/Breadcrumb'
 import * as FcIcons from 'react-icons/fc';
 import * as MdIcons from 'react-icons/md';
+import * as AiIcons from 'react-icons/ai';
 import CreateFolder from './CreateFolder';
+import CreateFile from './CreateFile';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 export class CodeFolders extends Component {
@@ -13,12 +15,14 @@ export class CodeFolders extends Component {
         //             breadCrumbList: [{title:'Research',show:true}],
         //             displayFolderCreationForm: false
         // }
-        this.handlecallback=this.handlecallback.bind(this);
+        this.handlecallbackFolder=this.handlecallbackFolder.bind(this);
+        this.handlecallbackFile=this.handlecallbackFile.bind(this);
         this.state={currentFolderID: this.props.parentFolderID
         ,currentFolder: [],
         subFolders:[],
         doRender:false,
         displayFolderCreationForm:false,
+        displayFileCreationForm:false,
         breadCrumbList: ['']
     }
     }
@@ -74,16 +78,30 @@ export class CodeFolders extends Component {
 
     };
     createFolderHandler=()=>{
-        console.log("HELLo")
-        console.log(this.state.currentFolderID)
+        if(this.state.displayFileCreationForm && !this.state.displayFolderCreationForm)
+        this.setState({displayFileCreationForm:!this.state.displayFileCreationForm});
         this.setState({displayFolderCreationForm:!this.state.displayFolderCreationForm});
     };
-    handlecallback=(toDoAfterFolderCreation)=>{
+    createFileHandler=()=>{
+        if(!this.state.displayFileCreationForm && this.state.displayFolderCreationForm)
+            this.setState({displayFolderCreationForm:!this.state.displayFolderCreationForm});
+        this.setState({displayFileCreationForm:!this.state.displayFileCreationForm});
+    }
+    handlecallbackFolder=(toDoAfterFolderCreation)=>{
         this.setState({displayFolderCreationForm:toDoAfterFolderCreation.displayFolderCreationForm,
             currentFolder:toDoAfterFolderCreation.currentFolder,
             subFolders:[...this.state.subFolders,toDoAfterFolderCreation.newFolder]
         })
         console.log(this.state.currentFolder);
+    }
+    handlecallbackFile=(toDoAfterFileCreation)=>{
+        console.log(toDoAfterFileCreation,'to_do_after_file_creation')
+        this.setState({displayFileCreationForm:toDoAfterFileCreation.displayFileCreationForm,
+            currentFolder:toDoAfterFileCreation.currentFolder
+        },()=>{
+            console.log(this.state.currentFolder);
+        })
+
     }
     render() {
         return (
@@ -105,12 +123,22 @@ export class CodeFolders extends Component {
                 </div >
                 <div style={{padding: '30px 0px 30px 20px', background:'#d8dbf0'}}>
                         <ul>
-                            <li><Link onClick={this.createFolderHandler}><span style={{fontSize:'40px'}}><MdIcons.MdCreateNewFolder /></span></Link></li>
-                                {this.state.displayFolderCreationForm?<CreateFolder parentcallback={this.handlecallback} parentID={this.state.currentFolderID}/>:''}
+                            <li>
+                                <Link onClick={this.createFolderHandler}><span style={{fontSize:'40px'}}><MdIcons.MdCreateNewFolder /></span></Link>
+                                <Link onClick={this.createFileHandler}><span style={{fontSize:'40px'}}><AiIcons.AiFillFileAdd /></span></Link>
+                            </li>
+                                {this.state.displayFolderCreationForm?<CreateFolder parentcallback={this.handlecallbackFolder} parentID={this.state.currentFolderID}/>:''}
+                                {this.state.displayFileCreationForm?<CreateFile parentcallback={this.handlecallbackFile} parent ={this.state.currentFolder} parentID={this.state.currentFolderID}/>:''}
                             <hr/>
+                            {(this.state.currentFolder.files).map((file)=>(
+                                <>
+                                <li><FcIcons.FcFile /><a download={file.name} href={file.base64} ><span>{file.name}</span></a><span style={{float:'right',padding:'0px 20px 0px 0px'}}>{file.description}</span></li>
+                                <hr/>
+                                </>
+                            ))}
                             {this.state.subFolders.map((folder)=>(
                                 <>
-                                <li><FcIcons.FcFolder /><Link onClick={this.clickFolderHandler.bind(this, folder)}><span>{folder.name}</span></Link></li>
+                                <li><FcIcons.FcFolder /><Link onClick={this.clickFolderHandler.bind(this, folder)}><span>{folder.name}</span></Link><span style={{float:'right',padding:'0px 20px 0px 0px'}}>{folder.description}</span></li>
                                 <hr/>
                                 </>
                             ))}

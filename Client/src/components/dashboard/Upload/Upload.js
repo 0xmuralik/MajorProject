@@ -10,6 +10,7 @@ import Button from "react-bootstrap/Button";
 import { Multiselect } from "multiselect-react-dropdown";
 import axios from "axios";
 import { updateLocalStorage } from "../Utils/UpdateLocalStorage";
+import FileBase from 'react-file-base64';
 
 class Upload extends Component {
   constructor(props) {
@@ -41,7 +42,7 @@ class Upload extends Component {
       "author":this.state.author,
       "organization": this.state.organization,
       "region":this.state.region,
-      //"image":[],
+      "image":this.state.image,
       "future": this.state.future,
       "workDone": this.state.workDone,
       "Description": this.state.Description,
@@ -50,7 +51,7 @@ class Upload extends Component {
       "status": this.state.status,
       "coAuthors":this.state.coAuthors,
     }
-    console.log(request);
+    console.log(request)
     axios.post("http://localhost:5000/posts/", request, {
         headers: {
           Authorization: `Bearer ${
@@ -238,10 +239,10 @@ class Upload extends Component {
                           Select images
                         </Form.Label>
                         <Col sm={10}>
-                          <Form.File
-                            id="custom-file"
-                            label="Select Images"
-                            custom
+                          <FileBase 
+                          type="file"
+                          multiple={true}
+                          onDone={({... base64})=>this.setState({image: Object.keys(base64).map((key)=>base64[key].base64)},()=>(console.log(this.state)))}
                           />
                         </Col>
                       </Form.Group>

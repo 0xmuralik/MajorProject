@@ -38,12 +38,12 @@ export const createFolder=async (req,res)=>{
 }
 
 export const updateFolder = async (req,res)=>{
-    const{id:_id} =req.params;
+    const _id =req.params.id;
     const folder = req.body;
 
     if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No folder with that id');
 
-    const updateFolder = await FolderMessage.findByIdAndUpdate(_id,{...folder,_id},{new:true});
+    const updateFolder = await FolderMessage.findByIdAndUpdate(_id,folder,{new:true});
 
     res.json(updateFolder);
 }

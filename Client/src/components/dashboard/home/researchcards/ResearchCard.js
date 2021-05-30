@@ -111,6 +111,7 @@ export class ResearchCard extends Component {
             <Card.Body style={{ background: "#d8dbf0" }}>
               <Card.Title>{this.state.details.title}</Card.Title>
               <Card.Subtitle>{this.state.details.status}</Card.Subtitle>
+              <Card.Img height={300}  variant="top" src={this.state.details.image[0]}/>
               <hr />
               <Card.Text>
                 {this.state.details.Description}

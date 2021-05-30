@@ -5,7 +5,7 @@ const folderSchema = mongoose.Schema({
     description:String, //folder description 
     parentId:mongoose.Schema.Types.ObjectId,
     subfolders:[mongoose.Schema.Types.ObjectId], // _ids of sub folders
-    files:[String], //base64 encodings of the uploaded files
+    files:[Map], //base64 encodings of the uploaded files
     itemCount:{ //number of files and folders in research
         type: Number,
         default: 0
