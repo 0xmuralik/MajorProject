@@ -16,6 +16,7 @@ const postSchema = mongoose.Schema({
   status: { type: String, require: true }, //status of the research (comlpeted/InProgress)
   coAuthors: [mongoose.Schema.Types.ObjectId], //list of collaborators (user _ids)
   homeDirectory: { type: mongoose.Schema.Types.ObjectId, require: true }, //id of home directory - create a folder with name as title and pass the objectID = > {name:title}
+  discussionForum: { type: mongoose.Schema.Types.ObjectId, require: true }, //id of discussion forum
   likes: {
     //array of userIds who liked
     type: [String],

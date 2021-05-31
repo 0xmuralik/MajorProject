@@ -1,5 +1,6 @@
 import PostMessage from "../models/postMessages.js";
 import FolderMessage from "../models/folderMessages.js";
+import DiscussionComment from '../models/comments.js'
 import Users from "../models/users.js";
 import mongoose from "mongoose";
 
@@ -27,10 +28,13 @@ export const createPost = async (req, res) => {
   const post = req.body;
   const folder = new FolderMessage({ name: post.title });
   await folder.save();
+  const discussionComment=new DiscussionComment({comment:"~root~"})
+  await discussionComment.save();
 
   const newPost = new PostMessage({
     ...post,
     homeDirectory: folder._id,
+    discussionForum: discussionComment._id,
     creator: req.userId,
     createdAt: new Date().toISOString(),
   });

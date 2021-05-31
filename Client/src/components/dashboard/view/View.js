@@ -146,9 +146,10 @@ const View = () => {
                                     <CodeFolders parentFolderID={postData.homeDirectory} />
                                     <Card.Body style={{ background: '#d8dbf0' }}>
                                         <Card.Title>Discussion Form</Card.Title>
+                                            {console.log('00000000000000000000',postData.discussionForum)}
                                         {ViewData.discussion_form.length == 0 ?
                                             <p>No comments</p> :
-                                            <DiscussionForum discussion_form={ViewData.discussion_form} />
+                                            <DiscussionForum discussion_form_id={postData.discussionForum} />
                                         }
                                     </Card.Body>
                                 </Card>

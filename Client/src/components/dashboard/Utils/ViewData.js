@@ -83,6 +83,16 @@ export const discussion_form = [
             upvotes:5,
             downvotes:2,
             subcomment: []
+        },
+        {
+            name: "pingu",
+            id: "14445",
+            time: "11 min ago",
+            comment: "what a research",
+            user_id:82,
+            upvotes:5,
+            downvotes:2,
+            subcomment: []
         }
     ]
 }
