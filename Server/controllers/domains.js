@@ -10,6 +10,18 @@ export const getDomains= async (req,res)=>{
         res.status(404).json({message:error.message});
     }
 }
+export const getIdAndName= async (req,res)=>{
+    try {
+        const domains = await Domains.find({}).select({ "name": 1, "_id": 1});
+        var dArray = domains.reduce(function(o, tpl) {
+            o[tpl._id] = tpl.name;
+            return o;
+        }, {});
+        res.status(200).json(dArray)
+    } catch (error) {
+        res.status(404).json({message:error.message});
+    }
+}
 
 export const getDomainById =async (req,res) => {
     const {_id} = req.params;

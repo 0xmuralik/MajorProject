@@ -8,3 +8,7 @@ export function getNameLocalStorage(id){
     const IdName= JSON.parse(localStorage.getItem('userIdAndName')).data;
     return IdName[id];
 }
+export function getDomainNameLocalStorage(id){
+    const IdName= JSON.parse(localStorage.getItem('domainIdAndName')).data;
+    return IdName[id];
+}

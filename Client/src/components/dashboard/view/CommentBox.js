@@ -4,7 +4,7 @@ import * as GoIcons from 'react-icons/go'
 import { Form, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-
+import {getNameLocalStorage} from '../Utils/UpdateLocalStorage'
 const CommentBox = ({ parent_id, class_list }) => {
     console.log(parent_id,'------parent-id---------')
     const [comments, setcomments] = useState([])
@@ -57,7 +57,7 @@ const CommentBox = ({ parent_id, class_list }) => {
                                 <div class="comment-box">
                                     <div class="comment-head">
                                         <h6 class="comment-name by-author">
-                                            <a href="http://creaticode.com/blog">{field.commentor}</a>
+                                            <a href="http://creaticode.com/blog">{getNameLocalStorage(field.commentor)}</a>
                                         </h6>
                                         <span>{field.time}</span>
                                         <span>

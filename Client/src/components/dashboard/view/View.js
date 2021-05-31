@@ -17,7 +17,8 @@ import { codeFolderStructure } from '../Utils/CodeFolders';
 import axios from 'axios'
 import { useParams } from 'react-router';
 import { Component } from 'react';
-import {updateLocalStorage} from '../Utils/UpdateLocalStorage';
+import { updateLocalStorage,getNameLocalStorage,getDomainNameLocalStorage } from "../Utils/UpdateLocalStorage";
+
 
 const View = () => {
 
@@ -100,15 +101,15 @@ const View = () => {
                                     <Card.Body style={{ background: '#d8dbf0' }}>
                                         <Card.Text>
                                             <h5>
-                                                <b>{postData.author}</b>
+                                                <b>{getNameLocalStorage(postData.author)}</b>
                                                 {postData.coAuthors && postData.coAuthors.map((field) => (
-                                                    ` , ${field}`
+                                                    ` , ${getNameLocalStorage(field)}`
                                                     // `${field.name} (${field.email}), `
                                                 ))}
                                                 <br />
                                                 <b>Organization: </b>{postData.organization}
                                                 <br />
-                                                <b>Domain: </b>{postData.domain}
+                                                <b>Domain: </b>{getDomainNameLocalStorage(postData.domain)}
                                                 <br />
                                                 <b>Region: </b>{postData.region}
                                             </h5>

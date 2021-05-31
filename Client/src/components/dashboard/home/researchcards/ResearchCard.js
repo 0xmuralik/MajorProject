@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import * as IoIcons from "react-icons/io5";
 import * as AiIcons from "react-icons/ai";
 import axios from "axios";
-import { updateLocalStorage } from "../../Utils/UpdateLocalStorage";
+import { updateLocalStorage,getNameLocalStorage } from "../../Utils/UpdateLocalStorage";
 
 //import './LoginForm.css'
 export class ResearchCard extends Component {
@@ -93,7 +93,7 @@ export class ResearchCard extends Component {
                   <Col md={9}>
                     <Row>
                       <Link to="/profile">
-                        <h5>{this.state.details.creator}</h5>
+                        <h5>{getNameLocalStorage(this.state.details.creator)}</h5>
                       </Link>
                     </Row>
                     <Row>

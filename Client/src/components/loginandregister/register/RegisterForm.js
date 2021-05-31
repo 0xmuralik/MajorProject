@@ -58,7 +58,11 @@ class RegisterForm extends Component {
             axios.get('http://localhost:5000/users/get_id_and_name')
             .then(response=>{
                 localStorage.setItem('userIdAndName',JSON.stringify(response));
-                window.location='/dashboard'
+                axios.get('http://localhost:5000/domains/getIdAndName')
+                .then(response=>{
+                    localStorage.setItem('domainIdAndName',JSON.stringify(response));
+                    window.location='/dashboard'
+                })
             })
         });
         
