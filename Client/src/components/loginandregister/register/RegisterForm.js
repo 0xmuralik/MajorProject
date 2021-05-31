@@ -5,6 +5,7 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form'
 import axios from 'axios';
+import getNameLocalStorage from '../../dashboard/Utils/UpdateLocalStorage.js'
 
 
 
@@ -54,7 +55,13 @@ class RegisterForm extends Component {
         axios.post('http://localhost:5000/users/signup',this.state.formDetails)
         .then(response=>{console.log(response);
             localStorage.setItem('profile',JSON.stringify(response));
-        window.location='/dashboard'});
+            axios.get('http://localhost:5000/users/get_id_and_name')
+            .then(response=>{
+                localStorage.setItem('userIdAndName',JSON.stringify(response));
+                window.location='/dashboard'
+            })
+        });
+        
     }
     render(props) {
         return (

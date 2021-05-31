@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { LoginDetails } from '../../dashboard/Utils/LoginDetails';
 import axios from 'axios';
+import {getNameLocalStorage} from '../../dashboard/Utils/UpdateLocalStorage.js'
 //import Dashboard from './Dashboard';
 import {
     BrowserRouter as Router,
@@ -44,7 +45,13 @@ class LoginForm extends Component {
         axios.post('http://localhost:5000/users/signin',this.state.formDetails)
         .then(response=>{console.log(response);
             localStorage.setItem('profile',JSON.stringify(response));
-            window.location='/dashboard'});
+            axios.get('http://localhost:5000/users/get_id_and_name')
+            .then(response=>{
+                localStorage.setItem('userIdAndName',JSON.stringify(response));
+                window.location='/dashboard'
+            })
+        });
+        
     }
 
 

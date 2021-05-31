@@ -4,3 +4,7 @@ export function updateLocalStorage(result){
     profile.data.result=result;
     localStorage.setItem('profile',JSON.stringify(profile));
 }
+export function getNameLocalStorage(id){
+    const IdName= JSON.parse(localStorage.getItem('userIdAndName')).data;
+    return IdName[id];
+}

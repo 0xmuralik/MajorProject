@@ -61,6 +61,19 @@ export const getUsers= async (req,res)=>{
     }
 }
 
+export const getIdAndName=async (req,res)=>{
+    try{
+        const users = await Users.find({}).select({ "name": 1, "_id": 1})
+        var uArray = users.reduce(function(o, tpl) {
+            o[tpl._id] = tpl.name;
+            return o;
+        }, {});
+        res.status(200).json(uArray)
+    }catch(error){
+        res.status(404).json({message:error.message})
+    }
+}
+
 export const getUserById =async (req,res) => {
     const {_id} = req.params;
     
