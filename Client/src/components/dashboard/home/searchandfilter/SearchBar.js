@@ -1,16 +1,9 @@
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
 import ListGroup from "react-bootstrap/ListGroup";
 import ResearchCard from "../researchcards/ResearchCard";
-import Col from "react-bootstrap/Col";
 import React, { Component } from "react";
 import "./SearchBar.css";
-import UseFiltersToggle from "./UseFiltersToggle";
 import axios from "axios";
 import ReactMultiSelectCheckboxes from "react-multiselect-checkboxes";
-import FilterDropDowns from "./FilterDropDowns";
-import { options } from "../../Utils/DropDownOprions";
-import { Children } from "react";
 
 class SearchBar extends Component {
   constructor(props) {
@@ -89,9 +82,8 @@ class SearchBar extends Component {
     axios
       .get(searchUrl, {
         headers: {
-          Authorization: `Bearer ${
-            JSON.parse(localStorage.getItem("profile")).data.token
-          }`,
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("profile")).data.token
+            }`,
         },
       })
       .then((res) => {

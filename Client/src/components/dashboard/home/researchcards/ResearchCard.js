@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import * as IoIcons from "react-icons/io5";
 import * as AiIcons from "react-icons/ai";
 import axios from "axios";
-import { updateLocalStorage,getNameLocalStorage } from "../../Utils/UpdateLocalStorage";
+import { updateLocalStorage, getNameLocalStorage } from "../../Utils/UpdateLocalStorage";
 
 //import './LoginForm.css'
 export class ResearchCard extends Component {
@@ -46,9 +46,8 @@ export class ResearchCard extends Component {
         {},
         {
           headers: {
-            Authorization: `Bearer ${
-              JSON.parse(localStorage.getItem("profile")).data.token
-            }`,
+            Authorization: `Bearer ${JSON.parse(localStorage.getItem("profile")).data.token
+              }`,
           },
         }
       )
@@ -66,9 +65,8 @@ export class ResearchCard extends Component {
         {},
         {
           headers: {
-            Authorization: `Bearer ${
-              JSON.parse(localStorage.getItem("profile")).data.token
-            }`,
+            Authorization: `Bearer ${JSON.parse(localStorage.getItem("profile")).data.token
+              }`,
           },
         }
       )
@@ -111,7 +109,7 @@ export class ResearchCard extends Component {
             <Card.Body style={{ background: "#d8dbf0" }}>
               <Card.Title>{this.state.details.title}</Card.Title>
               <Card.Subtitle>{this.state.details.status}</Card.Subtitle>
-              <Card.Img height={300}  variant="top" src={this.state.details.image[0]}/>
+              <Card.Img height={300} variant="top" src={this.state.details.image[0]} />
               <hr />
               <Card.Text>
                 {this.state.details.Description}
@@ -131,8 +129,8 @@ export class ResearchCard extends Component {
                       {!this.state.isLiked ? (
                         <AiIcons.AiFillLike />
                       ) : (
-                        <AiIcons.AiFillDislike />
-                      )}
+                          <AiIcons.AiFillDislike />
+                        )}
                     </Button>
                   </ButtonGroup>
                   <ButtonGroup className="mr-2">

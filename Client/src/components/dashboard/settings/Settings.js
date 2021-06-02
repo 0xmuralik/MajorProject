@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import './settings.css';
 import Button from 'react-bootstrap/Button'
 import EditPasswordForm from './EditPasswordForm';
@@ -10,29 +10,29 @@ import Header from '../header/Header';
 import SidePannel from '../sidepannel/SidePannel';
 function Settings() {
 
-    const[isEditPasswordFOrmOpened,setEditPasswordFormOpened]=useState(false);
-    const[isRemoveFOrmOpened,setRemoveFormOpened]=useState(false);
-    const[isDarkModeOn,setDarkMode]=useState(document.body.style.backgroundColor=='white'?true:false);
-    console.log(document.body.style.backgroundColor==='white',"AAAA")
-    const handleEditButton=()=>{
+    const [isEditPasswordFOrmOpened, setEditPasswordFormOpened] = useState(false);
+    const [isRemoveFOrmOpened, setRemoveFormOpened] = useState(false);
+    const [isDarkModeOn, setDarkMode] = useState(document.body.style.backgroundColor == 'white' ? true : false);
+    console.log(document.body.style.backgroundColor === 'white', "AAAA")
+    const handleEditButton = () => {
         setEditPasswordFormOpened(!isEditPasswordFOrmOpened)
     }
-    const handleRemoveButton=()=>{
+    const handleRemoveButton = () => {
         setRemoveFormOpened(!isRemoveFOrmOpened)
     }
-    const handleTheme=()=>{
+    const handleTheme = () => {
         setDarkMode(!isDarkModeOn);
-        document.body.style.backgroundColor = isDarkModeOn?'white':'black';
+        document.body.style.backgroundColor = isDarkModeOn ? 'white' : 'black';
     }
     useEffect(async () => {
-        if(!localStorage.getItem('profile')){
-            window.location='/';
-          }
+        if (!localStorage.getItem('profile')) {
+            window.location = '/';
+        }
         window.scrollTo(0, 0)
     });
     return (
         <>
-        <Header />
+            <Header />
             <div>
                 <Container fluid>
                     <Row>
@@ -43,40 +43,40 @@ function Settings() {
 
                         </Col>
                         <Col sm={10}>
-                        <div style={{ position: 'relative', top: '100px' }}>
-                            <div style={{padding: '50px 0px 0px 0px' }}>
-                                <span>Dark Mode</span>
-                                <label class="switch">
-                                <input checked={isDarkModeOn} onChange={handleTheme} type="checkbox"/>
-                                <span class="slider round">
-                                </span>
-                                </label>
-                            </div>
-                            <div style={{padding: '50px 0px 0px 0px' }}>
-                                <span>Change Password</span>
-                                <span style={{align: 'right'}}>
-                                    <Button variant={isEditPasswordFOrmOpened ? 'danger':'primary'} onClick={handleEditButton}>
-                                        {isEditPasswordFOrmOpened?'Close':'Edit'}
-                                    </Button>
+                            <div style={{ position: 'relative', top: '100px' }}>
+                                <div style={{ padding: '50px 0px 0px 0px' }}>
+                                    <span>Dark Mode</span>
+                                    <label class="switch">
+                                        <input checked={isDarkModeOn} onChange={handleTheme} type="checkbox" />
+                                        <span class="slider round">
+                                        </span>
+                                    </label>
+                                </div>
+                                <div style={{ padding: '50px 0px 0px 0px' }}>
+                                    <span>Change Password</span>
+                                    <span style={{ align: 'right' }}>
+                                        <Button variant={isEditPasswordFOrmOpened ? 'danger' : 'primary'} onClick={handleEditButton}>
+                                            {isEditPasswordFOrmOpened ? 'Close' : 'Edit'}
+                                        </Button>
                                     </span>
-                                {isEditPasswordFOrmOpened?<EditPasswordForm/>:null}
-                            </div>
-                            <div style={{padding: '50px 0px 0px 0px' }}>
-                                <span>Remove Account</span>
-                                <span style={{align: 'right'}}>
-                                    <Button variant={isRemoveFOrmOpened ? 'danger':'primary'} onClick={handleRemoveButton}>
-                                        {isRemoveFOrmOpened?'Close':'Remove'}
-                                    </Button>
+                                    {isEditPasswordFOrmOpened ? <EditPasswordForm /> : null}
+                                </div>
+                                <div style={{ padding: '50px 0px 0px 0px' }}>
+                                    <span>Remove Account</span>
+                                    <span style={{ align: 'right' }}>
+                                        <Button variant={isRemoveFOrmOpened ? 'danger' : 'primary'} onClick={handleRemoveButton}>
+                                            {isRemoveFOrmOpened ? 'Close' : 'Remove'}
+                                        </Button>
                                     </span>
-                                {isRemoveFOrmOpened?<RemoveAccountForm/>:null}
+                                    {isRemoveFOrmOpened ? <RemoveAccountForm /> : null}
+                                </div>
                             </div>
-                        </div>
                         </Col>
                     </Row>
                 </Container>
             </div>
-                </>
-                        
+        </>
+
     )
 }
 

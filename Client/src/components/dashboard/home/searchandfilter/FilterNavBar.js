@@ -1,17 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import FormControl from "react-bootstrap/FormControl";
-import SearchBar from "./SearchBar";
 import FilterDropDowns from "./FilterDropDowns";
 import { options } from "../../Utils/DropDownOprions";
-import ListGroup from "react-bootstrap/ListGroup";
 import UseFiltersToggle from "./UseFiltersToggle";
 import Container from "react-bootstrap/Container";
-import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
 class FilterNavBar extends React.Component {

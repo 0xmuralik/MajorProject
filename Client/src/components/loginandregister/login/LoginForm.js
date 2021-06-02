@@ -4,58 +4,54 @@ import './Form.css'
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-import { LoginDetails } from '../../dashboard/Utils/LoginDetails';
 import axios from 'axios';
-import {getNameLocalStorage} from '../../dashboard/Utils/UpdateLocalStorage.js'
-//import Dashboard from './Dashboard';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-} from "react-router-dom";
+
+
 class LoginForm extends Component {
 
 
     constructor(props) {
         super(props)
-        this.state = { formDetails:{
-            name:'',
-            emailOrUsername:'',
-            password:'',
-            username:'',
-            domains:[],
-            contact:'',
-            description:'',
-            displayPicture:'',
-            likedPosts:[],
-            savedPosts:[],
-            viewedPosts:[]
-        } }
+        this.state = {
+            formDetails: {
+                name: '',
+                emailOrUsername: '',
+                password: '',
+                username: '',
+                domains: [],
+                contact: '',
+                description: '',
+                displayPicture: '',
+                likedPosts: [],
+                savedPosts: [],
+                viewedPosts: []
+            }
+        }
     }
 
     changeHandler = (event) => {
-        const details= this.state.formDetails;
+        const details = this.state.formDetails;
         details[event.target.name] = event.target.value;
-        this.setState({formDetails: details});
+        this.setState({ formDetails: details });
         console.log(this.state.formDetails)
     }
     submitHandler = (e) => {
         e.preventDefault();
-        axios.post('/users/signin',this.state.formDetails)
-        .then(response=>{console.log(response);
-            localStorage.setItem('profile',JSON.stringify(response));
-            axios.get('/users/get_id_and_name')
-            .then(response=>{
-                localStorage.setItem('userIdAndName',JSON.stringify(response));
-                axios.get('/domains/getIdAndName')
-                .then(response=>{
-                    localStorage.setItem('domainIdAndName',JSON.stringify(response));
-                    window.location='/dashboard'
-                })
-            })
-        });
-        
+        axios.post('/users/signin', this.state.formDetails)
+            .then(response => {
+                console.log(response);
+                localStorage.setItem('profile', JSON.stringify(response));
+                axios.get('/users/get_id_and_name')
+                    .then(response => {
+                        localStorage.setItem('userIdAndName', JSON.stringify(response));
+                        axios.get('/domains/getIdAndName')
+                            .then(response => {
+                                localStorage.setItem('domainIdAndName', JSON.stringify(response));
+                                window.location = '/dashboard'
+                            })
+                    })
+            });
+
     }
 
 

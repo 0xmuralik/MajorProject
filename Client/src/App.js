@@ -1,6 +1,6 @@
 
-import React, { Component } from 'react';
-import {BrowserRouter as Router,Link,Switch,Route } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
 import Dashboard from './components/dashboard/home/Dashboard';
 import UserProfile from './components/dashboard/profile/UserProfile';
 import View from './components/dashboard/view/View'
@@ -14,7 +14,6 @@ import axios from 'axios'
 
 function App() {
   axios.defaults.baseURL = 'http://localhost:5000';
-  console.log("com");
   return (
     <Router>
       <Switch>

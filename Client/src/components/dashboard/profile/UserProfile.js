@@ -9,13 +9,11 @@ import Image from 'react-bootstrap/Image'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 import rImg from "../Utils/Images/Rohith.JPG";
-import { FaRegImage } from 'react-icons/fa';
 import DisplayFeilds from './DisplayFields'
 import { UserDetails } from "../Utils/UserDetails"
 import * as IoIcons from 'react-icons/io';
 import './UserProfile.css';
 import UserActivity from './UserActivity';
-import YourCommunities from './YourCommunities';
 import Header from '../header/Header';
 import SidePannel from '../sidepannel/SidePannel';
 
@@ -26,13 +24,13 @@ const UserProfile = () => {
     const [readOnly, handleEdit] = useState(true)
     const [details, setDetails] = useState(UserDetails)
     //setDetails(UserDetails)
-    const uname=details.filter(field=>field.name=='Username')[0].value
-    const desc=details.filter(field=>field.name=='Description')[0].value
+    const uname = details.filter(field => field.name == 'Username')[0].value
+    const desc = details.filter(field => field.name == 'Description')[0].value
 
     useEffect(async () => {
-        if(!localStorage.getItem('profile')){
-            window.location='/';
-          }
+        if (!localStorage.getItem('profile')) {
+            window.location = '/';
+        }
         window.scrollTo(0, 0);
     }, []);
 
@@ -56,11 +54,11 @@ const UserProfile = () => {
                                     <Row>
                                         <Col xs={12} md="auto" width=''>
                                             <Card style={{ width: '20rem' }}>
-                                                <Card style={{background:'#aeb9f7'}}>
+                                                <Card style={{ background: '#aeb9f7' }}>
                                                     <Image src={rImg} width="300" height="300" roundedCircle />
-                                                    <Button type='file' className="ml-auto"><IoIcons.IoMdAdd/></Button>
+                                                    <Button type='file' className="ml-auto"><IoIcons.IoMdAdd /></Button>
                                                 </Card>
-                                                <Card.Body style={{background:'#d8dbf0'}}>
+                                                <Card.Body style={{ background: '#d8dbf0' }}>
                                                     <Card.Title>
                                                         {uname}
                                                     </Card.Title>
@@ -73,9 +71,9 @@ const UserProfile = () => {
                                         <Col xs={6} md={5}>
                                             <Form>
                                                 <DisplayFeilds readOnly={readOnly} details={details} />
-                                                <Button onClick={()=>handleEdit(!readOnly)} variant="primary">{readOnly?'Edit':'Discard'}</Button>
+                                                <Button onClick={() => handleEdit(!readOnly)} variant="primary">{readOnly ? 'Edit' : 'Discard'}</Button>
                                                 <span>&nbsp;</span>
-                                                <Button type="submit"  disabled={readOnly} variant="primary">Submit</Button>
+                                                <Button type="submit" disabled={readOnly} variant="primary">Submit</Button>
                                             </Form>
                                         </Col>
                                     </Row>
@@ -84,18 +82,18 @@ const UserProfile = () => {
                                 <Container >
                                     <Row>
                                         <Col sm={10}>
-                                        <UserActivity/>
+                                            <UserActivity />
                                         </Col>
                                     </Row>
                                 </Container>
-                            
+
                             </div>
                         </Col>
                     </Row>
                 </Container>
             </div>
         </>
-       
+
 
     )
 }

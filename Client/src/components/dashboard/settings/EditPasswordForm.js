@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 
 function EditPasswordForm() {
     return (
-        <div class= 'col-lg-4 'style={{padding:'25px 0px 0px 15px'}}>
+        <div class='col-lg-4 ' style={{ padding: '25px 0px 0px 15px' }}>
             <Form>
                 <Form.Group controlId="formBasicPassword">
                     <Form.Label>Current Password</Form.Label>

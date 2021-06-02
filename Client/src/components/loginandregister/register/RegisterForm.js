@@ -5,8 +5,6 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form'
 import axios from 'axios';
-import getNameLocalStorage from '../../dashboard/Utils/UpdateLocalStorage.js'
-
 
 
 class RegisterForm extends Component {
@@ -16,20 +14,20 @@ class RegisterForm extends Component {
         super()
         this.state = {
             show: false,
-            formDetails:{
-                name:'',
-                email:'',
-                password:'',
-                username:'',
-                domains:[],
-                contact:'',
-                description:'',
-                displayPicture:'',
-                likedPosts:[],
-                savedPosts:[],
-                viewedPosts:[]
+            formDetails: {
+                name: '',
+                email: '',
+                password: '',
+                username: '',
+                domains: [],
+                contact: '',
+                description: '',
+                displayPicture: '',
+                likedPosts: [],
+                savedPosts: [],
+                viewedPosts: []
             },
-            confirmPassword:''
+            confirmPassword: ''
         }
 
     }
@@ -37,35 +35,36 @@ class RegisterForm extends Component {
     selectedCities = (e) => {
         this.setState({ selectedCities: e.value });
     }
-    changeHandler=(e)=>{
-        if(e.target.name=='confirmPassword'){
-            this.setState({confirmPassword:e.target.value});
+    changeHandler = (e) => {
+        if (e.target.name == 'confirmPassword') {
+            this.setState({ confirmPassword: e.target.value });
         }
-        else{
-        const details= this.state.formDetails;
-        details[e.target.name]=e.target.value;
-        if(e.target.name=='email')
-            details['username']=(e.target.value).split('@')[0];
-        this.setState({formDetails:details});
-        console.log(this.state.formDetails);
+        else {
+            const details = this.state.formDetails;
+            details[e.target.name] = e.target.value;
+            if (e.target.name == 'email')
+                details['username'] = (e.target.value).split('@')[0];
+            this.setState({ formDetails: details });
+            console.log(this.state.formDetails);
         }
     }
-    submitHandler=(e)=>{
+    submitHandler = (e) => {
         e.preventDefault();
-        axios.post('/users/signup',this.state.formDetails)
-        .then(response=>{console.log(response);
-            localStorage.setItem('profile',JSON.stringify(response));
-            axios.get('/users/get_id_and_name')
-            .then(response=>{
-                localStorage.setItem('userIdAndName',JSON.stringify(response));
-                axios.get('/domains/getIdAndName')
-                .then(response=>{
-                    localStorage.setItem('domainIdAndName',JSON.stringify(response));
-                    window.location='/dashboard'
-                })
-            })
-        });
-        
+        axios.post('/users/signup', this.state.formDetails)
+            .then(response => {
+                console.log(response);
+                localStorage.setItem('profile', JSON.stringify(response));
+                axios.get('/users/get_id_and_name')
+                    .then(response => {
+                        localStorage.setItem('userIdAndName', JSON.stringify(response));
+                        axios.get('/domains/getIdAndName')
+                            .then(response => {
+                                localStorage.setItem('domainIdAndName', JSON.stringify(response));
+                                window.location = '/dashboard'
+                            })
+                    })
+            });
+
     }
     render(props) {
         return (

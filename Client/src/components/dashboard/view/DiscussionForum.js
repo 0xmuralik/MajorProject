@@ -6,8 +6,8 @@ import axios from 'axios'
 
 const DiscussionForum = ({ discussion_form_id }) => {
     const [parentId, setparentId] = useState(discussion_form_id)
-    const [comment, setcomment] = useState('')  
-    const [displayCommentList, setdisplayCommentList] = useState(false)  
+    const [comment, setcomment] = useState('')
+    const [displayCommentList, setdisplayCommentList] = useState(false)
 
     useEffect(() => {
         setdisplayCommentList(true)
@@ -16,11 +16,11 @@ const DiscussionForum = ({ discussion_form_id }) => {
     const onsubmit = (e) => {
         e.preventDefault()
         setdisplayCommentList(false)
-        axios.post('/discussionforum/'+discussion_form_id+'/newcomment',
-            {message:comment},
-            {headers: { Authorization: `Bearer ${JSON.parse(localStorage.getItem("profile")).data.token}`}}            
-        ).then(response=>{
-            console.log(response.data,'===========================')
+        axios.post('/discussionforum/' + discussion_form_id + '/newcomment',
+            { message: comment },
+            { headers: { Authorization: `Bearer ${JSON.parse(localStorage.getItem("profile")).data.token}` } }
+        ).then(response => {
+            console.log(response.data, '===========================')
             setdisplayCommentList(true)
         })
         setcomment('')
@@ -40,8 +40,8 @@ const DiscussionForum = ({ discussion_form_id }) => {
                 </Form>
             </div>
             <div class="comments-container">
-                {console.log(discussion_form_id+"in formmmmmmmmm")}
-                {displayCommentList?<CommentBox parent_id={parentId} class_list={"comments-list"}/>:null}
+                {console.log(discussion_form_id + "in formmmmmmmmm")}
+                {displayCommentList ? <CommentBox parent_id={parentId} class_list={"comments-list"} /> : null}
             </div>
         </div>
     )

@@ -1,6 +1,7 @@
 import React from 'react'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+
 function RemoveAccountForm() {
     return (
         <div class= 'col-lg-4 'style={{padding:'25px 0px 0px 15px'}}>

@@ -5,7 +5,7 @@ import Container from "react-bootstrap/Container";
 import Header from "../header/Header";
 import SidePannel from "../sidepannel/SidePannel";
 import Form from "react-bootstrap/Form";
-import * as ViewData from "../Utils/ViewData";
+// import * as ViewData from "../Utils/ViewData";
 import Button from "react-bootstrap/Button";
 import { Multiselect } from "multiselect-react-dropdown";
 import axios from "axios";
@@ -39,26 +39,25 @@ class Upload extends Component {
     const request = {
       "title": this.state.title,
       // "creator":JSON.parse(localStorage.getItem('profile')).data.result._id,
-      "author":this.state.author,
+      "author": this.state.author,
       "organization": this.state.organization,
-      "region":this.state.region,
-      "image":this.state.image,
+      "region": this.state.region,
+      "image": this.state.image,
       "future": this.state.future,
       "workDone": this.state.workDone,
       "Description": this.state.Description,
       "domain": this.state.domain,
       "tags": this.state.tags,
       "status": this.state.status,
-      "coAuthors":this.state.coAuthors,
+      "coAuthors": this.state.coAuthors,
     }
     console.log(request)
     axios.post("/posts/", request, {
-        headers: {
-          Authorization: `Bearer ${
-            JSON.parse(localStorage.getItem("profile")).data.token
+      headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem("profile")).data.token
           }`,
-        },
-      })
+      },
+    })
       .then((response) => {
         console.log(response);
         updateLocalStorage(response.data.updatedUser);
@@ -239,10 +238,10 @@ class Upload extends Component {
                           Select images
                         </Form.Label>
                         <Col sm={10}>
-                          <FileBase 
-                          type="file"
-                          multiple={true}
-                          onDone={({... base64})=>this.setState({image: Object.keys(base64).map((key)=>base64[key].base64)},()=>(console.log(this.state)))}
+                          <FileBase
+                            type="file"
+                            multiple={true}
+                            onDone={({ ...base64 }) => this.setState({ image: Object.keys(base64).map((key) => base64[key].base64) }, () => (console.log(this.state)))}
                           />
                         </Col>
                       </Form.Group>

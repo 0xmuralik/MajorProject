@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-//import { Switch } from '@material-ui/core';
 import './UseFiltersToggle.css';
 import Col from "react-bootstrap/Col";
+
 export class UseFiltersToggle extends Component {
     render() {
         return (
