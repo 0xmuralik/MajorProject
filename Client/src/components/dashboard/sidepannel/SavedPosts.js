@@ -21,7 +21,6 @@ export class SavedPosts extends Component {
       axios.get('/posts/' + id, {})
         .then(response => {
           this.setState({ details: [...this.state.details, response.data] });
-          console.log(this.state.details, '-----------');
         })
     })
   }

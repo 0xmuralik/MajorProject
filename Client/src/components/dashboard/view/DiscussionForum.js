@@ -20,7 +20,6 @@ const DiscussionForum = ({ discussion_form_id }) => {
             { message: comment },
             { headers: { Authorization: `Bearer ${JSON.parse(localStorage.getItem("profile")).data.token}` } }
         ).then(response => {
-            console.log(response.data, '===========================')
             setdisplayCommentList(true)
         })
         setcomment('')
@@ -40,7 +39,6 @@ const DiscussionForum = ({ discussion_form_id }) => {
                 </Form>
             </div>
             <div class="comments-container">
-                {console.log(discussion_form_id + "in formmmmmmmmm")}
                 {displayCommentList ? <CommentBox parent_id={parentId} class_list={"comments-list"} /> : null}
             </div>
         </div>

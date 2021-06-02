@@ -10,7 +10,6 @@ export class AbstractModal extends Component {
 
   openAbstractModal = () => {
     this.setState({ isModalOpened: true });
-    console.log(this.state.isModalOpened);
   };
   closeAbstractModal = () => {
     this.setState({ isModalOpened: false });

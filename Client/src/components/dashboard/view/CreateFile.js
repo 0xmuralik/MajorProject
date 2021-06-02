@@ -6,14 +6,12 @@ import FileBase from 'react-file-base64';
 function CreateFile(props) {
     const [fileDetails, setFileDetails] = useState({ namee: '', description: '', base64: '' });
     const [parentFolder, setParentFolder] = useState(props.parent);
-    console.log(props.parentID)
     function submitHandler(e) {
         e.preventDefault();
         const request = { name: fileDetails.namee, description: fileDetails.description, base64: fileDetails.base64 };
         const parentFolderTemp = parentFolder;
         parentFolderTemp.files.push(request);
         setParentFolder(parentFolderTemp);
-        console.log(parentFolder);
         axios.patch('/folders/' + props.parentID, parentFolder,
             {
                 headers: {
@@ -22,7 +20,6 @@ function CreateFile(props) {
                 },
             })
             .then((response) => {
-                console.log(response);
                 const toDoAfterFileCreation = { displayFileCreationForm: false, currentFolder: response.data }
                 props.parentcallback(toDoAfterFileCreation);
             })
@@ -33,10 +30,8 @@ function CreateFile(props) {
     }
     function changeHandler(e) {
         const det = fileDetails;
-        console.log(e.target);
         det[e.target.name] = e.target.value;
         setFileDetails(det);
-        console.log(fileDetails);
     }
     return (
         <div class='col-lg-4 ' style={{ padding: '25px 0px 0px 15px' }}>
@@ -55,7 +50,6 @@ function CreateFile(props) {
                         type="file"
                         multiple={false}
                         onDone={({ base64 }) => {
-                            console.log(base64)
                             const det = fileDetails
                             det.base64 = base64
                             setFileDetails(det)

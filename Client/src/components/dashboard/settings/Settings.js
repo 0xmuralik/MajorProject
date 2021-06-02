@@ -13,7 +13,6 @@ function Settings() {
     const [isEditPasswordFOrmOpened, setEditPasswordFormOpened] = useState(false);
     const [isRemoveFOrmOpened, setRemoveFormOpened] = useState(false);
     const [isDarkModeOn, setDarkMode] = useState(document.body.style.backgroundColor == 'white' ? true : false);
-    console.log(document.body.style.backgroundColor === 'white', "AAAA")
     const handleEditButton = () => {
         setEditPasswordFormOpened(!isEditPasswordFOrmOpened)
     }

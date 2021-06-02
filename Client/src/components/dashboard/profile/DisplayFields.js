@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import { DisplayField } from "./DisplayField";
 
 const DisplayFields = ({ readOnly, details }) => {
-    console.log("probs1,", readOnly)
-
 
     return (
         <>

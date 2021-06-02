@@ -8,7 +8,6 @@ import { getNameLocalStorage } from '../Utils/UpdateLocalStorage'
 
 
 const CommentBox = ({ parent_id, class_list }) => {
-    console.log(parent_id, '------parent-id---------')
     const [comments, setcomments] = useState([])
     const [displaySubCommentForm, setdisplaySubCommentForm] = useState(false)
     const [displaySubCommentList, setdisplaySubCommentList] = useState(false)
@@ -35,7 +34,6 @@ const CommentBox = ({ parent_id, class_list }) => {
             { message: replyComment },
             { headers: { Authorization: `Bearer ${JSON.parse(localStorage.getItem("profile")).data.token}` } }
         ).then(response => {
-            console.log(response.data, '===========================')
             setdisplaySubCommentList(true)
             setformsubmited(true)
         })

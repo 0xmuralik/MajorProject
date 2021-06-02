@@ -14,7 +14,7 @@ function SidePannelButtons(props) {
             <span>{props.item.title}</span>
         </Link>
     return (
-        // console.log(props.item),
+        
         <li key={props.index} className={props.item.cName}>
             {link}
             <div id={props.item.id} class="collapse">

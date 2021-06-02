@@ -82,8 +82,9 @@ class SearchBar extends Component {
     axios
       .get(searchUrl, {
         headers: {
-          Authorization: `Bearer ${JSON.parse(localStorage.getItem("profile")).data.token
-            }`,
+          Authorization: `Bearer ${
+            JSON.parse(localStorage.getItem("profile")).data.token
+          }`,
         },
       })
       .then((res) => {

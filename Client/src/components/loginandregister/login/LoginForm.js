@@ -33,13 +33,11 @@ class LoginForm extends Component {
         const details = this.state.formDetails;
         details[event.target.name] = event.target.value;
         this.setState({ formDetails: details });
-        console.log(this.state.formDetails)
     }
     submitHandler = (e) => {
         e.preventDefault();
         axios.post('/users/signin', this.state.formDetails)
             .then(response => {
-                console.log(response);
                 localStorage.setItem('profile', JSON.stringify(response));
                 axios.get('/users/get_id_and_name')
                     .then(response => {

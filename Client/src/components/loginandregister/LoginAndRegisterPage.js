@@ -14,7 +14,6 @@ export class LoginAndRegisterPage extends Component {
   }
 
   handlecallback = (childValues) => {
-    console.log(childValues)
     this.setState({ password: childValues.password, email: childValues.email })
     //this.props.history.push('/dashboard');
   }

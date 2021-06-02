@@ -52,7 +52,6 @@ export class ResearchCard extends Component {
         }
       )
       .then((response) => {
-        console.log(response.data.updatedPost, "aaa");
         this.setState({ details: response.data.updatedPost });
         updateLocalStorage(response.data.updatedUser);
       });
@@ -71,13 +70,11 @@ export class ResearchCard extends Component {
         }
       )
       .then((response) => {
-        console.log(response.data.updatedPost, "aaa");
         this.setState({ details: response.data.updatedPost });
         updateLocalStorage(response.data.updatedUser);
       });
   };
   render() {
-    // console.log('cardsss', this.state.details)
     return (
       <>
         <div style={{ padding: "50px" }} class="wrapper wrapper--w640">

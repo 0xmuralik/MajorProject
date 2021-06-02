@@ -9,7 +9,6 @@ function Notification(props) {
   const handleReadAll = () => {
     setIsRead('#d8dbf0');
   }
-  console.log(props)
   return (
     <nav className={props.openNotification ? 'notification-menu active' : 'notification-menu'}>
       <h2 class='notificationheading'>Notifications</h2>

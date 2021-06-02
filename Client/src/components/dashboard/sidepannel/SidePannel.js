@@ -11,7 +11,6 @@ function SidePannel() {
   const showSidebar = () => setSidebar(!sidebar);
 
   return (
-    // console.log({SidebarData}),
     <nav className={true ? 'nav-menu active' : 'nav-menu'}>
       <ul className='nav-menu-items' onClick={showSidebar}>
         <li className='navbar-toggle'>

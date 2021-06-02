@@ -47,7 +47,6 @@ const View = () => {
         await axios.patch('/posts/' + post_id + '/viewPost', {},
             { headers: { 'Authorization': `Bearer ${JSON.parse(localStorage.getItem('profile')).data.token}` } })
             .then((response) => {
-                console.log(response);
                 setpostData(response.data.updatedPost);
                 updateLocalStorage(response.data.updatedUser);
                 setDoRender(true);
@@ -86,7 +85,6 @@ const View = () => {
                                                 </Row>
 
                                                 <Row>
-                                                    {console.log(postData, '===================')}
                                                     <Col><Card.Link href="#">{postData.likes.length} Likes</Card.Link></Col>
                                                     <Col><Card.Link href="#">{postData.views.length} Views</Card.Link></Col>
                                                     <Col><Card.Link href="#">Share</Card.Link></Col>
@@ -142,7 +140,6 @@ const View = () => {
                                         <CodeFolders parentFolderID={postData.homeDirectory} />
                                         <Card.Body style={{ background: '#d8dbf0' }}>
                                             <Card.Title>Discussion Form</Card.Title>
-                                            {console.log('00000000000000000000', postData.discussionForum)}
                                             {ViewData.discussion_form.length == 0 ?
                                                 <p>No comments</p> :
                                                 <DiscussionForum discussion_form_id={postData.discussionForum} />

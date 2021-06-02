@@ -45,14 +45,12 @@ class RegisterForm extends Component {
             if (e.target.name == 'email')
                 details['username'] = (e.target.value).split('@')[0];
             this.setState({ formDetails: details });
-            console.log(this.state.formDetails);
         }
     }
     submitHandler = (e) => {
         e.preventDefault();
         axios.post('/users/signup', this.state.formDetails)
             .then(response => {
-                console.log(response);
                 localStorage.setItem('profile', JSON.stringify(response));
                 axios.get('/users/get_id_and_name')
                     .then(response => {

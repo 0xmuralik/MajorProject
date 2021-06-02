@@ -52,8 +52,6 @@ export class CodeFolders extends Component {
     }
 
     clickFolderHandler = (folder) => {
-        console.log("hello onclick", folder)
-
         this.state.currentFolderID = folder._id;
         this.state.currentFolder = folder;
         const index = (this.state.breadCrumbList).indexOf(this.state.currentFolder);
@@ -63,7 +61,6 @@ export class CodeFolders extends Component {
         else {
             this.setState({ breadCrumbList: (this.state.breadCrumbList).slice(0, index + 1) });
         }
-        console.log(index, 'index')
         this.state.subFolders = [];
         (this.state.currentFolder.subfolders).map(async (subfolderID) => {
             this.setState({ doRender: false })
@@ -94,10 +91,8 @@ export class CodeFolders extends Component {
             currentFolder: toDoAfterFolderCreation.currentFolder,
             subFolders: [...this.state.subFolders, toDoAfterFolderCreation.newFolder]
         })
-        console.log(this.state.currentFolder);
     }
     handlecallbackFile = (toDoAfterFileCreation) => {
-        console.log(toDoAfterFileCreation, 'to_do_after_file_creation')
         this.setState({
             displayFileCreationForm: toDoAfterFileCreation.displayFileCreationForm,
             currentFolder: toDoAfterFileCreation.currentFolder

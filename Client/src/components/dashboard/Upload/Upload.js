@@ -35,7 +35,6 @@ class Upload extends Component {
   }
   submitHandler = (e) => {
     e.preventDefault();
-    console.log(this.state, "stateeeeee");
     const request = {
       "title": this.state.title,
       // "creator":JSON.parse(localStorage.getItem('profile')).data.result._id,
@@ -51,7 +50,6 @@ class Upload extends Component {
       "status": this.state.status,
       "coAuthors": this.state.coAuthors,
     }
-    console.log(request)
     axios.post("/posts/", request, {
       headers: {
         Authorization: `Bearer ${JSON.parse(localStorage.getItem("profile")).data.token
@@ -59,13 +57,11 @@ class Upload extends Component {
       },
     })
       .then((response) => {
-        console.log(response);
         updateLocalStorage(response.data.updatedUser);
         window.location = "/dashboard";
       });
   };
   authorHandler = (e) => {
-    console.log(e.target.value);
     this.setState({ author: e.target.value });
     this.setState({ creator: e.target.value });
   };
@@ -107,12 +103,10 @@ class Upload extends Component {
     window.scrollTo(0, 0);
     axios.get("/domains/", {})
       .then(resp => {
-        console.log(resp, 'domaiiiiiiiiin')
         this.setState({ all_domains: resp.data })
       })
     axios.get("/users/", {})
       .then(resp => {
-        console.log(resp)
         this.setState({ all_authors: resp.data })
       })
   }

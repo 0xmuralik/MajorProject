@@ -5,7 +5,6 @@ export class FilterDropDowns extends Component {
 
     constructor(props) {
         super(props);
-        console.log(props)
     }
     render() {
         const title = this.props.details.title
