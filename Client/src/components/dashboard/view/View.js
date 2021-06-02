@@ -49,7 +49,7 @@ const View = () => {
           }
         setDoRender(false);
         window.scrollTo(0, 0);
-        await axios.patch('http://localhost:5000/posts/'+post_id+'/viewPost',{},
+        await axios.patch('/posts/'+post_id+'/viewPost',{},
         {headers:{'Authorization':`Bearer ${JSON.parse(localStorage.getItem('profile')).data.token}`} })
         .then((response)=>{
             console.log(response);

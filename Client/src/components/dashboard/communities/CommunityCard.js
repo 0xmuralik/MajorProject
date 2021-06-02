@@ -7,8 +7,8 @@ import axios from 'axios'
 
 function CommunityCard(props) {
     const handleJoinLeave = ()=>{
-        console.log('http://localhost:5000/domains/'+props.community._id+'/subscribe','++++--')
-        axios.patch('http://localhost:5000/domains/'+props.community._id+'/subscribe' ,{},{
+        console.log('/domains/'+props.community._id+'/subscribe','++++--')
+        axios.patch('/domains/'+props.community._id+'/subscribe' ,{},{
             headers: {
               Authorization: `Bearer ${JSON.parse(localStorage.getItem("profile")).data.token}`,
             },

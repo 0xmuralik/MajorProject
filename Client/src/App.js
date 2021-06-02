@@ -10,8 +10,10 @@ import Settings from './components/dashboard/settings/Settings';
 import LoginAndRegisterPage from './components/loginandregister/LoginAndRegisterPage'
 import SavedPosts from './components/dashboard/sidepannel/SavedPosts';
 import YourPosts from './components/dashboard/sidepannel/YourPosts';
+import axios from 'axios'
 
 function App() {
+  axios.defaults.baseURL = 'http://localhost:5000';
   console.log("com");
   return (
     <Router>

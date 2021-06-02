@@ -42,13 +42,13 @@ class LoginForm extends Component {
     }
     submitHandler = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:5000/users/signin',this.state.formDetails)
+        axios.post('/users/signin',this.state.formDetails)
         .then(response=>{console.log(response);
             localStorage.setItem('profile',JSON.stringify(response));
-            axios.get('http://localhost:5000/users/get_id_and_name')
+            axios.get('/users/get_id_and_name')
             .then(response=>{
                 localStorage.setItem('userIdAndName',JSON.stringify(response));
-                axios.get('http://localhost:5000/domains/getIdAndName')
+                axios.get('/domains/getIdAndName')
                 .then(response=>{
                     localStorage.setItem('domainIdAndName',JSON.stringify(response));
                     window.location='/dashboard'

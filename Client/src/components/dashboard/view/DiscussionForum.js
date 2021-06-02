@@ -16,7 +16,7 @@ const DiscussionForum = ({ discussion_form_id }) => {
     const onsubmit = (e) => {
         e.preventDefault()
         setdisplayCommentList(false)
-        axios.post('http://localhost:5000/discussionforum/'+discussion_form_id+'/newcomment',
+        axios.post('/discussionforum/'+discussion_form_id+'/newcomment',
             {message:comment},
             {headers: { Authorization: `Bearer ${JSON.parse(localStorage.getItem("profile")).data.token}`}}            
         ).then(response=>{

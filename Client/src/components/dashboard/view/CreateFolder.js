@@ -8,7 +8,7 @@ function CreateFolder(props) {
     function submitHandler(e){
         e.preventDefault();
         const request ={name:folderDetails.namee,description:folderDetails.description,parentId:props.parentID};
-        axios.post('http://localhost:5000/folders',request,
+        axios.post('/folders',request,
         {
             headers: {
               Authorization: `Bearer ${

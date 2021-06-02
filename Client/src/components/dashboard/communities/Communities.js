@@ -25,7 +25,7 @@ function Communities() {
     },[]);
 
     const setCommunities=()=>{
-        axios.get('http://localhost:5000/domains/subscribed_and_unsubscribed' ,{
+        axios.get('/domains/subscribed_and_unsubscribed' ,{
             headers: {
               Authorization: `Bearer ${JSON.parse(localStorage.getItem("profile")).data.token}`,
             },

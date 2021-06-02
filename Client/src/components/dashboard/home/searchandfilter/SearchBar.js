@@ -54,10 +54,10 @@ class SearchBar extends Component {
   }
   componentDidMount() {
     window.scrollTo(0, 0);
-    axios.get("http://localhost:5000/posts").then((response) => {
+    axios.get("/posts").then((response) => {
       this.setState({ results: response.data });
     });
-    axios.get("http://localhost:5000/users/", {}).then((resp) => {
+    axios.get("/users/", {}).then((resp) => {
       console.log(resp);
       this.setState({ all_authors: resp.data });
       console.log(this.state.all_authors);
@@ -79,8 +79,8 @@ class SearchBar extends Component {
   ) => {
     const searchUrl =
       query == ""
-        ? `http://localhost:5000/posts`
-        : `http://localhost:5000/posts/${query}/Domains/ResearchTypes/StatusSelected/Authors`;
+        ? `/posts`
+        : `/posts/${query}/Domains/ResearchTypes/StatusSelected/Authors`;
     if (this.cancel) {
       this.cancel.cancel();
     }
@@ -202,7 +202,7 @@ class SearchBar extends Component {
   }
 
   renderSearchResults = () => {
-    axios.get("http://localhost:5000/domains").then((res) => {
+    axios.get("/domains").then((res) => {
       res.data.map((ival) => {
         this.state.DomainsInDB.set(ival.name, ival._id);
       });

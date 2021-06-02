@@ -52,7 +52,7 @@ class Upload extends Component {
       "coAuthors":this.state.coAuthors,
     }
     console.log(request)
-    axios.post("http://localhost:5000/posts/", request, {
+    axios.post("/posts/", request, {
         headers: {
           Authorization: `Bearer ${
             JSON.parse(localStorage.getItem("profile")).data.token
@@ -106,12 +106,12 @@ class Upload extends Component {
       window.location = "/";
     }
     window.scrollTo(0, 0);
-    axios.get("http://localhost:5000/domains/", {})
+    axios.get("/domains/", {})
       .then(resp => {
         console.log(resp, 'domaiiiiiiiiin')
         this.setState({ all_domains: resp.data })
       })
-    axios.get("http://localhost:5000/users/", {})
+    axios.get("/users/", {})
       .then(resp => {
         console.log(resp)
         this.setState({ all_authors: resp.data })

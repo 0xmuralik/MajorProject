@@ -14,7 +14,7 @@ function CreateFile(props) {
         parentFolderTemp.files.push(request);
         setParentFolder(parentFolderTemp);
         console.log(parentFolder);
-        axios.patch('http://localhost:5000/folders/'+props.parentID,parentFolder,
+        axios.patch('/folders/'+props.parentID,parentFolder,
         {
             headers: {
               Authorization: `Bearer ${

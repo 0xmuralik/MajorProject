@@ -42,7 +42,7 @@ export class ResearchCard extends Component {
     this.setState({ isLiked: !this.state.isLiked });
     axios
       .patch(
-        "http://localhost:5000/posts/" + this.props.details._id + "/likePost",
+        "/posts/" + this.props.details._id + "/likePost",
         {},
         {
           headers: {
@@ -62,7 +62,7 @@ export class ResearchCard extends Component {
     this.setState({ isSaved: !this.state.isSaved });
     axios
       .patch(
-        "http://localhost:5000/posts/" + this.props.details._id + "/savePost",
+        "/posts/" + this.props.details._id + "/savePost",
         {},
         {
           headers: {

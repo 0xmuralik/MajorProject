@@ -18,7 +18,7 @@ export class YourPosts extends Component {
     }
     componentDidMount(){
         this.state.savedPostIds.map((id)=>{
-             axios.get('http://localhost:5000/posts/' + id, {})
+             axios.get('/posts/' + id, {})
             .then(response => {
                 this.setState({details:[...this.state.details,response.data]});
                 console.log(this.state.details, '-----------');

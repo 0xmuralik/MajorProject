@@ -15,7 +15,7 @@ const CommentBox = ({ parent_id, class_list }) => {
     const [replyComment,setreplyComment]=useState("")
 
     useEffect(async() => {
-        await axios.get('http://localhost:5000/discussionforum/'+parent_id,{
+        await axios.get('/discussionforum/'+parent_id,{
             headers: {
               Authorization: `Bearer ${JSON.parse(localStorage.getItem("profile")).data.token}`,
             },
@@ -29,7 +29,7 @@ const CommentBox = ({ parent_id, class_list }) => {
     const onsubmit=(e,field_id)=>{
         setdisplaySubCommentList(false)
         e.preventDefault()
-        axios.post('http://localhost:5000/discussionforum/'+field_id+'/newcomment',
+        axios.post('/discussionforum/'+field_id+'/newcomment',
             {message:replyComment},
             {headers: { Authorization: `Bearer ${JSON.parse(localStorage.getItem("profile")).data.token}`}}            
         ).then(response=>{
@@ -57,7 +57,7 @@ const CommentBox = ({ parent_id, class_list }) => {
                                 <div class="comment-box">
                                     <div class="comment-head">
                                         <h6 class="comment-name by-author">
-                                            <a href="http://creaticode.com/blog">{getNameLocalStorage(field.commentor)}</a>
+                                            <a href={"/users/"+field.commentor}>{getNameLocalStorage(field.commentor)}</a>
                                         </h6>
                                         <span>{field.time}</span>
                                         <span>

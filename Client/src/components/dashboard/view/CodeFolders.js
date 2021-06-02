@@ -28,13 +28,13 @@ export class CodeFolders extends Component {
     }
     componentDidMount() {
         this.setState({doRender:false});
-        axios.get('http://localhost:5000/folders/'+this.state.currentFolderID)
+        axios.get('/folders/'+this.state.currentFolderID)
     .then((response)=>{
         this.setState({currentFolder: response.data},()=>{
             this.setState({breadCrumbList:[this.state.currentFolder]})
         });
         (this.state.currentFolder.subfolders).map((subfolderID)=>{
-            axios.get('http://localhost:5000/folders/'+subfolderID)
+            axios.get('/folders/'+subfolderID)
             .then((resp)=>{
                 this.setState({subFolders:[...this.state.subFolders,resp.data]});
             })
@@ -66,7 +66,7 @@ export class CodeFolders extends Component {
         this.state.subFolders=[];
         (this.state.currentFolder.subfolders).map(async(subfolderID)=>{
             this.setState({doRender:false})
-            await axios.get('http://localhost:5000/folders/'+subfolderID)
+            await axios.get('/folders/'+subfolderID)
             .then((resp)=>{
                 
                 this.setState({subFolders:[...this.state.subFolders,resp.data]},()=>{
