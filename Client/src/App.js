@@ -13,7 +13,7 @@ import YourPosts from './components/dashboard/sidepannel/YourPosts';
 import axios from 'axios'
 
 function App() {
-  axios.defaults.baseURL = 'http://localhost:5000';
+  // axios.defaults.baseURL = '';
   return (
     <Router>
       <Switch>
