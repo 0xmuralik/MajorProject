@@ -12,12 +12,11 @@ export const getFolders= async (req,res)=>{
 
 export const getFolderById =async (req,res) => {
     const _id = req.params.id;
-    console.log(_id,"AAA");
     
     if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send('No folder with that id');
 
     const folder = await FolderMessage.findById(_id);
-    console.log(folder);
+    
     res.json(folder);
 }
 

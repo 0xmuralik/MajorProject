@@ -20,7 +20,6 @@ export const getPostById = async (req, res) => {
     return res.status(404).send("No post with that id");
 
   const post = await PostMessage.findById(_id);
-  // console.log(post)
   res.json(post);
 };
 
@@ -171,11 +170,9 @@ export const viewPost = async (req, res) => {
 };
 
 export const SearchFun = async (req, res) => {
-  console.log(req.params);
   var query = req.params.q;
   const searchparams = await PostMessage.find({
     title: { $regex: "^" + query },
   });
-  console.log(searchparams);
   res.status(200).json(searchparams);
 };

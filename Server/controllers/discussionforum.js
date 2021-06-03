@@ -16,9 +16,7 @@ export const addNewComment = async (req, res) => {
         await newcomment.save();
 
         const parentComment = await DiscussionComment.findById(parentId);
-        console.log('before    ', parentComment)
         parentComment.subComments.push(newcomment._id);
-        console.log('after    ', parentComment)
         const updatedparentComment = await DiscussionComment.findByIdAndUpdate(parentId, parentComment)
 
         res.status(201).json({ message: "added " })
@@ -30,11 +28,8 @@ export const addNewComment = async (req, res) => {
 export const getPostDiscussionForum = async (req, res) => {
         const parentId = req.params.parentId;
         const user = await Users.findById(req.userId);
-        console.log(parentId,'----------',req.url)
         const parentcomment = await DiscussionComment.findById(parentId)
-        console.log('commentlistttt ', parentcomment.subComments)
         const commentlist = await DiscussionComment.find({ '_id': { $in: parentcomment.subComments } })
-        console.log('commentlistttt ', parentcomment.subComments, commentlist)
         res.status(201).json(commentlist)
     
     

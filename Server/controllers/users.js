@@ -41,11 +41,9 @@ export const signup = async (req,res) =>{
         const hashedPassword = await bcrypt.hash(user.password,12);
 
         const result = await Users.create({...user,password:hashedPassword});
-        console.log("2");
 
         const token = jwt.sign({email:result.email, _id:result._id,username:result.username},'test',{expiresIn:'1h'});
-        console.log("3");
-        
+          
         res.status(200).json({result,token});
     } catch (error) {
         
@@ -97,7 +95,6 @@ export const updateUser = async (req,res)=>{
 }
 
 export const deleteUser= async (req,res)=>{
-    console.log(req.params)
     const {id} =req.params;
 
     if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No user with that id');

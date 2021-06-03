@@ -46,7 +46,6 @@ export const createDomain=async (req,res)=>{
 
 export const subscribe = async (req,res)=>{
     const domainId =req.params.id;
-    console.log('-----',domainId)
     if(!req.userId) return res.json({message:'Unauthenticated'});
 
     if(!mongoose.Types.ObjectId.isValid(domainId)) return res.status(404).send('No domain with that id');
@@ -56,7 +55,7 @@ export const subscribe = async (req,res)=>{
     const user = await Users.findById(req.userId);
 
     const index = domain.subscribers.findIndex((id)=>String(id)===String(req.userId));
-    console.log(index,domainId)
+    
     if(index===-1){
         domain.subscribers.push(req.userId);
         user.domains.push(domainId);
