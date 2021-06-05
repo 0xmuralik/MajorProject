@@ -26,11 +26,14 @@ export const addNewComment = async (req, res) => {
 }
 
 export const getPostDiscussionForum = async (req, res) => {
+    try{
         const parentId = req.params.parentId;
         const user = await Users.findById(req.userId);
         const parentcomment = await DiscussionComment.findById(parentId)
         const commentlist = await DiscussionComment.find({ '_id': { $in: parentcomment.subComments } })
         res.status(201).json(commentlist)
+    } 
+    catch (error) {res.status(400).json(error)}
     
     
 }
