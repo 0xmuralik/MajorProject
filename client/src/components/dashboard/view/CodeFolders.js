@@ -121,17 +121,18 @@ export class CodeFolders extends Component {
                         </div >
                         <div style={{ padding: '30px 0px 30px 20px', background: '#d8dbf0' }}>
                             <ul>
+                                {this.props.isCoAuthor?
                                 <li>
                                     <Link onClick={this.createFolderHandler}><span style={{ fontSize: '40px' }}><MdIcons.MdCreateNewFolder /></span></Link>
                                     <Link onClick={this.createFileHandler}><span style={{ fontSize: '40px' }}><AiIcons.AiFillFileAdd /></span></Link>
-                                </li>
+                                </li>:''}
                                 {this.state.displayFolderCreationForm ? <CreateFolder parentcallback={this.handlecallbackFolder} parentID={this.state.currentFolderID} /> : ''}
                                 {this.state.displayFileCreationForm ? <CreateFile parentcallback={this.handlecallbackFile} parent={this.state.currentFolder} parentID={this.state.currentFolderID} /> : ''}
                                 <hr />
                                 {(this.state.currentFolder.files).map((file) => (
                                     <>
                                         <li><FcIcons.FcFile /><a download={file.name} href={file.base64} ><span>{file.name}</span></a><span style={{ float: 'right', padding: '0px 20px 0px 0px' }}>{file.description}</span></li>
-                                        <hr />
+                                        <hr/>
                                     </>
                                 ))}
                                 {this.state.subFolders.map((folder) => (

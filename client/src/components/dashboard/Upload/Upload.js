@@ -15,6 +15,7 @@ import FileBase from 'react-file-base64';
 class Upload extends Component {
   constructor(props) {
     super(props);
+    let post_id=undefined;
     this.state = {
       title: "",
       creator: "",
@@ -31,25 +32,63 @@ class Upload extends Component {
       coAuthors: [],
       all_authors: [],
       all_domains: [],
+      fullPost:{}
     };
+    if(this.props.match){
+    post_id = this.props.match.params.post_id;
+    axios.get('/posts/'+ post_id ).then((response)=>{
+      console.log(response.data);
+      this.setState({
+        title: response.data.title,
+        creator: response.data.creator,
+        author: response.data.author,
+        organization: response.data.organization,
+        region: response.data.region,
+        image: response.data.image,
+        future: response.data.future,
+        workDone: response.data.workDone,
+        Description: response.data.Description,
+        domain: response.data.domain,
+        tags: response.data.tags,
+        status: response.data.status,
+        coAuthors: response.data.coAuthors,
+        fullPost: response.data
+      })
+    })
+    }
+
   }
   submitHandler = (e) => {
     e.preventDefault();
-    const request = {
-      "title": this.state.title,
-      // "creator":JSON.parse(localStorage.getItem('profile')).data.result._id,
-      "author": this.state.author,
-      "organization": this.state.organization,
-      "region": this.state.region,
-      "image": this.state.image,
-      "future": this.state.future,
-      "workDone": this.state.workDone,
-      "Description": this.state.Description,
-      "domain": this.state.domain,
-      "tags": this.state.tags,
-      "status": this.state.status,
-      "coAuthors": this.state.coAuthors,
+    let request = this.state.fullPost;
+    request.title=this.state.title;
+    request.creator=this.state.creator;
+    request.author=this.state.author;
+    request.organization=this.state.organization;
+    request.region=this.state.region;
+    request.image=this.state.image;
+    request.future=this.state.future;
+    request.workDone=this.state.workDone;
+    request.Description=this.state.Description;
+    request.domain=this.state.domain;
+    request.tags=this.state.tags;
+    request.status=this.state.status;
+    request.coAuthors=this.state.coAuthors;
+
+    console.log(request);
+
+    if(this.props.match){
+      axios.patch("/posts/"+ this.props.match.params.post_id, request, {
+        headers:{
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("profile")).data.token
+          }`,
+        },
+      })
+      .then((response)=>{
+        window.location="/view/"+response.data._id;
+      })
     }
+    else{
     axios.post("/posts/", request, {
       headers: {
         Authorization: `Bearer ${JSON.parse(localStorage.getItem("profile")).data.token
@@ -58,8 +97,9 @@ class Upload extends Component {
     })
       .then((response) => {
         updateLocalStorage(response.data.updatedUser);
-        window.location = "/dashboard";
+        window.location = "/view/"+response.data.newPost._id;
       });
+    }
   };
   authorHandler = (e) => {
     this.setState({ author: e.target.value });
@@ -138,6 +178,7 @@ class Upload extends Component {
                           <Form.Control
                             onChange={this.titleHandler}
                             placeholder="Enter Title"
+                            value={this.state.title}
                           />
                         </Col>
                       </Form.Group>
@@ -149,6 +190,7 @@ class Upload extends Component {
                           <Form.Control
                             onChange={this.authorHandler}
                             as="select"
+                            value={this.state.author}
                           >
                             <option>-Select-</option>
                             {this.state.all_authors.map((field) => (<option value={field._id}>{field.name}</option>))}
@@ -164,6 +206,7 @@ class Upload extends Component {
                             onSelect={this.coAuthorsHandler}
                             options={this.state.all_authors} // Options to display in the dropdown
                             selectedValues={
+                              
                               this.state.all_authors.selectedValues
                             }
                             displayValue="name" // Property name to display in the dropdown options
@@ -175,7 +218,7 @@ class Upload extends Component {
                           Organization
                         </Form.Label>
                         <Col sm={10}>
-                          <Form.Control onChange={this.orghandler} as="select">
+                          <Form.Control onChange={this.orghandler} value={this.state.organization} as="select">
                             <option>-Select-</option>
                             <option>Lab</option>
                             <option>Private</option>
@@ -187,7 +230,7 @@ class Upload extends Component {
                           Region
                         </Form.Label>
                         <Col sm={10}>
-                          <Form.Control onChange={this.reghandler} as="select">
+                          <Form.Control onChange={this.reghandler} value={this.state.region} as="select">
                             <option>-Select-</option>
                             <option>region 1</option>
                             <option>region 2</option>
@@ -217,6 +260,7 @@ class Upload extends Component {
                             label="Pending"
                             type="radio"
                             name="group1"
+                            checked={this.state.status=="Pending"}
                           />
                           <Form.Check
                             onChange={this.statusCompletedHandler}
@@ -224,6 +268,7 @@ class Upload extends Component {
                             label="Completed"
                             type="radio"
                             name="group1"
+                            checked={this.state.status=="Completed"}
                           />
                         </div>
                       </Form.Group>
@@ -248,6 +293,7 @@ class Upload extends Component {
                             onChange={this.descriptionHandler}
                             as="textarea"
                             rows={3}
+                            value={this.state.Description}
                           />
                         </Col>
                       </Form.Group>
@@ -260,6 +306,7 @@ class Upload extends Component {
                             onChange={this.workdoneHandler}
                             as="textarea"
                             rows={3}
+                            value={this.state.workDone}
                           />
                         </Col>
                       </Form.Group>
@@ -272,6 +319,7 @@ class Upload extends Component {
                             onChange={this.futureworkHandler}
                             as="textarea"
                             rows={3}
+                            value={this.state.future}
                           />
                         </Col>
                       </Form.Group>

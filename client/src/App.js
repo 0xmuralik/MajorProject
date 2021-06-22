@@ -30,6 +30,8 @@ function App() {
         <Route path='/upload'>
           <Upload />
         </Route>
+        <Route path='/edit/:post_id' component={Upload}>
+        </Route>
         <Route path='/self/:status'>
           <YourPosts />
         </Route>
