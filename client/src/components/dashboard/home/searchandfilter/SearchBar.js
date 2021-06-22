@@ -9,6 +9,7 @@ class SearchBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      userSearch: "",
       myevent: [],
       all_authors: [],
       coAuthors: [],
@@ -132,6 +133,8 @@ class SearchBar extends Component {
     event.map((ival, idx) => {
       arr.push(ival.label);
     });
+    this.state.userSearch = this.state.userSearch.concat(" ");
+    this.state.userSearch = this.state.userSearch.concat(arr.join(" "));
     this.state.DomainFilterValues = arr;
   };
   OrganizationFilterBefore = (event) => {
@@ -148,6 +151,8 @@ class SearchBar extends Component {
     event.map((ival, idx) => {
       arr.push(ival.label);
     });
+    this.state.userSearch = this.state.userSearch.concat(" ");
+    this.state.userSearch = this.state.userSearch.concat(arr.join(" "));
     this.state.OrgainzationFilterValues = arr;
   };
 
@@ -165,6 +170,8 @@ class SearchBar extends Component {
     event.map((ival, idx) => {
       arr.push(ival.label);
     });
+    this.state.userSearch = this.state.userSearch.concat(" ");
+    this.state.userSearch = this.state.userSearch.concat(arr.join(" "));
     this.state.StatusFilterValues = arr;
     console.log(this.state.StatusFilterValues);
   };
@@ -183,6 +190,8 @@ class SearchBar extends Component {
       console.log(ival);
       arr.push(ival.value);
     });
+    this.state.userSearch = this.state.userSearch.concat(" ");
+    this.state.userSearch = this.state.userSearch.concat(arr.join(" "));
     this.state.AuthorsFilteredValues = arr;
   };
 
@@ -193,6 +202,53 @@ class SearchBar extends Component {
       });
     });
   }
+  rank = (result_object) => {
+    var _userSearch = this.state.userSearch;
+    var stringSimilarity = require("string-similarity");
+    var fetchedData = "";
+
+    for (const property in result_object) {
+      //console.log(property, property != "image", property !== "image");
+      if (
+        property != "image" &&
+        property != "coAuthors" &&
+        property != "views" &&
+        property != "saves" &&
+        property != "createdOn" &&
+        property != "_id" &&
+        property != "author" &&
+        property != "image" &&
+        property != "homeDirectory" &&
+        property != "discussionForum"
+      ) {
+        fetchedData = fetchedData.concat(" ");
+        fetchedData = fetchedData.concat(result_object[property]);
+      }
+    }
+    var rank = stringSimilarity.compareTwoStrings(_userSearch, fetchedData);
+    console.log(rank);
+    return rank * 10000000000;
+  };
+  rankingAlgo = (result_object) => {
+    let rankMap = new Map();
+    result_object.map((ival, idx) => {
+      var rank = this.rank(ival);
+      rankMap.set(rank, idx);
+    });
+    let keys = Array.from(rankMap.keys());
+    keys.sort();
+    var final_result_object = {};
+    var id = 0;
+    for (const property in result_object) {
+      final_result_object[id] = result_object[rankMap.get(keys[id])];
+      id++;
+    }
+
+    console.log(final_result_object);
+    console.log(typeof result_object);
+
+    return result_object;
+  };
 
   renderSearchResults = () => {
     axios.get("/domains").then((res) => {
@@ -258,6 +314,9 @@ class SearchBar extends Component {
     }
 
     if (Object.keys(resultss).length && resultss.length) {
+      if (this.state.userSearch) {
+        resultss = this.rankingAlgo(resultss);
+      }
       return (
         <div>
           {resultss.map((result) => {
